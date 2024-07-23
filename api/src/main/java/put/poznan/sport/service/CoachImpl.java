@@ -21,8 +21,10 @@ public class CoachImpl implements CoachService {
     public Coach getCoachById(int id){
 
         Optional<Coach> coach = coachRepository.findById(id);
+        if (coach.isEmpty()) {
+            throw new CoachNotFoundException("Coach with id " + id + " not found");
+        }
         return coach.orElse(null);
-
     }
 
     public Coach createCoach(Coach coach){

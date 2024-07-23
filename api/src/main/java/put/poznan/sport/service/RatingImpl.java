@@ -18,15 +18,27 @@ public class RatingImpl implements RatingService {
 
     public Rating getRatingById(int id) {
         Optional<Rating> rating = ratingRepository.findById(id);
+        if (rating.isEmpty()) {
+            throw new RatingNotFoundException("Rating with id " + id + " not found");
+        }
         return rating.orElse(null);
     }
 
     public Rating createRating(Rating rating) {
+        if (rating.getRate() < 1 || rating.getRate() > 5) {
+            throw new InvalidRatingException("Rating value " + rating.getRate() + " is invalid");
+        }
         return ratingRepository.save(rating);
     }
 
     public Rating updateRating(Rating rating) {
-       return ratingRepository.save(rating);
+        if (!ratingRepository.existsById(rating.getId())) {
+            throw new RatingNotFoundException("Rating with id " + rating.getId() + " not found");
+        }
+        if (rating.getRate() < 1 || rating.getRate() > 5) {
+            throw new InvalidRatingException("Rating value " + rating.getRate() + " is invalid");
+        }
+        return ratingRepository.save(rating);
     }
 
     public boolean deleteRating(int id) {
@@ -35,7 +47,7 @@ public class RatingImpl implements RatingService {
             ratingRepository.deleteById(id);
             return true;
         }else{
-            return false;
+            throw new RatingNotFoundException("Rating with id " + id + " not found");
         }
     }
 }

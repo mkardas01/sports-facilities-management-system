@@ -20,14 +20,25 @@ public class UserImpl implements UserService {
 
     public User getUserById(int id) {
         Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User with id " + id + " not found");
+                }
         return user.orElse(null);
     }
 
+    @Override
     public User createUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new EmailAlreadyExistsException("Email " + user.getEmail() + " already exists");
+        }
         return userRepository.save(user);
     }
 
+    @Override
     public User updateUser(User user) {
+        if (!userRepository.existsById(user.getId())) {
+            throw new UserNotFoundException("User with id " + user.getId() + " not found");
+        }
         return userRepository.save(user);
     }
 
