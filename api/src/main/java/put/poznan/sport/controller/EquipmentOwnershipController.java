@@ -18,7 +18,7 @@ public class EquipmentOwnershipController {
     @Autowired
     private EquipmentOwnershipService equipmentOwnershipService;
 
-    @GetMapping("getAllEqOw")
+    @GetMapping("all")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllEqOw() {
@@ -26,7 +26,7 @@ public class EquipmentOwnershipController {
         return new ResponseEntity<>(equipmentOwnershipService.getAllEqOw(), HttpStatus.OK);
     }
 
-    @GetMapping("getEqOwById/{id}")
+    @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getEqOwById(@PathVariable("id") EquipmentOwnershipId id) {
@@ -34,7 +34,7 @@ public class EquipmentOwnershipController {
         return new ResponseEntity<>(equipmentOwnershipService.getEqOwById(id), HttpStatus.OK);
     }
 
-    @PostMapping("createEqOw")
+    @PostMapping("create")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createEqOw(@RequestBody EquipmentOwnership equipmentOwnership) {
@@ -42,7 +42,7 @@ public class EquipmentOwnershipController {
         return new ResponseEntity<>(equipmentOwnershipService.saveEqOw(equipmentOwnership), HttpStatus.OK);
     }
 
-//    @PutMapping("updateEqOw")
+//    @PutMapping("update")
 //    @CrossOrigin
 //    @ResponseBody
 //    public ResponseEntity<?> updateEqOw(@RequestBody EquipmentOwnership equipmentOwnership) {
@@ -50,7 +50,7 @@ public class EquipmentOwnershipController {
 //        return new ResponseEntity<>(equipmentOwnershipService.updateEqOw(equipmentOwnership), HttpStatus.OK);
 //    }
 
-    @DeleteMapping("deleteEqOw/{id}")
+    @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> deleteEqOw(@PathVariable("id") EquipmentOwnershipId id) {

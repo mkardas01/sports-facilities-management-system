@@ -17,35 +17,35 @@ public class TrainingSessionController {
     @Autowired
     private TrainingSessionService trainingSessionService;
 
-    @GetMapping("getAllSessions")
+    @GetMapping("all")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllSessions() {
         return new ResponseEntity<>(trainingSessionService.getAllSessions(), HttpStatus.OK);
     }
 
-    @GetMapping("getSessionById/{id}")
+    @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getSessionById(@PathVariable("id") int id) {
         return new ResponseEntity<>(trainingSessionService.getSessionById(id), HttpStatus.OK);
     }
 
-    @PostMapping("createSession")
+    @PostMapping("create")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createSession(@RequestBody TrainingSession trainingSession) {
         return new ResponseEntity<>(trainingSessionService.createSession(trainingSession), HttpStatus.OK);
     }
 
-    @PutMapping("updateSession")
+    @PutMapping("update")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateSession(@RequestBody TrainingSession trainingSession) {
         return new ResponseEntity<>(trainingSessionService.updateSession(trainingSession), HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteSession/{id}")
+    @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> deleteSession(@PathVariable int id) {

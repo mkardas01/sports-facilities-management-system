@@ -17,7 +17,7 @@ public class SportFacilityNewsController {
     @Autowired
     private SportFacilityNewsService sportFacilityNewsService;
 
-    @GetMapping("getAllSportFacilityNews")
+    @GetMapping("all")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllSportFacilityNews() {
@@ -26,7 +26,7 @@ public class SportFacilityNewsController {
 
     }
 
-    @GetMapping("getSportFacilityNewsById/{id}")
+    @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getSportFacilityNewsById(@PathVariable("id") Integer id) {
@@ -35,7 +35,7 @@ public class SportFacilityNewsController {
 
     }
 
-    @PostMapping("createSportFacilityNews")
+    @PostMapping("create")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createSportFacilityNews(@RequestBody SportFacilityNews news) {
@@ -44,7 +44,7 @@ public class SportFacilityNewsController {
 
     }
 
-    @PutMapping("updateSportFacilityNews")
+    @PutMapping("update")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateSportFacilityNews(@RequestBody SportFacilityNews news) {
@@ -53,7 +53,7 @@ public class SportFacilityNewsController {
 
     }
 
-    @DeleteMapping("deleteSportFacilityNews/{id}")
+    @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> deleteSportFacilityNews(@PathVariable("id") Integer id) {

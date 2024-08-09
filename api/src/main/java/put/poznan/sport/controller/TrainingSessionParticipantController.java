@@ -19,38 +19,38 @@ public class TrainingSessionParticipantController {
     @Autowired
     private TrainingSessionParticipantService trainingSessionParticipantService;
 
-    @GetMapping("getAllParticipants")
+    @GetMapping("all")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllParticipants() {
         return new ResponseEntity<>(trainingSessionParticipantService.getAllParticipants(), HttpStatus.OK);
     }
 
-    @GetMapping("getParticipantById/{id}")
+    @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getParticipantById(@PathVariable("id") TrainingSessionParticipantId id) {
         return new ResponseEntity<>(trainingSessionParticipantService.getParticipantById(id),HttpStatus.OK);
     }
 
-    @PostMapping("createParticipant")
+    @PostMapping("create")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createParticipant(@RequestBody TrainingSessionParticipant participant) {
         return new ResponseEntity<>(trainingSessionParticipantService.createParticipant(participant),HttpStatus.OK);
     }
 
-    @PutMapping("updateParticipant")
+    @PutMapping("update")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateParticipant(@RequestBody TrainingSessionParticipant participant) {
         return new ResponseEntity<>(trainingSessionParticipantService.updateParticipant(participant),HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteParticipant")
+    @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> deleteParticipant(@RequestBody TrainingSessionParticipantId id) {
+    public ResponseEntity<?> deleteParticipant(@PathVariable TrainingSessionParticipantId id) {
         return new ResponseEntity<>(trainingSessionParticipantService.deleteParticipant(id),HttpStatus.OK);
     }
 }

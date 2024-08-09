@@ -18,7 +18,7 @@ public class OpenHourController {
     @Autowired
     private OpenHourService openHourService;
 
-    @GetMapping("getAllOpenHours")
+    @GetMapping("all")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllOpenHours(){
@@ -27,7 +27,7 @@ public class OpenHourController {
 
     }
 
-    @GetMapping("getOpenHourById/{id}")
+    @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getOpenHourById(@PathVariable("id") int id){
@@ -37,7 +37,7 @@ public class OpenHourController {
     }
 
 
-    @PostMapping("createOpenHour")
+    @PostMapping("create")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createOpenHour(@RequestBody OpenHour openHour){
@@ -46,7 +46,7 @@ public class OpenHourController {
 
     }
 
-    @PutMapping("updateOpenHour")
+    @PutMapping("update")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateOpenHour(@RequestBody OpenHour openHour){
@@ -55,7 +55,7 @@ public class OpenHourController {
 
     }
 
-    @DeleteMapping("deleteOpenHour/{id}")
+    @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> deleteOpenHour(@PathVariable("id") int id){

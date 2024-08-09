@@ -17,7 +17,7 @@ public class SportEquipmentController {
     @Autowired
     private SportEquipmentService sportEquipmentService;
 
-    @GetMapping("getAllEquipment")
+    @GetMapping("all")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllEquipment() {
@@ -26,7 +26,7 @@ public class SportEquipmentController {
 
     }
 
-    @GetMapping("getEquipmentById/{id}")
+    @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getEquipmentById(@PathVariable int id) {
@@ -35,7 +35,7 @@ public class SportEquipmentController {
 
     }
 
-    @PostMapping("createEquipment")
+    @PostMapping("create")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createEquipment(@RequestBody SportEquipment sportEquipment) {
@@ -43,7 +43,7 @@ public class SportEquipmentController {
         return new ResponseEntity<>(sportEquipmentService.createEquipment(sportEquipment), HttpStatus.OK);
     }
 
-    @PutMapping("updateEquipment")
+    @PutMapping("update")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateEquipment(@RequestBody SportEquipment sportEquipment) {
@@ -52,7 +52,7 @@ public class SportEquipmentController {
 
     }
 
-    @DeleteMapping("deleteEquipment/{id}")
+    @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> deleteEquipment(@PathVariable int id) {

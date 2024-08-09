@@ -17,7 +17,7 @@ public class RatingController {
     @Autowired
     private RatingService ratingService;
 
-    @GetMapping("getAllRatings")
+    @GetMapping("all")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllRatings() {
@@ -25,7 +25,7 @@ public class RatingController {
         return new ResponseEntity<>(ratingService.getAllRatings(), HttpStatus.OK);
     }
 
-    @GetMapping("getRatingById/{id}")
+    @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getRatingById(@PathVariable int id) {
@@ -34,7 +34,7 @@ public class RatingController {
 
     }
 
-    @PostMapping("createRating")
+    @PostMapping("create")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createRating(@RequestBody Rating rating) {
@@ -43,7 +43,7 @@ public class RatingController {
 
     }
 
-    @PutMapping("updateRating")
+    @PutMapping("update")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateRating(@RequestBody Rating rating) {
@@ -52,7 +52,7 @@ public class RatingController {
 
     }
 
-    @DeleteMapping("deleteRating/{id}")
+    @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> deleteRating(@PathVariable int id) {
