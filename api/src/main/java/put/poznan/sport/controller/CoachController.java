@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/Coaches/")
+@RequestMapping("api/Coach/")
 public class CoachController {
     //logika do serwisu, zwracamy request
     //postman
     @Autowired
     private CoachImpl coachService;
 
-    @GetMapping("getAllCoaches")
+    @GetMapping("all")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllCoaches() {
@@ -26,21 +26,21 @@ public class CoachController {
         return new ResponseEntity<>(coachService.getAllCoaches(), HttpStatus.OK);
     }
 
-    @GetMapping("getCoachById/{id}")
+    @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getCoachById(@PathVariable int id) {
         return new ResponseEntity<>(coachService.getCoachById(id), HttpStatus.OK);
     }
 
-    @PostMapping("createCoach")
+    @PostMapping("create")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createCoach(@RequestBody Coach coach) {
         return new ResponseEntity<>(coachService.createCoach(coach), HttpStatus.OK);
     }
 
-    @PutMapping("updateCoach")
+    @PutMapping("update")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateCoach(@RequestBody Coach coach) {
@@ -48,7 +48,7 @@ public class CoachController {
         return new ResponseEntity<>(coachService.updateCoach(coach), HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteCoach/{id}")
+    @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> deleteCoach(@PathVariable int id) {
