@@ -3,10 +3,11 @@ package put.poznan.sport.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.User;
+import put.poznan.sport.exception.EmailAlreadyExistsException;
+import put.poznan.sport.exception.UserNotFoundException;
 import put.poznan.sport.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserImpl implements UserService {
@@ -14,16 +15,15 @@ public class UserImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    @Override
     public User getUserById(int id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("User with id " + id + " not found");
-                }
-        return user.orElse(null);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }
 
     @Override
@@ -36,21 +36,18 @@ public class UserImpl implements UserService {
 
     @Override
     public User updateUser(User user) {
-        if (!userRepository.existsById(user.getId())) {
-            throw new UserNotFoundException("User with id " + user.getId() + " not found");
-        }
+        userRepository.findById(user.getId())
+                .orElseThrow(() -> new UserNotFoundException("User with id " + user.getId() + " not found"));
+
         return userRepository.save(user);
     }
 
+    @Override
     public boolean deleteUserById(int id) {
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()) {
-            userRepository.delete(user.get());
-            return true;
-        }else{
-            return false;
-        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+
+        userRepository.delete(user);
+        return true;
     }
-
-
 }

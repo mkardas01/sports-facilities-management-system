@@ -3,10 +3,10 @@ package put.poznan.sport.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.OpenHour;
+import put.poznan.sport.exception.OpenHourNotFoundException;
 import put.poznan.sport.repository.OpenHourRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OpenHourImpl implements OpenHourService {
@@ -14,30 +14,36 @@ public class OpenHourImpl implements OpenHourService {
     @Autowired
     private OpenHourRepository openHourRepository;
 
-    public List<OpenHour> getAllOpenHours(){
+    @Override
+    public List<OpenHour> getAllOpenHours() {
         return openHourRepository.findAll();
     }
 
-    public OpenHour getOpenHourById(int id){
-        Optional<OpenHour> openHour = openHourRepository.findById(id);
-        return openHour.orElse(null);
+    @Override
+    public OpenHour getOpenHourById(int id) {
+        return openHourRepository.findById(id)
+                .orElseThrow(() -> new OpenHourNotFoundException("OpenHour with id " + id + " not found"));
     }
 
-    public OpenHour saveOpenHour(OpenHour openHour){
+    @Override
+    public OpenHour saveOpenHour(OpenHour openHour) {
         return openHourRepository.save(openHour);
     }
 
-    public OpenHour updateOpenHour(OpenHour openHour){
+    @Override
+    public OpenHour updateOpenHour(OpenHour openHour) {
+        openHourRepository.findById(openHour.getId())
+                .orElseThrow(() -> new OpenHourNotFoundException("OpenHour with id " + openHour.getId() + " not found"));
+
         return openHourRepository.save(openHour);
     }
 
-    public boolean deleteOpenHour(int id){
-        Optional<OpenHour> openHour = openHourRepository.findById(id);
-        if(openHour.isPresent()){
-            openHourRepository.deleteById(id);
-            return true;
-        }else{
-            return false;
-        }
+    @Override
+    public boolean deleteOpenHour(int id) {
+        OpenHour openHour = openHourRepository.findById(id)
+                .orElseThrow(() -> new OpenHourNotFoundException("OpenHour with id " + id + " not found"));
+
+        openHourRepository.deleteById(id);
+        return true;
     }
 }

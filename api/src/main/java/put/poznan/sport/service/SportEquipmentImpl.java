@@ -3,10 +3,10 @@ package put.poznan.sport.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.SportEquipment;
+import put.poznan.sport.exception.SportEquipmentNotFoundException;
 import put.poznan.sport.repository.SportEquipmentRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SportEquipmentImpl implements SportEquipmentService {
@@ -14,27 +14,36 @@ public class SportEquipmentImpl implements SportEquipmentService {
     @Autowired
     private SportEquipmentRepository sportEquipmentRepository;
 
-    public List<SportEquipment> getAllEquipments() { return sportEquipmentRepository.findAll(); }
-
-    public SportEquipment getEquipmentsById(int id) {
-        Optional<SportEquipment> optional = sportEquipmentRepository.findById(id);
-        return optional.orElse(null);
+    @Override
+    public List<SportEquipment> getAllEquipments() {
+        return sportEquipmentRepository.findAll();
     }
 
-    public SportEquipment createEquipment(SportEquipment equipment) { return sportEquipmentRepository.save(equipment); }
+    @Override
+    public SportEquipment getEquipmentsById(int id) {
+        return sportEquipmentRepository.findById(id)
+                .orElseThrow(() -> new SportEquipmentNotFoundException("SportEquipment with id " + id + " not found"));
+    }
 
-    public SportEquipment updateEquipment(SportEquipment equipment) {
+    @Override
+    public SportEquipment createEquipment(SportEquipment equipment) {
         return sportEquipmentRepository.save(equipment);
     }
 
-    public boolean deleteEquipment(int id) {
-        Optional<SportEquipment> optional = sportEquipmentRepository.findById(id);
-        if (optional.isPresent()) {
-            sportEquipmentRepository.deleteById(id);
-            return true;
-        }else{
-            return false;
-        }
+    @Override
+    public SportEquipment updateEquipment(SportEquipment equipment) {
+        sportEquipmentRepository.findById(equipment.getId())
+                .orElseThrow(() -> new SportEquipmentNotFoundException("SportEquipment with id " + equipment.getId() + " not found"));
+
+        return sportEquipmentRepository.save(equipment);
     }
 
+    @Override
+    public boolean deleteEquipment(int id) {
+        SportEquipment equipment = sportEquipmentRepository.findById(id)
+                .orElseThrow(() -> new SportEquipmentNotFoundException("SportEquipment with id " + id + " not found"));
+
+        sportEquipmentRepository.deleteById(id);
+        return true;
+    }
 }

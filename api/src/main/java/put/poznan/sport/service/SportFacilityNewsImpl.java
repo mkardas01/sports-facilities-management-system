@@ -3,41 +3,47 @@ package put.poznan.sport.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.SportFacilityNews;
+import put.poznan.sport.exception.SportFacilityNewsNotFoundException;
 import put.poznan.sport.repository.SportFacilityNewsRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class SportFacilityNewsImpl implements SportFacilityNewsService{
+public class SportFacilityNewsImpl implements SportFacilityNewsService {
 
     @Autowired
-    private SportFacilityNewsRepository SportFacilityNewsrepository;
+    private SportFacilityNewsRepository sportFacilityNewsRepository;
 
-    public List<SportFacilityNews> getAllFacilityNews() { return SportFacilityNewsrepository.findAll(); }
+    @Override
+    public List<SportFacilityNews> getAllFacilityNews() {
+        return sportFacilityNewsRepository.findAll();
+    }
 
+    @Override
     public SportFacilityNews getFacilityNewsById(int id) {
-
-        Optional<SportFacilityNews> optional = SportFacilityNewsrepository.findById(id);
-        return optional.orElse(null);
-
+        return sportFacilityNewsRepository.findById(id)
+                .orElseThrow(() -> new SportFacilityNewsNotFoundException("SportFacilityNews with id " + id + " not found"));
     }
 
-    public SportFacilityNews createFacilityNews(SportFacilityNews facilityNews) { return SportFacilityNewsrepository.save(facilityNews); }
+    @Override
+    public SportFacilityNews createFacilityNews(SportFacilityNews facilityNews) {
+        return sportFacilityNewsRepository.save(facilityNews);
+    }
 
+    @Override
     public SportFacilityNews updateFacilityNews(SportFacilityNews facilityNews) {
+        sportFacilityNewsRepository.findById(facilityNews.getId())
+                .orElseThrow(() -> new SportFacilityNewsNotFoundException("SportFacilityNews with id " + facilityNews.getId() + " not found"));
 
-        return SportFacilityNewsrepository.save(facilityNews);
-
+        return sportFacilityNewsRepository.save(facilityNews);
     }
 
+    @Override
     public boolean deleteFacilityNews(int id) {
-        Optional<SportFacilityNews> optional = SportFacilityNewsrepository.findById(id);
-        if(optional.isPresent()) {
-            SportFacilityNewsrepository.deleteById(id);
-            return true;
-        }else{
-            return false;
-        }
+        SportFacilityNews facilityNews = sportFacilityNewsRepository.findById(id)
+                .orElseThrow(() -> new SportFacilityNewsNotFoundException("SportFacilityNews with id " + id + " not found"));
+
+        sportFacilityNewsRepository.deleteById(id);
+        return true;
     }
 }
