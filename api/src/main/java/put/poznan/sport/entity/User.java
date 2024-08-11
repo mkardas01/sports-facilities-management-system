@@ -1,7 +1,7 @@
 package put.poznan.sport.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,21 +13,29 @@ import java.util.List;
 
 @Entity
 @Table(name = "Users")
-@Data
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String surname;
 
     @Column(unique = true, length = 100, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String imageUrl;
 
     @CreationTimestamp
@@ -60,4 +68,5 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword(){ return password;}
+
 }
