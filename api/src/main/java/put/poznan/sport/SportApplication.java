@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import io.github.cdimascio.dotenv.Dotenv;
 
 @SpringBootApplication
-public class SportApplication {
+public class  SportApplication {
 
 	public static void main(String[] args) {
 
