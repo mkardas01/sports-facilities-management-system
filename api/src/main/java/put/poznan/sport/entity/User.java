@@ -1,81 +1,72 @@
 package put.poznan.sport.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "Users")
-public class User {
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String surname;
+
+    @Column(unique = true, length = 100, nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private String imageUrl;
+
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    private Collection<Authority> authorities;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TrainingSessionParticipant> trainingSessionParticipants;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SportFacilityParticipant> sportFacilityParticipants;
-
-    // Getters and Setters
-    public Integer getId() {
-        return id;
+  
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getEmail() {
+    @Override
+    public String getUsername() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @Override
+    public String getPassword(){ return password;}
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public List<TrainingSessionParticipant> getTrainingSessionParticipants() {
-        return trainingSessionParticipants;
-    }
-
-    public void setTrainingSessionParticipants(List<TrainingSessionParticipant> trainingSessionParticipants) {
-        this.trainingSessionParticipants = trainingSessionParticipants;
-    }
-
-    public List<SportFacilityParticipant> getSportFacilityParticipants() {
-        return sportFacilityParticipants;
-    }
-
-    public void setSportFacilityParticipants(List<SportFacilityParticipant> sportFacilityParticipants) {
-        this.sportFacilityParticipants = sportFacilityParticipants;
-    }
 }

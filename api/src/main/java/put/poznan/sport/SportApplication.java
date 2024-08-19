@@ -10,7 +10,7 @@ import put.poznan.sport.service.CoachImpl;
 import java.util.List;
 
 @SpringBootApplication
-public class SportApplication {
+public class  SportApplication {
 
 	public static void main(String[] args) {
 		// Load environment variables from .env file
