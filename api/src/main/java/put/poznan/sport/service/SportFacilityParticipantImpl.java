@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.SportFacilityParticipant;
 import put.poznan.sport.entity.SportFacilityParticipantId;
-import put.poznan.sport.exception.SportFacilityParticipantNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.SportFacilityParticipantNotFoundException;
 import put.poznan.sport.repository.SportFacilityParticipantRepository;
 
 import java.util.List;
@@ -33,8 +33,10 @@ public class SportFacilityParticipantImpl implements SportFacilityParticipantSer
 
     @Override
     public SportFacilityParticipant updateSportFacilityParticipant(SportFacilityParticipant participant) {
-        sportFacilityParticipantRepository.findById(participant.getId())
-                .orElseThrow(() -> new SportFacilityParticipantNotFoundException("SportFacilityParticipant with id " + participant.getId() + " not found"));
+        SportFacilityParticipantId user = new SportFacilityParticipantId(participant.getUserId(), participant.getSportFacilitiesId());
+
+        sportFacilityParticipantRepository.findById(user)
+                .orElseThrow(() -> new SportFacilityParticipantNotFoundException("SportFacilityParticipant with id " + user.getUserId() + " not found"));
 
         return sportFacilityParticipantRepository.save(participant);
     }

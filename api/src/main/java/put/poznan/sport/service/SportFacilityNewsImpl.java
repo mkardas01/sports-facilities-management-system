@@ -3,7 +3,7 @@ package put.poznan.sport.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.SportFacilityNews;
-import put.poznan.sport.exception.SportFacilityNewsNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.SportFacilityNewsNotFoundException;
 import put.poznan.sport.repository.SportFacilityNewsRepository;
 
 import java.util.List;

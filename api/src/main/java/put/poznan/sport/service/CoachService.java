@@ -1,5 +1,6 @@
 package put.poznan.sport.service;
 
+import put.poznan.sport.dto.CoachCreateResponse;
 import put.poznan.sport.entity.Coach;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface CoachService {
 
     public Coach getCoachById(int id);
 
-    public Coach createCoach(Coach coach);
+    public CoachCreateResponse createCoach(Coach coach);
 
     public Coach updateCoach(Coach coach);
 

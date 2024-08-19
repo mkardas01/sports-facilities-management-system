@@ -7,7 +7,6 @@ public class OpenHour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sportFacilityId;
-
     private String monday;
     private String tuesday;
     private String wednesday;

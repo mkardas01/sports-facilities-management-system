@@ -2,8 +2,9 @@ package put.poznan.sport.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import put.poznan.sport.dto.CoachCreateResponse;
 import put.poznan.sport.entity.Coach;
-import put.poznan.sport.exception.CoachNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.CoachNotFoundException;
 import put.poznan.sport.repository.CoachRepository;
 
 import java.util.List;
@@ -26,8 +27,17 @@ public class CoachImpl implements CoachService {
     }
 
     @Override
-    public Coach createCoach(Coach coach) {
-        return coachRepository.save(coach);
+    public CoachCreateResponse createCoach(Coach coach) {
+        CoachCreateResponse coachCreateResponse = CoachCreateResponse.builder()
+                .name(coach.getName())
+                .surname(coach.getSurname())
+                .imageUrl(coach.getImageUrl())
+                .sportFacilitiesId(coach.getSportFacility().getId())
+                .build();
+
+        coachRepository.save(coach);
+
+        return coachCreateResponse;
     }
 
     @Override

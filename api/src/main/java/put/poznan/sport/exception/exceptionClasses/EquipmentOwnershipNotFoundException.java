@@ -1,4 +1,4 @@
-package put.poznan.sport.exception;
+package put.poznan.sport.exception.exceptionClasses;
 
 public class EquipmentOwnershipNotFoundException extends RuntimeException {
 

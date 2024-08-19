@@ -3,8 +3,8 @@ package put.poznan.sport.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.Rating;
-import put.poznan.sport.exception.InvalidRatingException;
-import put.poznan.sport.exception.RatingNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.InvalidRatingException;
+import put.poznan.sport.exception.exceptionClasses.RatingNotFoundException;
 import put.poznan.sport.repository.RatingRepository;
 
 import java.util.List;

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.TrainingSessionParticipant;
 import put.poznan.sport.entity.TrainingSessionParticipantId;
-import put.poznan.sport.exception.TrainingSessionParticipantNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.TrainingSessionParticipantNotFoundException;
 import put.poznan.sport.repository.TrainingSessionParticipantRepository;
 
 import java.util.List;
@@ -33,8 +33,11 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
 
     @Override
     public TrainingSessionParticipant updateParticipant(TrainingSessionParticipant participant) {
-        trainingSessionParticipantRepository.findById(participant.getId())
-                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("TrainingSessionParticipant with id " + participant.getId() + " not found"));
+
+        TrainingSessionParticipantId user = new TrainingSessionParticipantId(participant.getUserId(), participant.getTrainingSessionId());
+
+        trainingSessionParticipantRepository.findById(user)
+                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("TrainingSessionParticipant with id " + user.getUserId() + " not found"));
 
         return trainingSessionParticipantRepository.save(participant);
     }
