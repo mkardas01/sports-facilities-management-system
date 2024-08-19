@@ -10,7 +10,6 @@ public class TrainingSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private Integer coachesId;
     private Integer sportFacilitiesId;
     private String name;

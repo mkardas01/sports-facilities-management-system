@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Coach {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
