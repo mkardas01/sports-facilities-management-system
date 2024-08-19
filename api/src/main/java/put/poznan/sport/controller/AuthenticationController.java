@@ -1,4 +1,4 @@
-package put.poznan.sport.contoller;
+package put.poznan.sport.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
