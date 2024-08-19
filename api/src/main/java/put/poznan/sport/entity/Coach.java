@@ -23,16 +23,12 @@ public class Coach {
     private String surname;
 
     @Column(nullable = false)
-    private Integer sportFacilitiesId;
-
-    @Column(nullable = false)
     private String imageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "sportFacilitiesId", insertable = false, updatable = false)
+    @JoinColumn(name = "sportFacilitiesId", nullable = false)
     private SportFacility sportFacility;
 
     @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TrainingSession> trainingSessions;
-
 }
