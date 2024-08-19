@@ -1,3 +1,4 @@
+/*
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,4 +40,52 @@
 
 .read-the-docs {
   color: #888;
+} */
+
+nav {
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  margin-bottom: 10px;
+}
+
+nav ul li a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Stylizacja dla wycentrowanego napisu */
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  color: #f8f9fa;
+  margin-top: 200px;
+}
+
+p {
+  text-align: center;
+  color: #adb5bd;
+  font-size: 1.2rem;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
