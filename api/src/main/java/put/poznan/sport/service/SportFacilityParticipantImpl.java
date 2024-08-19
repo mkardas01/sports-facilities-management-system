@@ -33,8 +33,10 @@ public class SportFacilityParticipantImpl implements SportFacilityParticipantSer
 
     @Override
     public SportFacilityParticipant updateSportFacilityParticipant(SportFacilityParticipant participant) {
-        sportFacilityParticipantRepository.findById(participant.getId())
-                .orElseThrow(() -> new SportFacilityParticipantNotFoundException("SportFacilityParticipant with id " + participant.getId() + " not found"));
+        SportFacilityParticipantId user = new SportFacilityParticipantId(participant.getUserId(), participant.getSportFacilitiesId());
+
+        sportFacilityParticipantRepository.findById(user)
+                .orElseThrow(() -> new SportFacilityParticipantNotFoundException("SportFacilityParticipant with id " + user.getUserId() + " not found"));
 
         return sportFacilityParticipantRepository.save(participant);
     }

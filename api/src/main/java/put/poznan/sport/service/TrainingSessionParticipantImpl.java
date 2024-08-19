@@ -33,8 +33,11 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
 
     @Override
     public TrainingSessionParticipant updateParticipant(TrainingSessionParticipant participant) {
-        trainingSessionParticipantRepository.findById(participant.getId())
-                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("TrainingSessionParticipant with id " + participant.getId() + " not found"));
+
+        TrainingSessionParticipantId user = new TrainingSessionParticipantId(participant.getUserId(), participant.getTrainingSessionId());
+
+        trainingSessionParticipantRepository.findById(user)
+                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("TrainingSessionParticipant with id " + user.getUserId() + " not found"));
 
         return trainingSessionParticipantRepository.save(participant);
     }
