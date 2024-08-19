@@ -3,7 +3,7 @@ package put.poznan.sport.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.OpenHour;
-import put.poznan.sport.exception.OpenHourNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.OpenHourNotFoundException;
 import put.poznan.sport.repository.OpenHourRepository;
 
 import java.util.List;

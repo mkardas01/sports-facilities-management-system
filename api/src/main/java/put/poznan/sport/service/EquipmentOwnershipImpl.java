@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.EquipmentOwnership;
 import put.poznan.sport.entity.EquipmentOwnershipId;
-import put.poznan.sport.exception.EquipmentOwnershipNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.EquipmentOwnershipNotFoundException;
 import put.poznan.sport.repository.EquipmentOwnershipRepository;
 
 import java.util.List;

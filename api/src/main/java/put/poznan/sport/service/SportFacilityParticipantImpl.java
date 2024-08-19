@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.SportFacilityParticipant;
 import put.poznan.sport.entity.SportFacilityParticipantId;
-import put.poznan.sport.exception.SportFacilityParticipantNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.SportFacilityParticipantNotFoundException;
 import put.poznan.sport.repository.SportFacilityParticipantRepository;
 
 import java.util.List;

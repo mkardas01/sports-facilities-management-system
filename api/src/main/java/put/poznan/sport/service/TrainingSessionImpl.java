@@ -3,7 +3,7 @@ package put.poznan.sport.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.TrainingSession;
-import put.poznan.sport.exception.TrainingSessionNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.TrainingSessionNotFoundException;
 import put.poznan.sport.repository.TrainingSessionRepository;
 
 import java.util.List;
