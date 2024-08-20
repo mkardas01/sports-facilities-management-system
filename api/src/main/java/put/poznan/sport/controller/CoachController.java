@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/Coach/")
@@ -58,9 +59,15 @@ public class CoachController {
             throw new SportFacilityNotFoundException("Nie znaleziono podanego obiektu sportowego w bazie danych");
         }
 
-        String owner = userImplementation.getCurrentUsername();
+        String currentUser = userImplementation.getCurrentUsername();
 
-        if(!Objects.equals(sportFacility.get().getManagerAccount(), owner)){
+        List<String> managerUserNames = sportFacility.get()
+                .getManagers()
+                .stream()
+                .map(User::getUsername)
+                .toList();
+
+        if(!managerUserNames.contains(currentUser)){
             throw new InvalidUserException("Nie możesz zarządzać tym obiektem z poziomu tego konta");
         }
 

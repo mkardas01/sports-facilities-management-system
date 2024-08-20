@@ -43,7 +43,7 @@ public class CoachImpl implements CoachService {
     @Override
     public Coach updateCoach(Coach coach) {
         coachRepository.findById(coach.getId())
-                .orElseThrow(() -> new CoachNotFoundException("Coach with id " + coach.getId() + " not found"));
+                .orElseThrow(() -> new CoachNotFoundException("Wystąpił błąd w czasie wprowadzania zmian u podanego trenera"));
 
         return coachRepository.save(coach);
     }
