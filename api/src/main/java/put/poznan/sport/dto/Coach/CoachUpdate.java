@@ -1,4 +1,4 @@
-package put.poznan.sport.dto;
+package put.poznan.sport.dto.Coach;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,10 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+public class CoachUpdate {
 
-public class CreateCoach {
+    @NotNull(message = "Id trenera nie może być pusty")
+    private Integer id;
 
     @NotBlank(message = "Imię nie może pozostać puste")
     private String name;

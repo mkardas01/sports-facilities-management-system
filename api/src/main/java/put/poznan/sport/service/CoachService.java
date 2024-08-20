@@ -1,7 +1,8 @@
 package put.poznan.sport.service;
 
-import put.poznan.sport.dto.CoachCreateResponse;
-import put.poznan.sport.dto.CreateCoach;
+import put.poznan.sport.dto.Coach.CoachCreateResponse;
+import put.poznan.sport.dto.Coach.CoachUpdate;
+import put.poznan.sport.dto.Coach.CreateCoach;
 import put.poznan.sport.entity.Coach;
 import put.poznan.sport.entity.SportFacility;
 
@@ -14,11 +15,11 @@ public interface CoachService {
 
     public Coach getCoachById(int id);
 
-    public Optional<SportFacility> checkIfUserIsManager(CreateCoach coachDTO);
+    public void checkIfUserIsManager(Optional<SportFacility> sportFacility);
 
     public CoachCreateResponse createCoach(Coach coach);
 
-    public Coach updateCoach(Coach coach);
+    public CoachUpdate updateCoach(CoachUpdate coach);
 
     public boolean deleteCoach(int id);
 }

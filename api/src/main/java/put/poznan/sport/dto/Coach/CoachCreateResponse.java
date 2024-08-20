@@ -1,4 +1,4 @@
-package put.poznan.sport.dto;
+package put.poznan.sport.dto.Coach;
 
 import lombok.Builder;
 import lombok.Data;
