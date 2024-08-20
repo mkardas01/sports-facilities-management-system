@@ -9,6 +9,7 @@ import put.poznan.sport.dto.Coach.CreateCoach;
 import put.poznan.sport.entity.Coach;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.CoachNotFoundException;
+import put.poznan.sport.repository.CoachRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.service.CoachImpl;
 
@@ -24,6 +25,9 @@ public class CoachController {
 
     @Autowired
     private SportFacilityRepository sportFacilityRepository;
+
+    @Autowired
+    private CoachRepository coachRepository;
 
     @GetMapping("all")
     @CrossOrigin
@@ -93,7 +97,17 @@ public class CoachController {
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> deleteCoach(@PathVariable int id) {
-        return new ResponseEntity<>(coachService.deleteCoach(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCoach(@PathVariable int id) {
+
+        Coach coach = coachRepository.findById(id).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono podanego trenera"));
+
+        Integer sportFacilityID = coach.getSportFacility().getId();
+
+        Optional<SportFacility> sportFacility = sportFacilityRepository.findById(sportFacilityID);
+        coachService.checkIfUserIsManager(sportFacility);
+
+        coachService.deleteCoach(coach);
+
     }
 }

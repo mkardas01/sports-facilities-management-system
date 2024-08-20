@@ -67,7 +67,9 @@ public class CoachImpl implements CoachService {
                 .sportFacilitiesId(coach.getSportFacility().getId())
                 .build();
 
-        coachRepository.save(coach);
+        Coach newCoach = coachRepository.save(coach);
+
+        coachCreateResponse.setId(newCoach.getId());
 
         return coachCreateResponse;
     }
@@ -87,11 +89,9 @@ public class CoachImpl implements CoachService {
     }
 
     @Override
-    public boolean deleteCoach(int id) {
-        Coach coach = coachRepository.findById(id)
-                .orElseThrow(() -> new CoachNotFoundException("Coach with id " + id + " not found"));
+    public boolean deleteCoach(Coach coach) {
 
-        coachRepository.deleteById(id);
+        coachRepository.delete(coach);
         return true;
     }
 }

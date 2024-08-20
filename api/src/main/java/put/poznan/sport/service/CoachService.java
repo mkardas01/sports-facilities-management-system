@@ -21,5 +21,5 @@ public interface CoachService {
 
     public CoachUpdate updateCoach(CoachUpdate coach);
 
-    public boolean deleteCoach(int id);
+    public boolean deleteCoach(Coach coach);
 }
