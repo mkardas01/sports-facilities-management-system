@@ -1,5 +1,6 @@
 package put.poznan.sport.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,8 +28,10 @@ public class Coach {
 
     @ManyToOne
     @JoinColumn(name = "sportFacilitiesId", nullable = false)
+    @JsonIgnore
     private SportFacility sportFacility;
 
     @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<TrainingSession> trainingSessions;
 }

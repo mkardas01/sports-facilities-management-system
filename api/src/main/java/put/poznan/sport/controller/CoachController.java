@@ -28,9 +28,21 @@ public class CoachController {
     @GetMapping("all")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> getAllCoaches() {
+    public ResponseEntity<?> getSportFacilityCoaches(@RequestParam Integer sportFacilityID) {
 
-        return new ResponseEntity<>(coachService.getAllCoaches(), HttpStatus.OK);
+        Optional<SportFacility> sportFacility = Optional.ofNullable(sportFacilityRepository.findById(sportFacilityID)
+                .orElseThrow(() -> new CoachNotFoundException("Nie zaleziono trenerów w podanym obieckie")));
+
+        List<Coach> coaches;
+        if (sportFacility.isPresent()) {
+            coaches = sportFacility.get().getCoaches()
+                    .stream()
+                    .toList();
+        } else {
+            throw new CoachNotFoundException("Nie zaleziono trenerów w podanym obieckie");
+        }
+
+        return new ResponseEntity<>(coaches, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
