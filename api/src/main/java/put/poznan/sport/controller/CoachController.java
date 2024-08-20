@@ -28,12 +28,6 @@ public class CoachController {
     @Autowired
     private CoachImpl coachService;
 
-    @Autowired
-    private SportFacilityRepository sportFacilityRepository;
-
-    @Autowired
-    private UserImpl userImplementation;
-
     @GetMapping("all")
     @CrossOrigin
     @ResponseBody
@@ -54,22 +48,7 @@ public class CoachController {
     @ResponseBody
     public ResponseEntity<?> createCoach(@RequestBody @Valid CreateCoach coachDTO) {
 
-        Optional<SportFacility> sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId());
-        if (sportFacility.isEmpty()) {
-            throw new SportFacilityNotFoundException("Nie znaleziono podanego obiektu sportowego w bazie danych");
-        }
-
-        String currentUser = userImplementation.getCurrentUsername();
-
-        List<String> managerUserNames = sportFacility.get()
-                .getManagers()
-                .stream()
-                .map(User::getUsername)
-                .toList();
-
-        if(!managerUserNames.contains(currentUser)){
-            throw new InvalidUserException("Nie możesz zarządzać tym obiektem z poziomu tego konta");
-        }
+        Optional<SportFacility> sportFacility = coachService.checkIfUserIsManager(coachDTO);
 
         Coach coach = Coach.builder()
                 .name(coachDTO.getName())
