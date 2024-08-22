@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/screens/trainings/bloc/trainings_bloc.dart';
+import 'package:sport_plus/widgets/generic_button.dart';
 
 class TrainingParticipationDialog extends StatelessWidget {
   final int trainingId;
@@ -27,18 +26,15 @@ class TrainingParticipationDialog extends StatelessWidget {
           ),
           const SizedBox(width: 50),
           Expanded(
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: AppColors.mainColor,
-                ),
-                onPressed: () {
+            child: GenericButton(
+                takeLessSpace: true,
+                onTap: () {
                   Navigator.pop(context);
                   context
                       .read<TrainingsBloc>()
                       .add(SingUpForTrainingEvent(trainingId));
                 },
-                child: const Text(AppStrings.yes)),
+                title: AppStrings.yes),
           ),
         ],
       ),

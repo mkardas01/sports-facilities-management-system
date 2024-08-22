@@ -56,7 +56,7 @@ class SportFacilitiesSlider extends StatelessWidget {
                         children: [
                           Text(
                             element.name,
-                            style: AppTypography.bigBoldTextStyle,
+                            style: AppTypography.bigBoldTextStyle(),
                             textAlign: TextAlign.center,
                           ),
                           Text(

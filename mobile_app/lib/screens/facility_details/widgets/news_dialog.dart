@@ -24,7 +24,7 @@ class NewsDialog extends StatelessWidget {
                 children: [
                   Text(
                     AppStrings.news,
-                    style: AppTypography.bigBoldTextStyle,
+                    style: AppTypography.bigBoldTextStyle(),
                     textAlign: TextAlign.center,
                   ),
                   Align(
@@ -63,7 +63,7 @@ class NewsDialog extends StatelessWidget {
                           children: [
                             Text(
                               element.title,
-                              style: AppTypography.bigBoldTextStyle,
+                              style: AppTypography.bigBoldTextStyle(),
                               textAlign: TextAlign.center,
                             ),
                             Text(

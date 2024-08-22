@@ -32,4 +32,13 @@ class AppStrings {
       "Wystąpił niespodziewany błąd. Spróbuj ponownie później";
   static const String participationAlreadySaved =
       "Już jesteś zapisany na te zajęcia";
+  static const String nameSurname = "Imię i nazwisko:";
+  static const String email = "E-mail:";
+  static const String edit = "Edytuj";
+  static const String camera = "Kamera";
+  static const String gallery = "Galeria";
+  static const String name = "Imię";
+  static const String surname = "Nazwisko";
+  static const String save = "Zapisz";
+  static const String savingError = "Wystąpił błąd podczas zapisywania danych";
 }

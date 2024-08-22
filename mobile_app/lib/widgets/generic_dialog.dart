@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
+import 'package:sport_plus/widgets/generic_button.dart';
 
 class GenericDialog extends StatelessWidget {
   final String title;
@@ -14,13 +14,8 @@ class GenericDialog extends StatelessWidget {
         title,
         textAlign: TextAlign.center,
       ),
-      content: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: AppColors.mainColor,
-              minimumSize: const Size(50, 50)),
-          onPressed: () => Navigator.pop(context),
-          child: const Text(AppStrings.agree)),
+      content: GenericButton(
+          onTap: () => Navigator.pop(context), title: AppStrings.agree),
     );
   }
 }

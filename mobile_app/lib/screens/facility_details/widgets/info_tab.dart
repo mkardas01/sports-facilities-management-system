@@ -29,7 +29,7 @@ class InfoTab extends StatelessWidget {
         children: [
           Text(
             facility.name,
-            style: AppTypography.bigBoldTextStyle,
+            style: AppTypography.bigBoldTextStyle(),
           ),
           Text(
             facility.description,
@@ -39,7 +39,7 @@ class InfoTab extends StatelessWidget {
           InfoLabel(
               data: Text(
                 facility.address,
-                style: AppTypography.defaultBoldTextStyle,
+                style: AppTypography.defaultBoldTextStyle(),
               ),
               title: AppStrings.address),
           InfoLabel(
@@ -55,7 +55,7 @@ class InfoTab extends StatelessWidget {
               title: AppStrings.membershipRequired),
           Text(
             AppStrings.openHours,
-            style: AppTypography.defaultBoldTextStyle,
+            style: AppTypography.defaultBoldTextStyle(),
           ),
           Expanded(
             child: ListView.builder(
@@ -66,7 +66,7 @@ class InfoTab extends StatelessWidget {
                   showDivider: false,
                   data: Text(
                     openHours[index].value,
-                    style: AppTypography.defaultBoldTextStyle,
+                    style: AppTypography.defaultBoldTextStyle(),
                   ),
                   title: openHours[index].day,
                 );

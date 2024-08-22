@@ -75,7 +75,7 @@ class DummyData {
     name: "Jane",
     surname: "Doe",
     email: "jane.doe@example.com",
-    imageUrl: "https://example.com/jane.png",
+    imageUrl: null,
   );
 
   static final User user2 = User(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
+import 'package:sport_plus/screens/profile/profile/profile_screen.dart';
 import 'package:sport_plus/widgets/images/bar_logo.dart';
 
 class AppScaffold extends StatelessWidget {
@@ -27,11 +28,14 @@ class AppScaffold extends StatelessWidget {
         ),
       ),
       drawer: showDrawer
-          ? const Drawer(
+          ? Drawer(
+              width: MediaQuery.of(context).size.width * 0.6,
               child: Center(
                 child: ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text(AppStrings.profile),
+                  onTap: () =>
+                      Navigator.pushNamed(context, ProfileScreen.route),
+                  leading: const Icon(Icons.person),
+                  title: const Text(AppStrings.profile),
                 ),
               ),
             )

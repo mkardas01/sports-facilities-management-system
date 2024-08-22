@@ -1,9 +1,9 @@
 class User {
   final int id;
-  final String name;
-  final String surname;
-  final String email;
-  final String imageUrl;
+  String? name;
+  String? surname;
+  final String? email;
+  String? imageUrl;
 
   User({
     required this.id,
@@ -12,4 +12,11 @@ class User {
     required this.email,
     required this.imageUrl,
   });
+
+  String get getInitials {
+    if (name != null && surname != null) {
+      return "${name![0]}${surname![0]}";
+    }
+    return "-";
+  }
 }

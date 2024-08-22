@@ -49,7 +49,7 @@ class CoachTab extends StatelessWidget {
                           const SizedBox(height: 20),
                           Text(
                             "${coach.name} ${coach.surname}",
-                            style: AppTypography.bigBoldTextStyle,
+                            style: AppTypography.bigBoldTextStyle(),
                           ),
                           TextButton(
                               onPressed: () => Navigator.pushNamed(

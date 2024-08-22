@@ -37,7 +37,7 @@ class EquipmentTab extends StatelessWidget {
                         children: [
                           Text(
                             eq.type,
-                            style: AppTypography.bigBoldTextStyle,
+                            style: AppTypography.bigBoldTextStyle(),
                           ),
                           Text(
                             "${eq.brand} ${eq.model}",
