@@ -43,7 +43,7 @@ public class SportEquipmentImpl implements SportEquipmentService {
     @Override
     public SportEquipment getEquipmentsById(int id) {
         return sportEquipmentRepository.findById(id)
-                .orElseThrow(() -> new SportEquipmentNotFoundException("SportEquipment with id " + id + " not found"));
+                .orElseThrow(() -> new SportEquipmentNotFoundException(" Nie znaleziono wyposażenia z podanym id: " + id ));
     }
 
     @Override
@@ -66,7 +66,7 @@ public class SportEquipmentImpl implements SportEquipmentService {
         EquipmentOwnership ownership = EquipmentOwnership.builder()
                 .sportEquipmentId(savedSportEquipment.getId())
                 .sportFacilitiesId(sportFacility.get().getId())
-                .amount(1)
+                .amount(equipment.getAmount())
                 .build();
 
         equipmentOwnershipRepository.save(ownership);

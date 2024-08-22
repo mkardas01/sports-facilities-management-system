@@ -1,5 +1,6 @@
 package put.poznan.sport.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,12 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
 import put.poznan.sport.entity.SportEquipment;
 import put.poznan.sport.service.SportEquipmentImpl;
-import put.poznan.sport.service.SportEquipmentService;
-import put.poznan.sport.service.UserImpl;
-
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/equipment/")
@@ -33,7 +28,7 @@ public class SportEquipmentController {
     @PostMapping("create")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> createEquipment(@RequestBody @Valid CreateSportEquipment sportEquipment) {
+    public ResponseEntity<?> createEquipment(@Valid @RequestBody CreateSportEquipment sportEquipment) {
 
         return new ResponseEntity<>(sportEquipmentService.createEquipment(sportEquipment), HttpStatus.OK);
     }
