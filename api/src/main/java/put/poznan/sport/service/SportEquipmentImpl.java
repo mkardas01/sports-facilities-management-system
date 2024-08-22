@@ -50,7 +50,9 @@ public class SportEquipmentImpl implements SportEquipmentService {
     @Transactional
     public SportEquipment createEquipment(CreateSportEquipment equipment) {
 
-        Optional<SportFacility> sportFacility = sportFacilityRepository.findById(equipment.getSportFacilityId());
+        Optional<SportFacility> sportFacility = Optional.ofNullable(sportFacilityRepository.findById(equipment.getSportFacilityId())
+                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie zaleziono obiektu sportowego")));
+
         userService.checkIfUserIsManager(sportFacility);
 
         SportEquipment newSportEquipment = SportEquipment.builder()

@@ -38,8 +38,6 @@ public class SportEquipmentController {
     @ResponseBody
     public ResponseEntity<?> updateEquipment(@RequestBody SportEquipment sportEquipment) {
 
-
-
         return new ResponseEntity<>(sportEquipmentService.updateEquipment(sportEquipment), HttpStatus.OK);
 
     }
