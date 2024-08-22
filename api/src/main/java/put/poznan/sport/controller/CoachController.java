@@ -9,9 +9,11 @@ import put.poznan.sport.dto.Coach.CreateCoach;
 import put.poznan.sport.entity.Coach;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.CoachNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.SportEquipmentNotFoundException;
 import put.poznan.sport.repository.CoachRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.service.CoachImpl;
+import put.poznan.sport.service.UserImpl;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,13 +31,16 @@ public class CoachController {
     @Autowired
     private CoachRepository coachRepository;
 
+    @Autowired
+    private UserImpl userService;
+
     @GetMapping("all")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getSportFacilityCoaches(@RequestParam Integer sportFacilityID) {
 
         Optional<SportFacility> sportFacility = Optional.ofNullable(sportFacilityRepository.findById(sportFacilityID)
-                .orElseThrow(() -> new CoachNotFoundException("Nie zaleziono trenerów w podanym obieckie")));
+                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie zaleziono obiektu sportowego")));
 
         List<Coach> coaches;
         if (sportFacility.isPresent()) {
@@ -62,7 +67,7 @@ public class CoachController {
     public ResponseEntity<?> createCoach(@RequestBody @Valid CreateCoach coachDTO) {
 
         Optional<SportFacility> sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId());
-        coachService.checkIfUserIsManager(sportFacility);
+        userService.checkIfUserIsManager(sportFacility);
 
         Coach coach = Coach.builder()
                 .name(coachDTO.getName())
@@ -80,7 +85,7 @@ public class CoachController {
     public ResponseEntity<?> updateCoach(@RequestBody @Valid CoachUpdate coachDTO) {
 
         Optional<SportFacility> sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId());
-        coachService.checkIfUserIsManager(sportFacility);
+        userService.checkIfUserIsManager(sportFacility);
 
         List<Integer> coachIDs = sportFacility.get().getCoaches()
                 .stream()
@@ -105,7 +110,7 @@ public class CoachController {
         Integer sportFacilityID = coach.getSportFacility().getId();
 
         Optional<SportFacility> sportFacility = sportFacilityRepository.findById(sportFacilityID);
-        coachService.checkIfUserIsManager(sportFacility);
+        userService.checkIfUserIsManager(sportFacility);
 
         coachService.deleteCoach(coach);
 

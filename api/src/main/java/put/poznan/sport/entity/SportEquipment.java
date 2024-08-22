@@ -1,78 +1,40 @@
 package put.poznan.sport.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SportEquipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private String type;
+
+    @Column(nullable = false)
     private String brand;
+
+    @Column(nullable = false)
     private String model;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private String imageUrl;
 
     @OneToMany(mappedBy = "sportEquipment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<EquipmentOwnership> equipmentOwnerships;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public List<EquipmentOwnership> getEquipmentOwnerships() {
-        return equipmentOwnerships;
-    }
-
-    public void setEquipmentOwnerships(List<EquipmentOwnership> equipmentOwnerships) {
-        this.equipmentOwnerships = equipmentOwnerships;
-    }
-
 }

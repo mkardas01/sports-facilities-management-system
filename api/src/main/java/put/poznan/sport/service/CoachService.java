@@ -15,8 +15,6 @@ public interface CoachService {
 
     public Coach getCoachById(int id);
 
-    public void checkIfUserIsManager(Optional<SportFacility> sportFacility);
-
     public CoachCreateResponse createCoach(Coach coach);
 
     public CoachUpdate updateCoach(CoachUpdate coach);

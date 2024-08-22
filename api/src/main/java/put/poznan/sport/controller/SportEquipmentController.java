@@ -4,27 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
 import put.poznan.sport.entity.SportEquipment;
+import put.poznan.sport.service.SportEquipmentImpl;
 import put.poznan.sport.service.SportEquipmentService;
+import put.poznan.sport.service.UserImpl;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/SportEquipment/")
+@RequestMapping("api/equipment/")
 public class SportEquipmentController {
 
     @Autowired
-    private SportEquipmentService sportEquipmentService;
-
-    @GetMapping("all")
-    @CrossOrigin
-    @ResponseBody
-    public ResponseEntity<?> getAllEquipment() {
-
-        return new ResponseEntity<>(sportEquipmentService.getAllEquipments(), HttpStatus.OK);
-
-    }
+    private SportEquipmentImpl sportEquipmentService;
 
     @GetMapping("{id}")
     @CrossOrigin
@@ -38,7 +33,7 @@ public class SportEquipmentController {
     @PostMapping("create")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> createEquipment(@RequestBody SportEquipment sportEquipment) {
+    public ResponseEntity<?> createEquipment(@RequestBody @Valid CreateSportEquipment sportEquipment) {
 
         return new ResponseEntity<>(sportEquipmentService.createEquipment(sportEquipment), HttpStatus.OK);
     }
@@ -47,6 +42,8 @@ public class SportEquipmentController {
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateEquipment(@RequestBody SportEquipment sportEquipment) {
+
+
 
         return new ResponseEntity<>(sportEquipmentService.updateEquipment(sportEquipment), HttpStatus.OK);
 

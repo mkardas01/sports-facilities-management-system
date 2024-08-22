@@ -31,7 +31,14 @@ public class WebConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("api/coach/create", "api/coach/update").hasAnyAuthority(Authority.MANAGER.name(), Authority.ADMIN.name())
+                        .requestMatchers(
+                                "api/coach/create",
+                                "api/coach/update",
+                                "api/equipment/create",
+                                "api/equipment/update",
+                                "api/equipment/delete"
+                        )
+                        .hasAnyAuthority(Authority.MANAGER.name(), Authority.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
