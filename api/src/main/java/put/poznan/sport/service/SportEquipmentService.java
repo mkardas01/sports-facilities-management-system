@@ -17,5 +17,5 @@ public interface SportEquipmentService {
 
     public SportEquipment updateEquipment(UpdateSportEquipment sportEquipment);
 
-    public boolean deleteEquipment(int id);
+    public void deleteEquipment(int id);
 }

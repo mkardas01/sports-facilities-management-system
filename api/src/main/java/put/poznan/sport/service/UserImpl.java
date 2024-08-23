@@ -7,10 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.User;
-import put.poznan.sport.exception.exceptionClasses.EmailAlreadyExistsException;
-import put.poznan.sport.exception.exceptionClasses.InvalidUserException;
-import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
-import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.*;
+import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.repository.UserRepository;
 
 import java.util.List;
@@ -21,6 +19,9 @@ public class UserImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SportFacilityRepository sportFacilityRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -71,15 +72,18 @@ public class UserImpl implements UserService {
         return null;
     }
 
-    public void checkIfUserIsManager(Optional<SportFacility> sportFacility){
+    public void checkIfUserIsManager(Integer id){
 
-        if (sportFacility.isEmpty()) {
+        SportFacility sportFacility = sportFacilityRepository.findById(id)
+                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie zaleziono obiektu sportowego"));
+
+        if (sportFacility == null) {
             throw new SportFacilityNotFoundException("Nie znaleziono podanego obiektu sportowego w bazie danych");
         }
 
         String currentUser = this.getCurrentUsername();
 
-        List<String> managerUserNames = sportFacility.get()
+        List<String> managerUserNames = sportFacility
                 .getManagers()
                 .stream()
                 .map(User::getUsername)

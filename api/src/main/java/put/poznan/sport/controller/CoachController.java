@@ -10,6 +10,7 @@ import put.poznan.sport.entity.Coach;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.CoachNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportEquipmentNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.repository.CoachRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.service.CoachImpl;
@@ -66,13 +67,15 @@ public class CoachController {
     @ResponseBody
     public ResponseEntity<?> createCoach(@RequestBody @Valid CreateCoach coachDTO) {
 
-        Optional<SportFacility> sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId());
-        userService.checkIfUserIsManager(sportFacility);
+        userService.checkIfUserIsManager(coachDTO.getSportFacilitiesId());
+
+        SportFacility sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId())
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie zaleziono obiektu sportowego"));
 
         Coach coach = Coach.builder()
                 .name(coachDTO.getName())
                 .surname(coachDTO.getSurname())
-                .sportFacility(sportFacility.get())
+                .sportFacility(sportFacility)
                 .imageUrl(coachDTO.getImageUrl())
                 .build();
 
@@ -83,11 +86,12 @@ public class CoachController {
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateCoach(@RequestBody @Valid CoachUpdate coachDTO) {
+        userService.checkIfUserIsManager(coachDTO.getSportFacilitiesId());
 
-        Optional<SportFacility> sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId());
-        userService.checkIfUserIsManager(sportFacility);
+        SportFacility sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId())
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie zaleziono obiektu sportowego"));
 
-        List<Integer> coachIDs = sportFacility.get().getCoaches()
+        List<Integer> coachIDs = sportFacility.getCoaches()
                 .stream()
                 .map(Coach::getId)
                 .toList();
@@ -108,9 +112,7 @@ public class CoachController {
         Coach coach = coachRepository.findById(id).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono podanego trenera"));
 
         Integer sportFacilityID = coach.getSportFacility().getId();
-
-        Optional<SportFacility> sportFacility = sportFacilityRepository.findById(sportFacilityID);
-        userService.checkIfUserIsManager(sportFacility);
+        userService.checkIfUserIsManager(sportFacilityID);
 
         coachService.deleteCoach(coach);
 

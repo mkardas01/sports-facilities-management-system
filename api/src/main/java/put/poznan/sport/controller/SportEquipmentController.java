@@ -45,9 +45,8 @@ public class SportEquipmentController {
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> deleteEquipment(@PathVariable int id) {
-
-        return new ResponseEntity<>(sportEquipmentService.deleteEquipment(id), HttpStatus.OK);
-
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteEquipment(@PathVariable int id) {
+        sportEquipmentService.deleteEquipment(id);
     }
 }

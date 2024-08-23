@@ -10,6 +10,7 @@ import put.poznan.sport.entity.SportEquipment;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.EquipmentOwnershipNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportEquipmentNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.repository.EquipmentOwnershipRepository;
 import put.poznan.sport.repository.SportEquipmentRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
@@ -47,11 +48,7 @@ public class SportEquipmentImpl implements SportEquipmentService {
     @Override
     @Transactional
     public SportEquipment createEquipment(CreateSportEquipment equipment) {
-
-        Optional<SportFacility> sportFacility = Optional.ofNullable(sportFacilityRepository.findById(equipment.getSportFacilityId())
-                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie zaleziono obiektu sportowego")));
-
-        userService.checkIfUserIsManager(sportFacility);
+        userService.checkIfUserIsManager(equipment.getSportFacilityId());
 
         SportEquipment newSportEquipment = SportEquipment.builder()
                 .type(equipment.getType())
@@ -65,7 +62,7 @@ public class SportEquipmentImpl implements SportEquipmentService {
 
         EquipmentOwnership ownership = EquipmentOwnership.builder()
                 .sportEquipmentId(savedSportEquipment.getId())
-                .sportFacilitiesId(sportFacility.get().getId())
+                .sportFacilitiesId(equipment.getSportFacilityId())
                 .amount(equipment.getAmount())
                 .build();
 
@@ -78,19 +75,11 @@ public class SportEquipmentImpl implements SportEquipmentService {
     @Override
     public SportEquipment updateEquipment(UpdateSportEquipment requestEquipment) {
 
-        Optional<SportFacility> sportFacility = Optional.ofNullable(sportFacilityRepository.findById(requestEquipment.getSportFacilityId())
-                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie zaleziono obiektu sportowego")));
-
-        userService.checkIfUserIsManager(sportFacility);
-
-        Optional<EquipmentOwnership> equipmentOwnership = equipmentOwnershipRepository.findEquipmentOwnershipsBySportEquipmentId(requestEquipment.getId());
-
-        if (equipmentOwnership.isEmpty() || !Objects.equals(equipmentOwnership.get().getSportFacilitiesId(), requestEquipment.getSportFacilityId())){
-            throw new EquipmentOwnershipNotFoundException("Nie możesz edytować tego przedmiotu");
-        }
+        userService.checkIfUserIsManager(requestEquipment.getSportFacilityId());
+        this.checkIfEquipmentOwner(requestEquipment.getId(), requestEquipment.getSportFacilityId());
 
         SportEquipment oldEquipment = sportEquipmentRepository.findById(requestEquipment.getId())
-                .orElseThrow(() -> new SportEquipmentNotFoundException("SportEquipment with id " + requestEquipment.getId() + " not found"));
+                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie znaleziono obiektu sportowego z przesłanym id " + requestEquipment.getId()));
 
         SportEquipment newEquipment = SportEquipment.builder()
                 .id(oldEquipment.getId())
@@ -107,11 +96,23 @@ public class SportEquipmentImpl implements SportEquipmentService {
     }
 
     @Override
-    public boolean deleteEquipment(int id) {
-        SportEquipment equipment = sportEquipmentRepository.findById(id)
-                .orElseThrow(() -> new SportEquipmentNotFoundException("SportEquipment with id " + id + " not found"));
+    public void deleteEquipment(int equipmentDeleteID) {
 
-        sportEquipmentRepository.deleteById(id);
-        return true;
+        EquipmentOwnership equipmentOwnership = equipmentOwnershipRepository
+                .findEquipmentOwnershipsBySportEquipmentId(equipmentDeleteID)
+                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie znaleziono przedmiotu o id: " + equipmentDeleteID));
+
+        userService.checkIfUserIsManager(equipmentOwnership.getSportFacilitiesId());
+        this.checkIfEquipmentOwner(equipmentDeleteID, equipmentOwnership.getSportFacilitiesId());
+
+        sportEquipmentRepository.deleteById(equipmentDeleteID);
+    }
+
+    private void checkIfEquipmentOwner(Integer equipmentID, Integer sportFacilityID){
+        Optional<EquipmentOwnership> equipmentOwnership = equipmentOwnershipRepository.findEquipmentOwnershipsBySportEquipmentId(equipmentID);
+
+        if (equipmentOwnership.isEmpty() || !Objects.equals(equipmentOwnership.get().getSportFacilitiesId(), sportFacilityID)){
+            throw new EquipmentOwnershipNotFoundException("Nie możesz edytować tego przedmiotu");
+        }
     }
 }
