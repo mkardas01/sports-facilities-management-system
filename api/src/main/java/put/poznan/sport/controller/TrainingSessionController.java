@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.entity.TrainingSession;
 import put.poznan.sport.service.TrainingSessionService;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("api/TrainingSession/")
 public class TrainingSessionController {

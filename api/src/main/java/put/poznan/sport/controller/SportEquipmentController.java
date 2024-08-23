@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
-import put.poznan.sport.entity.SportEquipment;
+import put.poznan.sport.dto.SportEquipment.UpdateSportEquipment;
 import put.poznan.sport.service.SportEquipmentImpl;
 
 @RestController
@@ -36,7 +36,7 @@ public class SportEquipmentController {
     @PutMapping("update")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> updateEquipment(@RequestBody SportEquipment sportEquipment) {
+    public ResponseEntity<?> updateEquipment(@Valid @RequestBody UpdateSportEquipment sportEquipment) {
 
         return new ResponseEntity<>(sportEquipmentService.updateEquipment(sportEquipment), HttpStatus.OK);
 

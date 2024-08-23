@@ -4,20 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
+import put.poznan.sport.dto.SportEquipment.UpdateSportEquipment;
 import put.poznan.sport.entity.EquipmentOwnership;
 import put.poznan.sport.entity.SportEquipment;
 import put.poznan.sport.entity.SportFacility;
-import put.poznan.sport.entity.User;
+import put.poznan.sport.exception.exceptionClasses.EquipmentOwnershipNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportEquipmentNotFoundException;
-import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
 import put.poznan.sport.repository.EquipmentOwnershipRepository;
 import put.poznan.sport.repository.SportEquipmentRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
-import put.poznan.sport.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -78,11 +76,34 @@ public class SportEquipmentImpl implements SportEquipmentService {
     }
 
     @Override
-    public SportEquipment updateEquipment(SportEquipment equipment) {
-        sportEquipmentRepository.findById(equipment.getId())
-                .orElseThrow(() -> new SportEquipmentNotFoundException("SportEquipment with id " + equipment.getId() + " not found"));
+    public SportEquipment updateEquipment(UpdateSportEquipment requestEquipment) {
 
-        return sportEquipmentRepository.save(equipment);
+        Optional<SportFacility> sportFacility = Optional.ofNullable(sportFacilityRepository.findById(requestEquipment.getSportFacilityId())
+                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie zaleziono obiektu sportowego")));
+
+        userService.checkIfUserIsManager(sportFacility);
+
+        Optional<EquipmentOwnership> equipmentOwnership = equipmentOwnershipRepository.findEquipmentOwnershipsBySportEquipmentId(requestEquipment.getId());
+
+        if (equipmentOwnership.isEmpty() || !Objects.equals(equipmentOwnership.get().getSportFacilitiesId(), requestEquipment.getSportFacilityId())){
+            throw new EquipmentOwnershipNotFoundException("Nie możesz edytować tego przedmiotu");
+        }
+
+        SportEquipment oldEquipment = sportEquipmentRepository.findById(requestEquipment.getId())
+                .orElseThrow(() -> new SportEquipmentNotFoundException("SportEquipment with id " + requestEquipment.getId() + " not found"));
+
+        SportEquipment newEquipment = SportEquipment.builder()
+                .id(oldEquipment.getId())
+                .type(requestEquipment.getType())
+                .brand(requestEquipment.getBrand())
+                .model(requestEquipment.getModel())
+                .description(requestEquipment.getDescription())
+                .equipmentOwnerships(oldEquipment.getEquipmentOwnerships())
+                .imageUrl(requestEquipment.getImageUrl())
+                .build();
+
+
+        return sportEquipmentRepository.save(newEquipment);
     }
 
     @Override

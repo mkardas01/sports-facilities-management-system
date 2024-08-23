@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.entity.Rating;
 import put.poznan.sport.service.RatingService;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("api/Rating/")
 public class RatingController {
