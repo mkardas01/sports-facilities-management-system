@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.service.SportFacilityService;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("api/SportFacility/")
 public class SportFacilityController {

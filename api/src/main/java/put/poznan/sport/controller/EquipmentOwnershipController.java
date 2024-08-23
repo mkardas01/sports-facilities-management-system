@@ -8,11 +8,8 @@ import put.poznan.sport.entity.EquipmentOwnership;
 import put.poznan.sport.entity.EquipmentOwnershipId;
 import put.poznan.sport.service.EquipmentOwnershipService;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
-@RequestMapping("api/EquipmentOwnership/")
+@RequestMapping("api/equipmentOwnership/")
 public class EquipmentOwnershipController {
 
     @Autowired

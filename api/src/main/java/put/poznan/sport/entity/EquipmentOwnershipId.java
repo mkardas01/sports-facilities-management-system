@@ -7,8 +7,6 @@ public class EquipmentOwnershipId implements Serializable {
     private Integer sportEquipmentId;
     private Integer sportFacilitiesId;
 
-    // Default constructor
-
     public EquipmentOwnershipId() {}
 
     @Override
