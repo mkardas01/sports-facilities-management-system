@@ -7,19 +7,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
 import put.poznan.sport.dto.SportEquipment.UpdateSportEquipment;
-import put.poznan.sport.service.SportEquipmentImpl;
+import put.poznan.sport.service.SportEquipmentService;
 
 @RestController
 @RequestMapping("api/equipment/")
 public class SportEquipmentController {
 
     @Autowired
-    private SportEquipmentImpl sportEquipmentService;
+    private SportEquipmentService sportEquipmentService;
 
     @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getEquipmentById(@PathVariable int id) {
+
+        return new ResponseEntity<>(sportEquipmentService.getEquipmentsById(id), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/sport/{id}")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> getEquipmentBySportFacility(@PathVariable int id) {
 
         return new ResponseEntity<>(sportEquipmentService.getEquipmentsById(id), HttpStatus.OK);
 

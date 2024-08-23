@@ -31,7 +31,10 @@ public class SportEquipment {
     @Column(nullable = false)
     private String imageUrl;
 
-    @OneToMany(mappedBy = "sportEquipment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<EquipmentOwnership> equipmentOwnerships;
+    @Column(nullable = false)
+    private Integer ownerID;
+
+    @Column(nullable = false)
+    private Integer amount;
+
 }

@@ -34,9 +34,6 @@ public class SportFacility {
     private List<TrainingSession> trainingSessions;
 
     @OneToMany(mappedBy = "sportFacility", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<EquipmentOwnership> equipmentOwnerships;
-
-    @OneToMany(mappedBy = "sportFacility", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SportFacilityNews> sportFacilityNews;
 
 }
