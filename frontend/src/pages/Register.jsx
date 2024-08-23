@@ -10,6 +10,7 @@ const Register = () => {
     password: '',
     imageUrl: ''
   });
+  const [error, setError] = useState(''); // Stan na przechowywanie błędu
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,10 +21,10 @@ const Register = () => {
     e.preventDefault();
     try {
       await register(userData);
-      navigate('/login'); // Przekierowanie na stronę logowania po udanej rejestracji
+      navigate('/login');
     } catch (error) {
       console.error('Registration failed', error);
-      // Możesz dodać wyświetlanie błędu dla użytkownika tutaj
+      setError('Registration failed. Please try again.'); // Ustawienie błędu
     }
   };
 
@@ -80,6 +81,7 @@ const Register = () => {
             onChange={handleChange}
           />
         </div>
+        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Wyświetlanie błędu */}
         <button type="submit">Register</button>
       </form>
     </div>

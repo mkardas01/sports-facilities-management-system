@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/Coach';
+const API_URL = 'http://localhost:8080/api/coach';
 
 export const getAllCoaches = async () => {
   const response = await axios.get(`${API_URL}/all`);
@@ -9,6 +9,13 @@ export const getAllCoaches = async () => {
 
 export const getCoachById = async (id) => {
   const response = await axios.get(`${API_URL}/${id}`);
+  return response.data;
+};
+
+export const getCoachesBySportFacility = async (sportFacilityID) => {
+  const response = await axios.get(`${API_URL}/all`, {
+    params: { sportFacilityID }
+  });
   return response.data;
 };
 

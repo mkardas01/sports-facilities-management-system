@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/Navbar.css';  // Dodajmy plik CSS, jeśli go nie masz
 
 const Navbar = () => {
   return (
-    <nav>
+    <nav className="vertical-nav">
       <ul>
         <li>
           <Link to="/">Home</Link>

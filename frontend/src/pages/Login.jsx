@@ -5,6 +5,7 @@ import { login } from '../services/authService';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // Stan na przechowywanie błędu
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -14,7 +15,7 @@ const Login = () => {
       navigate('/sport-facilities');
     } catch (error) {
       console.error('Login failed', error);
-      // Możesz dodać wyświetlanie błędu dla użytkownika tutaj
+      setError('Login failed. Please check your email and password.'); // Ustawienie błędu
     }
   };
 
@@ -40,6 +41,7 @@ const Login = () => {
             required
           />
         </div>
+        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Wyświetlanie błędu */}
         <button type="submit">Login</button>
       </form>
     </div>
