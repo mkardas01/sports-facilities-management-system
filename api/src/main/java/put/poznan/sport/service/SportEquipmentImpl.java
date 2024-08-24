@@ -6,8 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
 import put.poznan.sport.dto.SportEquipment.UpdateSportEquipment;
 import put.poznan.sport.entity.SportEquipment;
+import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.EquipmentOwnershipNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportEquipmentNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.repository.SportEquipmentRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
 
@@ -20,6 +22,9 @@ public class SportEquipmentImpl implements SportEquipmentService {
 
     @Autowired
     private SportEquipmentRepository sportEquipmentRepository;
+
+    @Autowired
+    private  SportFacilityRepository sportFacilityRepository;
 
     @Autowired
     private UserImpl userService;
@@ -38,7 +43,11 @@ public class SportEquipmentImpl implements SportEquipmentService {
     @Override
     @Transactional
     public SportEquipment createEquipment(CreateSportEquipment equipment) {
-        userService.checkIfUserIsManager(equipment.getSportFacilityId());
+
+       SportFacility sportFacility = sportFacilityRepository.findById(equipment.getSportFacilityId())
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego o podanym id: " + equipment.getSportFacilityId()));
+
+        userService.checkIfUserIsManager(sportFacility);
 
         SportEquipment newSportEquipment = SportEquipment.builder()
                 .type(equipment.getType())
@@ -47,7 +56,7 @@ public class SportEquipmentImpl implements SportEquipmentService {
                 .description(equipment.getDescription())
                 .imageUrl(equipment.getImageUrl())
                 .amount(equipment.getAmount())
-                .ownerID(equipment.getSportFacilityId())
+                .ownerSportFacility(sportFacility)
                 .build();
 
         return sportEquipmentRepository.save(newSportEquipment);
@@ -57,10 +66,11 @@ public class SportEquipmentImpl implements SportEquipmentService {
     @Override
     public SportEquipment updateEquipment(UpdateSportEquipment requestEquipment) {
 
-        userService.checkIfUserIsManager(requestEquipment.getSportFacilityId());
 
-        SportEquipment oldEquipment = sportEquipmentRepository.findByIdAndOwnerID(requestEquipment.getId(), requestEquipment.getSportFacilityId())
-                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie znaleziono przedmiotu z przesłanym id " + requestEquipment.getId()));
+        SportEquipment oldEquipment = sportEquipmentRepository.findById(requestEquipment.getId())
+                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie znaleziono przedmiotu: " + requestEquipment.getBrand() + requestEquipment.getModel()));
+
+        userService.checkIfUserIsManager(oldEquipment.getOwnerSportFacility());
 
         SportEquipment newEquipment = SportEquipment.builder()
                 .id(oldEquipment.getId())
@@ -70,7 +80,7 @@ public class SportEquipmentImpl implements SportEquipmentService {
                 .description(requestEquipment.getDescription())
                 .imageUrl(requestEquipment.getImageUrl())
                 .amount(requestEquipment.getAmount())
-                .ownerID(oldEquipment.getOwnerID())
+                .ownerSportFacility(oldEquipment.getOwnerSportFacility())
                 .build();
 
 
@@ -83,7 +93,7 @@ public class SportEquipmentImpl implements SportEquipmentService {
         SportEquipment equipment = sportEquipmentRepository.findById(equipmentDeleteID)
                 .orElseThrow(() -> new SportEquipmentNotFoundException("Nie znaleziono przedmiotu o id: " + equipmentDeleteID));
 
-        userService.checkIfUserIsManager(equipment.getOwnerID());
+        userService.checkIfUserIsManager(equipment.getOwnerSportFacility());
 
         sportEquipmentRepository.deleteById(equipmentDeleteID);
     }

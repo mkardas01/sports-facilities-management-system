@@ -17,7 +17,7 @@ public interface CoachService {
 
     public CoachCreateResponse createCoach(Coach coach);
 
-    public CoachUpdate updateCoach(CoachUpdate coach);
+    public CoachUpdate updateCoach(CoachUpdate coach, Coach existingCoach);
 
-    public boolean deleteCoach(Coach coach);
+    public void deleteCoach(Coach coach);
 }

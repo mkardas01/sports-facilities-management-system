@@ -18,6 +18,7 @@ import put.poznan.sport.service.UserImpl;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -67,10 +68,10 @@ public class CoachController {
     @ResponseBody
     public ResponseEntity<?> createCoach(@RequestBody @Valid CreateCoach coachDTO) {
 
-        userService.checkIfUserIsManager(coachDTO.getSportFacilitiesId());
-
         SportFacility sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId())
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie zaleziono obiektu sportowego"));
+
+        userService.checkIfUserIsManager(sportFacility);
 
         Coach coach = Coach.builder()
                 .name(coachDTO.getName())
@@ -86,21 +87,20 @@ public class CoachController {
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateCoach(@RequestBody @Valid CoachUpdate coachDTO) {
-        userService.checkIfUserIsManager(coachDTO.getSportFacilitiesId());
 
         SportFacility sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId())
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie zaleziono obiektu sportowego"));
 
-        List<Integer> coachIDs = sportFacility.getCoaches()
+        userService.checkIfUserIsManager(sportFacility);
+
+        Coach coach = sportFacility.getCoaches()
                 .stream()
-                .map(Coach::getId)
-                .toList();
+                .filter(c -> Objects.equals(c.getId(), coachDTO.getId()))
+                .findFirst()
+                .orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera w podanym obiekcie sportowym"));
 
-        if (!coachIDs.contains(coachDTO.getId())) {
-            throw new CoachNotFoundException("Nie znaleziono trenera w podanym obiekcie sportowym");
-        }
 
-        return new ResponseEntity<>(coachService.updateCoach(coachDTO), HttpStatus.OK);
+        return new ResponseEntity<>(coachService.updateCoach(coachDTO, coach), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
@@ -111,8 +111,7 @@ public class CoachController {
 
         Coach coach = coachRepository.findById(id).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono podanego trenera"));
 
-        Integer sportFacilityID = coach.getSportFacility().getId();
-        userService.checkIfUserIsManager(sportFacilityID);
+        userService.checkIfUserIsManager(coach.getSportFacility());
 
         coachService.deleteCoach(coach);
 

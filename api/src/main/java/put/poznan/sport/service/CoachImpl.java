@@ -52,9 +52,7 @@ public class CoachImpl implements CoachService {
     }
 
     @Override
-    public CoachUpdate updateCoach(CoachUpdate coach) {
-        Coach existingCoach = coachRepository.findById(coach.getId())
-                .orElseThrow(() -> new CoachNotFoundException("Wystąpił błąd w czasie wprowadzania zmian u podanego trenera"));
+    public CoachUpdate updateCoach(CoachUpdate coach, Coach existingCoach) {
 
         existingCoach.setName(coach.getName());
         existingCoach.setSurname(coach.getSurname());
@@ -66,9 +64,8 @@ public class CoachImpl implements CoachService {
     }
 
     @Override
-    public boolean deleteCoach(Coach coach) {
+    public void deleteCoach(Coach coach) {
 
         coachRepository.delete(coach);
-        return true;
     }
 }

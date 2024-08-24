@@ -31,8 +31,9 @@ public class SportEquipment {
     @Column(nullable = false)
     private String imageUrl;
 
-    @Column(nullable = false)
-    private Integer ownerID;
+    @ManyToOne
+    @JsonIgnore
+    private SportFacility ownerSportFacility;
 
     @Column(nullable = false)
     private Integer amount;

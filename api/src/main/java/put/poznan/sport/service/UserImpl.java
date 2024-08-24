@@ -72,10 +72,7 @@ public class UserImpl implements UserService {
         return null;
     }
 
-    public void checkIfUserIsManager(Integer id){
-
-        SportFacility sportFacility = sportFacilityRepository.findById(id)
-                .orElseThrow(() -> new SportEquipmentNotFoundException("Nie zaleziono obiektu sportowego"));
+    public void checkIfUserIsManager(SportFacility sportFacility){
 
         if (sportFacility == null) {
             throw new SportFacilityNotFoundException("Nie znaleziono podanego obiektu sportowego w bazie danych");

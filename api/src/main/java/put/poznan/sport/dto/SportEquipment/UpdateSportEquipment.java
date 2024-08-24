@@ -30,7 +30,4 @@ public class UpdateSportEquipment {
     @NotNull(message = "Ilość nie może być pusta")
     private Integer amount;
 
-    @NotNull(message = "Obiekt sportowy nie może być pusty")
-    private Integer sportFacilityId;
-
 }

@@ -36,4 +36,7 @@ public class SportFacility {
     @OneToMany(mappedBy = "sportFacility", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SportFacilityNews> sportFacilityNews;
 
+    @OneToMany(mappedBy = "ownerSportFacility")
+    private List<SportEquipment> sportEquipments;
+
 }
