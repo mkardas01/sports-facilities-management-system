@@ -24,19 +24,19 @@ public class SportFacility {
     @ManyToMany(mappedBy = "managedFacilities")
     private List<User> managers;
 
-    @OneToOne(mappedBy = "sportFacility", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "sportFacility", orphanRemoval = true, cascade = CascadeType.ALL)
     private OpenHour openHour;
 
-    @OneToMany(mappedBy = "sportFacility", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sportFacility", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Coach> coaches;
 
-    @OneToMany(mappedBy = "sportFacility", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sportFacility", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TrainingSession> trainingSessions;
 
-    @OneToMany(mappedBy = "sportFacility", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sportFacility", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SportFacilityNews> sportFacilityNews;
 
-    @OneToMany(mappedBy = "ownerSportFacility")
+    @OneToMany(mappedBy = "ownerSportFacility", orphanRemoval = true)
     private List<SportEquipment> sportEquipments;
 
 }

@@ -32,8 +32,8 @@ public class OpenHourImpl implements OpenHourService {
 
     @Override
     public OpenHour updateOpenHour(OpenHour openHour) {
-        openHourRepository.findById(openHour.getSportFacilityId())
-                .orElseThrow(() -> new OpenHourNotFoundException("OpenHour with id " + openHour.getSportFacilityId() + " not found"));
+        openHourRepository.findById(openHour.getId())
+                .orElseThrow(() -> new OpenHourNotFoundException("OpenHour with id " + openHour.getId() + " not found"));
 
         return openHourRepository.save(openHour);
     }
