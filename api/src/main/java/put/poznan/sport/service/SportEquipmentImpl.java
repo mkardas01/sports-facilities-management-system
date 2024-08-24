@@ -41,6 +41,15 @@ public class SportEquipmentImpl implements SportEquipmentService {
     }
 
     @Override
+    public List<SportEquipment> getEquipmentsBySportFacility(int id) {
+        SportFacility sportFacility = sportFacilityRepository
+                .findById(id).orElseThrow(() -> new SportFacilityNotFoundException(" Nie znaleziono obiektu sportowego z podanym id: " + id ));
+
+        return sportFacility.getSportEquipments();
+
+    }
+
+    @Override
     @Transactional
     public SportEquipment createEquipment(CreateSportEquipment equipment) {
 

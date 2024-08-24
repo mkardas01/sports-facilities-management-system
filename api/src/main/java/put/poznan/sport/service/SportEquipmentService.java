@@ -13,6 +13,8 @@ public interface SportEquipmentService {
 
     public SportEquipment getEquipmentsById(int id);
 
+    public List<SportEquipment> getEquipmentsBySportFacility(int id);
+
     SportEquipment createEquipment(CreateSportEquipment equipment);
 
     public SportEquipment updateEquipment(UpdateSportEquipment sportEquipment);

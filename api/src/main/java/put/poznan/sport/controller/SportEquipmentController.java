@@ -30,7 +30,7 @@ public class SportEquipmentController {
     @ResponseBody
     public ResponseEntity<?> getEquipmentBySportFacility(@PathVariable int id) {
 
-        return new ResponseEntity<>(sportEquipmentService.getEquipmentsById(id), HttpStatus.OK);
+        return new ResponseEntity<>(sportEquipmentService.getEquipmentsBySportFacility(id), HttpStatus.OK);
 
     }
 
