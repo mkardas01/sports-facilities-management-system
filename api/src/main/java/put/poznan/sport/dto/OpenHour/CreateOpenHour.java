@@ -1,4 +1,4 @@
-package put.poznan.sport.dto.OpeHour;
+package put.poznan.sport.dto.OpenHour;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;

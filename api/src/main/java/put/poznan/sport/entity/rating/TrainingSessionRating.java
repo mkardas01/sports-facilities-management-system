@@ -13,6 +13,6 @@ import put.poznan.sport.entity.TrainingSession;
 public class TrainingSessionRating extends BaseRating {
 
     @ManyToOne
-    @JoinColumn(name = "trainingSessionId")
+    @JoinColumn(name = "objectId")
     private TrainingSession trainingSession;
 }

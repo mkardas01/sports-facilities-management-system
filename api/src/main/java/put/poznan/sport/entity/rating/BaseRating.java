@@ -6,6 +6,7 @@ import lombok.Setter;
 import put.poznan.sport.entity.User;
 
 @Getter
+@Setter
 @MappedSuperclass
 public abstract class BaseRating {
     @Id

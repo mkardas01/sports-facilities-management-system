@@ -11,6 +11,6 @@ import put.poznan.sport.entity.SportFacility;
 public class SportFacilityRating extends BaseRating {
 
     @ManyToOne
-    @JoinColumn(name = "sportFacilityId")
+    @JoinColumn(name = "objectId")
     private SportFacility sportFacility;
 }
