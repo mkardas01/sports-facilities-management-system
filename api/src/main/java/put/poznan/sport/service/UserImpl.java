@@ -72,6 +72,7 @@ public class UserImpl implements UserService {
         return null;
     }
 
+    @Override
     public void checkIfUserIsManager(SportFacility sportFacility){
 
         if (sportFacility == null) {

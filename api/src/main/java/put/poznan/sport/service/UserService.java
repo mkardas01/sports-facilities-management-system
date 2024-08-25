@@ -2,6 +2,7 @@ package put.poznan.sport.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.User;
 import put.poznan.sport.repository.UserRepository;
 
@@ -21,4 +22,6 @@ public interface UserService {
     public User updateUser(User user);
 
     public boolean deleteUserById(int id);
+
+    public void checkIfUserIsManager(SportFacility sportFacility);
 }
