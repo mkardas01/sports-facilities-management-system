@@ -1,0 +1,36 @@
+.open-hours-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.open-hours-table th, .open-hours-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.open-hours-table th {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.open-hours-table input[type="time"] {
+  width: 100px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.open-hours-table button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.open-hours-table button:hover {
+  background-color: #0056b3;
+}

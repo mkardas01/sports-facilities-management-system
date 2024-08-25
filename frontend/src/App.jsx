@@ -7,6 +7,7 @@ import SportFacilities from './pages/SportFacilities';
 import Coaches from './pages/Coaches';
 import AddCoach from './pages/AddCoach';
 import AddSportFacility from './pages/AddSportFacility';
+import ManageOpenHours from './pages/ManageOpenHours';
 import Navbar from './components/Navbar';
 import icon from './assets/icon.png';
 
@@ -15,8 +16,8 @@ import './styles/App.css';
 function App() {
   return (
     <Router>
-    <img src={icon} alt="logo" className="logo-icon" />
       <Navbar />
+      <img src={icon} alt="logo" className="logo-icon" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -25,6 +26,7 @@ function App() {
         <Route path="/coaches" element={<Coaches />} />
         <Route path="/add-coach" element={<AddCoach />} />
         <Route path="/add-sport-facility" element={<AddSportFacility />} />
+        <Route path="/manage-open-hours" element={<ManageOpenHours />} />
       </Routes>
     </Router>
   );
