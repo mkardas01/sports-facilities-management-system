@@ -78,27 +78,36 @@ public class OpenHourController {
         OpenHour existingOpenHour = openHourRepository.findById(openHour.getSportFacilityId())
                 .orElseThrow(() -> new OpenHourNotFoundException("Nie znaleziono godzin otwarcia dla podanego obiektu"));
 
-        existingOpenHour.setMonday(convertToOpeningTime(openHour.getMondayStart(), openHour.getMondayEnd()));
-        existingOpenHour.setTuesday(convertToOpeningTime(openHour.getTuesdayStart(), openHour.getTuesdayEnd()));
-        existingOpenHour.setWednesday(convertToOpeningTime(openHour.getWednesdayStart(), openHour.getWednesdayEnd()));
-        existingOpenHour.setThursday(convertToOpeningTime(openHour.getThursdayStart(), openHour.getThursdayEnd()));
-        existingOpenHour.setFriday(convertToOpeningTime(openHour.getFridayStart(), openHour.getFridayEnd()));
-        existingOpenHour.setSaturday(convertToOpeningTime(openHour.getSaturdayStart(), openHour.getSaturdayEnd()));
-        existingOpenHour.setSunday(convertToOpeningTime(openHour.getSundayStart(), openHour.getSundayEnd()));
+        userService.checkIfUserIsManager(existingOpenHour.getSportFacility());
 
-        return new ResponseEntity<>(openHourService.saveOpenHour(existingOpenHour), HttpStatus.OK);
+        OpenHour newOpenHour =  OpenHour.builder()
+                .id(existingOpenHour.getId())
+                .monday(convertToOpeningTime(openHour.getMondayStart(), openHour.getMondayEnd()))
+                .tuesday(convertToOpeningTime(openHour.getTuesdayStart(), openHour.getTuesdayEnd()))
+                .wednesday(convertToOpeningTime(openHour.getWednesdayStart(), openHour.getWednesdayEnd()))
+                .thursday(convertToOpeningTime(openHour.getThursdayStart(), openHour.getThursdayEnd()))
+                .friday(convertToOpeningTime(openHour.getFridayStart(), openHour.getFridayEnd()))
+                .saturday(convertToOpeningTime(openHour.getSaturdayStart(), openHour.getSaturdayEnd()))
+                .sunday(convertToOpeningTime(openHour.getSundayStart(), openHour.getSundayEnd()))
+                .sportFacility(existingOpenHour.getSportFacility())
+                .build();
+
+        return new ResponseEntity<>(openHourService.saveOpenHour(newOpenHour), HttpStatus.OK);
 
 
     }
-//
-//    @DeleteMapping("delete/{id}")
-//    @CrossOrigin
-//    @ResponseBody
-//    public ResponseEntity<?> deleteOpenHour(@PathVariable("id") int id){
-//
-//        return new ResponseEntity<>(openHourService.deleteOpenHour(id), HttpStatus.OK);
-//
-//    }
+
+    @DeleteMapping("delete/{id}")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> deleteOpenHour(@PathVariable("id") int id){
+
+        OpenHour existingOpenHour = openHourRepository.findById(id)
+                .orElseThrow(() -> new OpenHourNotFoundException("Nie znaleziono godzin otwarcia dla podanego obiektu"));
+
+        return new ResponseEntity<>(openHourService.deleteOpenHour(id), HttpStatus.OK);
+
+    }
 
     private static OpeningTime convertToOpeningTime(LocalTime start, LocalTime end) {
         if (start == null && end == null) {
