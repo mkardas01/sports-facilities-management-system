@@ -20,10 +20,6 @@ public class CoachImpl implements CoachService {
 
     @Autowired
     private CoachRepository coachRepository;
-
-    @Autowired
-    private UserImpl userService;
-
     @Override
     public List<Coach> getAllCoaches() {
         return coachRepository.findAll();

@@ -4,6 +4,7 @@ package put.poznan.sport.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import put.poznan.sport.entity.openHour.OpenHour;
 
 import java.util.List;
 
