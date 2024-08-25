@@ -1,4 +1,4 @@
-package put.poznan.sport.service;
+package put.poznan.sport.service.sportFacilityNews;
 
 
 import put.poznan.sport.entity.SportFacilityNews;

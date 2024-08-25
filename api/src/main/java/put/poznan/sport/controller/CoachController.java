@@ -13,8 +13,8 @@ import put.poznan.sport.exception.exceptionClasses.SportEquipmentNotFoundExcepti
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.repository.CoachRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
-import put.poznan.sport.service.CoachImpl;
-import put.poznan.sport.service.UserImpl;
+import put.poznan.sport.service.coach.CoachImpl;
+import put.poznan.sport.service.user.UserImpl;
 
 import jakarta.validation.Valid;
 import java.util.List;

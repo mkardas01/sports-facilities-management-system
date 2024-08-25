@@ -1,4 +1,4 @@
-package put.poznan.sport.service;
+package put.poznan.sport.service.coach;
 
 import put.poznan.sport.dto.Coach.CoachCreateResponse;
 import put.poznan.sport.dto.Coach.CoachUpdate;

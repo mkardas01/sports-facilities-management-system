@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
 import put.poznan.sport.dto.SportEquipment.UpdateSportEquipment;
-import put.poznan.sport.service.SportEquipmentService;
+import put.poznan.sport.service.sportEquipment.SportEquipmentService;
 
 @RestController
 @RequestMapping("api/equipment/")

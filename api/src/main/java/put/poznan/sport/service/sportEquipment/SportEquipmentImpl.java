@@ -1,4 +1,4 @@
-package put.poznan.sport.service;
+package put.poznan.sport.service.sportEquipment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,15 +7,13 @@ import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
 import put.poznan.sport.dto.SportEquipment.UpdateSportEquipment;
 import put.poznan.sport.entity.SportEquipment;
 import put.poznan.sport.entity.SportFacility;
-import put.poznan.sport.exception.exceptionClasses.EquipmentOwnershipNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportEquipmentNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.repository.SportEquipmentRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
+import put.poznan.sport.service.user.UserImpl;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class SportEquipmentImpl implements SportEquipmentService {

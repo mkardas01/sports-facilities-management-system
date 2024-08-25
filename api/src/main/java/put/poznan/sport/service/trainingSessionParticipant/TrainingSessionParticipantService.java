@@ -1,4 +1,4 @@
-package put.poznan.sport.service;
+package put.poznan.sport.service.trainingSessionParticipant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

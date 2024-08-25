@@ -1,4 +1,4 @@
-package put.poznan.sport.service;
+package put.poznan.sport.service.sportEquipment;
 
 import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
 import put.poznan.sport.dto.SportEquipment.UpdateSportEquipment;

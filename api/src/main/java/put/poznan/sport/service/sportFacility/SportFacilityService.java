@@ -1,12 +1,8 @@
-package put.poznan.sport.service;
+package put.poznan.sport.service.sportFacility;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.SportFacility;
-import put.poznan.sport.repository.SportFacilityRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface SportFacilityService {

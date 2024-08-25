@@ -1,4 +1,4 @@
-package put.poznan.sport.service;
+package put.poznan.sport.service.openHour;
 
 import put.poznan.sport.dto.OpeHour.CreateOpenHour;
 import put.poznan.sport.entity.openHour.OpenHour;

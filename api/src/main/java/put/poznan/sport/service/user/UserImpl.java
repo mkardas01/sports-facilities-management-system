@@ -1,4 +1,4 @@
-package put.poznan.sport.service;
+package put.poznan.sport.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,7 +12,6 @@ import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserImpl implements UserService {

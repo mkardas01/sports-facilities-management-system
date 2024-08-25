@@ -1,12 +1,10 @@
-package put.poznan.sport.service;
+package put.poznan.sport.service.openHour;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.openHour.OpenHour;
 import put.poznan.sport.exception.exceptionClasses.OpenHourNotFoundException;
 import put.poznan.sport.repository.OpenHourRepository;
-
-import java.util.List;
 
 @Service
 public class OpenHourImpl implements OpenHourService {

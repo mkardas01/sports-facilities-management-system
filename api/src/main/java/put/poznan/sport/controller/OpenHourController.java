@@ -13,8 +13,8 @@ import put.poznan.sport.exception.exceptionClasses.OpenHourNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.repository.OpenHourRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
-import put.poznan.sport.service.OpenHourService;
-import put.poznan.sport.service.UserService;
+import put.poznan.sport.service.openHour.OpenHourService;
+import put.poznan.sport.service.user.UserService;
 
 import java.time.LocalTime;
 

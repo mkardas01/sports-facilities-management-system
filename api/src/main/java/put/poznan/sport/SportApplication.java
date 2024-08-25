@@ -3,11 +3,6 @@ package put.poznan.sport;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import put.poznan.sport.entity.Coach;
-import put.poznan.sport.service.CoachImpl;
-
-import java.util.List;
 
 @SpringBootApplication
 public class  SportApplication {
