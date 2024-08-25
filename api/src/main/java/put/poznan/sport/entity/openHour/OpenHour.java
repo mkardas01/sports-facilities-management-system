@@ -65,7 +65,7 @@ public class OpenHour {
     })
     private OpeningTime sunday;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "sportFacilityID")
     @JsonIgnore

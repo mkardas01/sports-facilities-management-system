@@ -25,7 +25,7 @@ public class SportFacility {
     @ManyToMany(mappedBy = "managedFacilities")
     private List<User> managers;
 
-    @OneToOne(mappedBy = "sportFacility", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "sportFacility", orphanRemoval = true)
     private OpenHour openHour;
 
     @OneToMany(mappedBy = "sportFacility", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)

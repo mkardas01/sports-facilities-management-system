@@ -100,12 +100,16 @@ public class OpenHourController {
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> deleteOpenHour(@PathVariable("id") int id){
 
-        OpenHour existingOpenHour = openHourRepository.findById(id)
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteOpenHour(@PathVariable("id") int id){
+
+        OpenHour openHour = openHourRepository.findById(id)
                 .orElseThrow(() -> new OpenHourNotFoundException("Nie znaleziono godzin otwarcia dla podanego obiektu"));
 
-        return new ResponseEntity<>(openHourService.deleteOpenHour(id), HttpStatus.OK);
+        userService.checkIfUserIsManager(openHour.getSportFacility());
+
+        openHourService.deleteOpenHour(openHour);
 
     }
 

@@ -8,11 +8,9 @@ import java.util.List;
 public interface OpenHourService {
 
 
-    public List<OpenHour> getAllOpenHours();
-
     public OpenHour getOpenHourById(int id);
 
     public OpenHour saveOpenHour(OpenHour openHour);
 
-    public boolean deleteOpenHour(int id);
+    public void deleteOpenHour(OpenHour openHour);
 }

@@ -15,14 +15,9 @@ public class OpenHourImpl implements OpenHourService {
     private OpenHourRepository openHourRepository;
 
     @Override
-    public List<OpenHour> getAllOpenHours() {
-        return openHourRepository.findAll();
-    }
-
-    @Override
     public OpenHour getOpenHourById(int id) {
         return openHourRepository.findById(id)
-                .orElseThrow(() -> new OpenHourNotFoundException("Nie znaleziono godzin otwarcia dla obiektu o id: " + id));
+                .orElseThrow(() -> new OpenHourNotFoundException("Nie znaleziono godzin otwarcia dla podanego obiektu"));
     }
 
     @Override
@@ -31,11 +26,7 @@ public class OpenHourImpl implements OpenHourService {
     }
 
     @Override
-    public boolean deleteOpenHour(int id) {
-        OpenHour openHour = openHourRepository.findById(id)
-                .orElseThrow(() -> new OpenHourNotFoundException("OpenHour with id " + id + " not found"));
-
-        openHourRepository.deleteById(id);
-        return true;
+    public void deleteOpenHour(OpenHour openHour) {
+        openHourRepository.delete(openHour);
     }
 }
