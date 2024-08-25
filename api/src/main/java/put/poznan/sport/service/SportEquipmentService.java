@@ -1,12 +1,10 @@
 package put.poznan.sport.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
+import put.poznan.sport.dto.SportEquipment.UpdateSportEquipment;
 import put.poznan.sport.entity.SportEquipment;
-import put.poznan.sport.repository.SportEquipmentRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface SportEquipmentService {
 
@@ -15,9 +13,11 @@ public interface SportEquipmentService {
 
     public SportEquipment getEquipmentsById(int id);
 
-    public SportEquipment createEquipment(SportEquipment sportEquipment);
+    public List<SportEquipment> getEquipmentsBySportFacility(int id);
 
-    public SportEquipment updateEquipment(SportEquipment sportEquipment);
+    SportEquipment createEquipment(CreateSportEquipment equipment);
 
-    public boolean deleteEquipment(int id);
+    public SportEquipment updateEquipment(UpdateSportEquipment sportEquipment);
+
+    public void deleteEquipment(int id);
 }

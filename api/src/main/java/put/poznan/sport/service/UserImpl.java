@@ -5,18 +5,23 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.User;
-import put.poznan.sport.exception.exceptionClasses.EmailAlreadyExistsException;
-import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.*;
+import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SportFacilityRepository sportFacilityRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -65,5 +70,25 @@ public class UserImpl implements UserService {
             }
         }
         return null;
+    }
+
+    public void checkIfUserIsManager(SportFacility sportFacility){
+
+        if (sportFacility == null) {
+            throw new SportFacilityNotFoundException("Nie znaleziono podanego obiektu sportowego w bazie danych");
+        }
+
+        String currentUser = this.getCurrentUsername();
+
+        List<String> managerUserNames = sportFacility
+                .getManagers()
+                .stream()
+                .map(User::getUsername)
+                .toList();
+
+        if(!managerUserNames.contains(currentUser)){
+            throw new InvalidUserException("Nie możesz zarządzać tym obiektem z poziomu tego konta");
+        }
+
     }
 }

@@ -8,9 +8,6 @@ import put.poznan.sport.entity.SportFacilityParticipant;
 import put.poznan.sport.entity.SportFacilityParticipantId;
 import put.poznan.sport.service.SportFacilityParticipantService;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("api/SportFacilityParticipant/")
 public class SportFacilityParticipantController {

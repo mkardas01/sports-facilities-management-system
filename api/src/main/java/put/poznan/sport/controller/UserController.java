@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.entity.User;
 import put.poznan.sport.service.UserService;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("api/User/")
 public class UserController {

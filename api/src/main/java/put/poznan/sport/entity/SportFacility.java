@@ -20,7 +20,9 @@ public class SportFacility {
     private String type;
     private Integer membershipRequired;
     private String imageUrl;
-    private String managerAccount;
+
+    @ManyToMany(mappedBy = "managedFacilities")
+    private List<User> managers;
 
     @OneToOne(mappedBy = "sportFacility", cascade = CascadeType.ALL)
     private OpenHour openHour;
@@ -32,9 +34,9 @@ public class SportFacility {
     private List<TrainingSession> trainingSessions;
 
     @OneToMany(mappedBy = "sportFacility", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<EquipmentOwnership> equipmentOwnerships;
-
-    @OneToMany(mappedBy = "sportFacility", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SportFacilityNews> sportFacilityNews;
+
+    @OneToMany(mappedBy = "ownerSportFacility")
+    private List<SportEquipment> sportEquipments;
 
 }

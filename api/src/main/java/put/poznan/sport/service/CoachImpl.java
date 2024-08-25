@@ -2,18 +2,27 @@ package put.poznan.sport.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import put.poznan.sport.dto.CoachCreateResponse;
+import put.poznan.sport.dto.Coach.CoachCreateResponse;
+import put.poznan.sport.dto.Coach.CoachUpdate;
 import put.poznan.sport.entity.Coach;
+import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.User;
 import put.poznan.sport.exception.exceptionClasses.CoachNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.InvalidUserException;
+import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.repository.CoachRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CoachImpl implements CoachService {
 
     @Autowired
     private CoachRepository coachRepository;
+
+    @Autowired
+    private UserImpl userService;
 
     @Override
     public List<Coach> getAllCoaches() {
@@ -35,25 +44,28 @@ public class CoachImpl implements CoachService {
                 .sportFacilitiesId(coach.getSportFacility().getId())
                 .build();
 
-        coachRepository.save(coach);
+        Coach newCoach = coachRepository.save(coach);
+
+        coachCreateResponse.setId(newCoach.getId());
 
         return coachCreateResponse;
     }
 
     @Override
-    public Coach updateCoach(Coach coach) {
-        coachRepository.findById(coach.getId())
-                .orElseThrow(() -> new CoachNotFoundException("Coach with id " + coach.getId() + " not found"));
+    public CoachUpdate updateCoach(CoachUpdate coach, Coach existingCoach) {
 
-        return coachRepository.save(coach);
+        existingCoach.setName(coach.getName());
+        existingCoach.setSurname(coach.getSurname());
+        existingCoach.setImageUrl(coach.getImageUrl());
+
+        coachRepository.save(existingCoach);
+
+        return coach;
     }
 
     @Override
-    public boolean deleteCoach(int id) {
-        Coach coach = coachRepository.findById(id)
-                .orElseThrow(() -> new CoachNotFoundException("Coach with id " + id + " not found"));
+    public void deleteCoach(Coach coach) {
 
-        coachRepository.deleteById(id);
-        return true;
+        coachRepository.delete(coach);
     }
 }

@@ -5,11 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.entity.OpenHour;
-import put.poznan.sport.service.CoachImpl;
 import put.poznan.sport.service.OpenHourService;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/OpenHour/")
