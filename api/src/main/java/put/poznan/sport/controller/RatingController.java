@@ -54,6 +54,9 @@ public class RatingController {
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createRating(@RequestBody @Valid CreateRating rating) {
+
+        validParam(rating.getObjectType());
+
         User user = userRepository.findByEmail(userService.getCurrentUsername())
                 .orElseThrow(() -> new UserNotFoundException("Błąd użytkownika"));
 
@@ -72,6 +75,9 @@ public class RatingController {
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateRating(@RequestBody @Valid CreateRating rating) {
+
+        validParam(rating.getObjectType());
+
         User user = userRepository.findByEmail(userService.getCurrentUsername())
                 .orElseThrow(() -> new UserNotFoundException("Błąd użytkownika"));
 

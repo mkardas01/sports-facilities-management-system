@@ -23,9 +23,8 @@ public class CreateRating {
     @Max(value =  5, message = "Ocena musi być mniejsza lub równa 5")
     private Integer rate;
 
-    @Enumerated(EnumType.STRING)
     @NotNull(message = "Typ nie może być pusty")
-    private ObjectType objectType;
+    private String objectType;
 
     @NotNull(message = "Id nie może być puste")
     private Integer objectId;
