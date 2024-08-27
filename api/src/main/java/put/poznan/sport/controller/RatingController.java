@@ -9,10 +9,13 @@ import put.poznan.sport.dto.Rating.CreateRating;
 import put.poznan.sport.dto.Rating.ObjectType;
 import put.poznan.sport.dto.Rating.Rating;
 import put.poznan.sport.entity.User;
+import put.poznan.sport.exception.exceptionClasses.ObjectTypeParamNotValid;
 import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
 import put.poznan.sport.repository.UserRepository;
 import put.poznan.sport.service.rating.RatingService;
 import put.poznan.sport.service.user.UserService;
+
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("api/rating/")
@@ -51,7 +54,6 @@ public class RatingController {
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createRating(@RequestBody @Valid CreateRating rating) {
-
         User user = userRepository.findByEmail(userService.getCurrentUsername())
                 .orElseThrow(() -> new UserNotFoundException("Błąd użytkownika"));
 
@@ -70,7 +72,6 @@ public class RatingController {
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateRating(@RequestBody @Valid CreateRating rating) {
-
         User user = userRepository.findByEmail(userService.getCurrentUsername())
                 .orElseThrow(() -> new UserNotFoundException("Błąd użytkownika"));
 
@@ -90,9 +91,20 @@ public class RatingController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public void deleteRating(@RequestParam String type, @PathVariable int id) {
+
+        validParam(type);
+
         User user = userRepository.findByEmail(userService.getCurrentUsername())
                 .orElseThrow(() -> new UserNotFoundException("Błąd użytkownika"));
 
         ratingService.deleteRating(user, type, id);
+    }
+
+    private void validParam(String param){
+        boolean isValid = Arrays.stream(ObjectType.values())
+                .anyMatch(objectType -> objectType.name().equals(param));
+        if (!isValid) {
+            throw new ObjectTypeParamNotValid("Podano zły parametr danych");
+        }
     }
 }

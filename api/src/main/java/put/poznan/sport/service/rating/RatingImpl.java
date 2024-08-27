@@ -6,15 +6,18 @@ import put.poznan.sport.dto.Rating.ObjectType;
 import put.poznan.sport.dto.Rating.Rating;
 import put.poznan.sport.entity.Coach;
 import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.TrainingSession;
 import put.poznan.sport.entity.User;
 import put.poznan.sport.entity.rating.CoachRating;
 import put.poznan.sport.entity.rating.SportFacilityRating;
+import put.poznan.sport.entity.rating.TrainingSessionRating;
 import put.poznan.sport.exception.exceptionClasses.*;
 import put.poznan.sport.repository.CoachRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.repository.TrainingSessionRepository;
 import put.poznan.sport.repository.rating.CoachRatingRepository;
 import put.poznan.sport.repository.rating.SportFacilityRatingRepository;
+import put.poznan.sport.repository.rating.TrainingSessionRatingRepository;
 import put.poznan.sport.service.user.UserService;
 
 import java.util.List;
@@ -29,6 +32,9 @@ public class RatingImpl implements RatingService {
     private SportFacilityRatingRepository sportFacilityRatingRepository;
 
     @Autowired
+    private TrainingSessionRatingRepository trainingSessionRatingRepository;
+
+    @Autowired
     private TrainingSessionRepository trainingSessionRepository;
 
     @Autowired
@@ -36,9 +42,6 @@ public class RatingImpl implements RatingService {
 
     @Autowired
     private SportFacilityRepository sportFacilityRepository;
-
-    @Autowired
-    private UserService userService;
 
 
     @Override
@@ -58,6 +61,8 @@ public class RatingImpl implements RatingService {
             return handleCoachRatingCreat(rating);
         } else if(rating.getObjectType().equals(ObjectType.SPORT_FACILITY)){
             return handleSportFacilityRatingCreate(rating);
+        } else if(rating.getObjectType().equals(ObjectType.TRAINING_SESSION)){
+            return handleTrainingSessionRatingCreate(rating);
         }
 
         return null;
@@ -69,6 +74,8 @@ public class RatingImpl implements RatingService {
             return handleCoachRatingUpdate(rating);
         } else if(rating.getObjectType().equals(ObjectType.SPORT_FACILITY)){
             return handleSportFacilityRatingUpdate(rating);
+        } else if(rating.getObjectType().equals(ObjectType.TRAINING_SESSION)){
+            return handleTrainingSessionRatingUpdate(rating);
         }
         return null;
     }
@@ -79,8 +86,9 @@ public class RatingImpl implements RatingService {
             handleCoachRatingDelete(user, id);
         }else if (type.equals(ObjectType.SPORT_FACILITY.name())){
             handleSportFacilityRatingDelete(user, id);
+        } else if(type.equals(ObjectType.TRAINING_SESSION.name())){
+            handleTrainingSessionRatingDelete(user, id);
         }
-
     }
 
     private Rating handleCoachRatingCreat(Rating rating){
@@ -162,11 +170,48 @@ public class RatingImpl implements RatingService {
     }
 
     private void handleSportFacilityRatingDelete(User user, int id){
-
         SportFacilityRating sportFacilityRating = sportFacilityRatingRepository.findByUserAndId(user, id).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono opini"));
-
         sportFacilityRatingRepository.delete(sportFacilityRating);
+    }
 
+    private Rating handleTrainingSessionRatingCreate(Rating rating){
+        TrainingSession trainingSession = trainingSessionRepository.findById(rating.getObjectId())
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono zajęć"));
+
+        trainingSessionRatingRepository.findByUserAndTrainingSession(rating.getAddedBy(), trainingSession)
+                .ifPresent(existingRating -> {
+                    throw new RatingAlreadyExistsException("Opinia została już prędzej wystawiona");
+                });
+
+        TrainingSessionRating trainingSessionRating = TrainingSessionRating.builder()
+                .rate(rating.getRate())
+                .trainingSession(trainingSession)
+                .user(rating.getAddedBy())
+                .build();
+
+        TrainingSessionRating newTrainingSessionRating = trainingSessionRatingRepository.save(trainingSessionRating);
+        rating.setId(newTrainingSessionRating.getId());
+
+        return rating;
+    }
+
+    private Rating handleTrainingSessionRatingUpdate(Rating rating){
+        TrainingSession trainingSession = trainingSessionRepository.findById(rating.getObjectId())
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono zajęć"));
+
+        TrainingSessionRating trainingSessionRating = trainingSessionRatingRepository.findByUserAndTrainingSession(rating.getAddedBy(), trainingSession).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono opini"));
+
+        trainingSessionRating.setRate(rating.getRate());
+
+        TrainingSessionRating newTrainingSessionRating = trainingSessionRatingRepository.save(trainingSessionRating);
+        rating.setId(newTrainingSessionRating.getId());
+
+        return rating;
+    }
+
+    private void handleTrainingSessionRatingDelete(User user, int id){
+        TrainingSessionRating trainingSessionRating = trainingSessionRatingRepository.findByUserAndId(user, id).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono opini"));
+        trainingSessionRatingRepository.delete(trainingSessionRating);
     }
 
 }
