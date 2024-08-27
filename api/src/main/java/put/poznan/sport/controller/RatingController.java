@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.dto.Rating.CreateRating;
+import put.poznan.sport.dto.Rating.ObjectType;
 import put.poznan.sport.dto.Rating.Rating;
 import put.poznan.sport.entity.User;
 import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
@@ -51,35 +52,47 @@ public class RatingController {
     @ResponseBody
     public ResponseEntity<?> createRating(@RequestBody @Valid CreateRating rating) {
 
-        Rating newRating = new Rating();
-
         User user = userRepository.findByEmail(userService.getCurrentUsername())
                 .orElseThrow(() -> new UserNotFoundException("Błąd użytkownika"));
 
-        newRating.setRate(rating.getRate());
-        newRating.setAddedBy(user);
-        newRating.setObjectId(rating.getObjectId());
-        newRating.setObjectType(rating.getObjectType());
+        Rating newRating = Rating.builder()
+                .addedBy(user)
+                .rate(rating.getRate())
+                .objectType(rating.getObjectType())
+                .objectId(rating.getObjectId())
+                .build();
 
         return new ResponseEntity<>(ratingService.createRating(newRating), HttpStatus.OK);
 
     }
-//
-//    @PutMapping("update")
-//    @CrossOrigin
-//    @ResponseBody
-//    public ResponseEntity<?> updateRating(@RequestBody Rating rating) {
-//
-//        return new ResponseEntity<>(ratingService.updateRating(rating), HttpStatus.OK);
-//
-//    }
-//
-//    @DeleteMapping("delete/{id}")
-//    @CrossOrigin
-//    @ResponseBody
-//    public ResponseEntity<?> deleteRating(@PathVariable int id) {
-//
-//        return new ResponseEntity<>(ratingService.deleteRating(id), HttpStatus.OK);
-//
-//    }
+
+    @PutMapping("update")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> updateRating(@RequestBody @Valid CreateRating rating) {
+
+        User user = userRepository.findByEmail(userService.getCurrentUsername())
+                .orElseThrow(() -> new UserNotFoundException("Błąd użytkownika"));
+
+        Rating newRating = Rating.builder()
+                .addedBy(user)
+                .rate(rating.getRate())
+                .objectType(rating.getObjectType())
+                .objectId(rating.getObjectId())
+                .build();
+
+        return new ResponseEntity<>(ratingService.updateRating(newRating), HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("delete/{id}")
+    @CrossOrigin
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteRating(@RequestParam String type, @PathVariable int id) {
+        User user = userRepository.findByEmail(userService.getCurrentUsername())
+                .orElseThrow(() -> new UserNotFoundException("Błąd użytkownika"));
+
+        ratingService.deleteRating(user, type, id);
+    }
 }

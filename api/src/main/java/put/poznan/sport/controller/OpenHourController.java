@@ -100,7 +100,6 @@ public class OpenHourController {
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
-
     @ResponseStatus(HttpStatus.OK)
     public void deleteOpenHour(@PathVariable("id") int id){
 
