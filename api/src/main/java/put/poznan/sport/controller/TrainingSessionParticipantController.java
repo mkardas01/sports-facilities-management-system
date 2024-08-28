@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.entity.TrainingSessionParticipant;
 import put.poznan.sport.entity.TrainingSessionParticipantId;
-import put.poznan.sport.service.TrainingSessionParticipantService;
+import put.poznan.sport.service.trainingSessionParticipant.TrainingSessionParticipantService;
 
 @RestController
 @RequestMapping("api/TrainingSessionParticipant/")

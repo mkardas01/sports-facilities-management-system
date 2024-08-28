@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.entity.SportFacilityParticipant;
 import put.poznan.sport.entity.SportFacilityParticipantId;
-import put.poznan.sport.service.SportFacilityParticipantService;
+import put.poznan.sport.service.sportFacilityParcticipant.SportFacilityParticipantService;
 
 @RestController
 @RequestMapping("api/SportFacilityParticipant/")

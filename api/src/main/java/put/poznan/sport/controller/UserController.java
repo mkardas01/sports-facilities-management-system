@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.entity.User;
-import put.poznan.sport.service.UserService;
+import put.poznan.sport.service.user.UserService;
 
 @RestController
 @RequestMapping("api/User/")

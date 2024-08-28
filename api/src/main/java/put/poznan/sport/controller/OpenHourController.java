@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import put.poznan.sport.dto.OpeHour.CreateOpenHour;
+import put.poznan.sport.dto.OpenHour.CreateOpenHour;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.openHour.OpenHour;
 import put.poznan.sport.entity.openHour.OpeningTime;
@@ -13,8 +13,8 @@ import put.poznan.sport.exception.exceptionClasses.OpenHourNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.repository.OpenHourRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
-import put.poznan.sport.service.OpenHourService;
-import put.poznan.sport.service.UserService;
+import put.poznan.sport.service.openHour.OpenHourService;
+import put.poznan.sport.service.user.UserService;
 
 import java.time.LocalTime;
 
@@ -100,7 +100,6 @@ public class OpenHourController {
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
-
     @ResponseStatus(HttpStatus.OK)
     public void deleteOpenHour(@PathVariable("id") int id){
 

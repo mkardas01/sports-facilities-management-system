@@ -2,12 +2,14 @@ package put.poznan.sport.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class SportFacilityParticipantId implements Serializable {
     private Integer userId;
     private Integer sportFacilitiesId;
@@ -25,5 +27,4 @@ public class SportFacilityParticipantId implements Serializable {
     public int hashCode() {
         return Objects.hash(userId, sportFacilitiesId);
     }
-
 }

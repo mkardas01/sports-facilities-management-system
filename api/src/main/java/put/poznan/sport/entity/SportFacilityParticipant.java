@@ -1,11 +1,14 @@
 package put.poznan.sport.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @IdClass(SportFacilityParticipantId.class)
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SportFacilityParticipant {
     @Id
     private Integer userId;
@@ -16,11 +19,10 @@ public class SportFacilityParticipant {
     private Integer isActive;
 
     @ManyToOne
-    @JoinColumn(name = "userId", insertable = false, updatable = false)
+    @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "sportFacilitiesId", insertable = false, updatable = false)
+    @JoinColumn(name = "sportFacilitiesId", referencedColumnName = "id", insertable = false, updatable = false)
     private SportFacility sportFacility;
-
 }
