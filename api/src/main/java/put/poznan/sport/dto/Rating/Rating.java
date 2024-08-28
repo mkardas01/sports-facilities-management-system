@@ -9,7 +9,7 @@ import put.poznan.sport.entity.User;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
-public class Rating extends CreateRating{
+public class Rating extends RatingRequest {
     private Integer id;
 
     @JsonIgnore
