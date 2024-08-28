@@ -5,7 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import put.poznan.sport.dto.Rating.CreateRating;
+import put.poznan.sport.dto.Rating.ObjectRating;
+import put.poznan.sport.dto.Rating.RatingRequest;
 import put.poznan.sport.dto.Rating.ObjectType;
 import put.poznan.sport.dto.Rating.Rating;
 import put.poznan.sport.entity.User;
@@ -31,29 +32,25 @@ public class RatingController {
     @Autowired
     private UserRepository userRepository;
 
+    @GetMapping("all")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> getAllRatings(@RequestParam String objectType, @RequestParam Integer id) {
 
-//
-//    @GetMapping("all")
-//    @CrossOrigin
-//    @ResponseBody
-//    public ResponseEntity<?> getAllRatings() {
-//
-//        return new ResponseEntity<>(ratingService.getAllRatings(), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("{id}")
-//    @CrossOrigin
-//    @ResponseBody
-//    public ResponseEntity<?> getRatingById(@PathVariable int id) {
-//
-//        return new ResponseEntity<>(ratingService.getRatingById(id), HttpStatus.OK);
-//
-//    }
+        validParam(objectType);
+
+        ObjectRating objectRating = ObjectRating.builder()
+                .objectId(id)
+                .objectType(objectType)
+                .build();
+
+        return new ResponseEntity<>(ratingService.getAllRatings(objectRating), HttpStatus.OK);
+    }
 
     @PostMapping("add")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> createRating(@RequestBody @Valid CreateRating rating) {
+    public ResponseEntity<?> createRating(@RequestBody @Valid RatingRequest rating) {
 
         validParam(rating.getObjectType());
 
@@ -74,7 +71,7 @@ public class RatingController {
     @PutMapping("update")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> updateRating(@RequestBody @Valid CreateRating rating) {
+    public ResponseEntity<?> updateRating(@RequestBody @Valid RatingRequest rating) {
 
         validParam(rating.getObjectType());
 

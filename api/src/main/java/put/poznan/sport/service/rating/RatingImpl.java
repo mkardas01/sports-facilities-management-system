@@ -2,6 +2,7 @@ package put.poznan.sport.service.rating;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import put.poznan.sport.dto.Rating.ObjectRating;
 import put.poznan.sport.dto.Rating.ObjectType;
 import put.poznan.sport.dto.Rating.Rating;
 import put.poznan.sport.entity.*;
@@ -45,13 +46,20 @@ public class RatingImpl implements RatingService {
 
 
     @Override
-    public List<Rating> getAllRatings() {
-        return null;
-    }
+    public ObjectRating getAllRatings(ObjectRating objectRating) {
+        if (objectRating.getObjectType().equals(ObjectType.COACH.name())){
+            objectRating.setRatingAvg(handleCoachRatingSearch(objectRating));
+        } else if(objectRating.getObjectType().equals(ObjectType.SPORT_FACILITY.name())){
+            objectRating.setRatingAvg(handleSportFacilityRatingSearch(objectRating));
+        } else {
+            objectRating.setRatingAvg(handleTrainingSessionRatingSearch(objectRating));
+        }
 
-    @Override
-    public Rating getRatingById(int id) {
-        return null;
+        if (objectRating.getRatingAvg() == null){
+            throw new ObjectNullRating("Nie znaleziono żadnych opini");
+        }
+
+        return objectRating;
     }
 
     @Override
@@ -61,11 +69,10 @@ public class RatingImpl implements RatingService {
             return handleCoachRatingCreat(rating);
         } else if(rating.getObjectType().equals(ObjectType.SPORT_FACILITY.name())){
             return handleSportFacilityRatingCreate(rating);
-        } else if(rating.getObjectType().equals(ObjectType.TRAINING_SESSION.name())){
+        } else {
             return handleTrainingSessionRatingCreate(rating);
         }
 
-        return null;
     }
 
     @Override
@@ -74,10 +81,9 @@ public class RatingImpl implements RatingService {
             return handleCoachRatingUpdate(rating);
         } else if(rating.getObjectType().equals(ObjectType.SPORT_FACILITY.name())){
             return handleSportFacilityRatingUpdate(rating);
-        } else if(rating.getObjectType().equals(ObjectType.TRAINING_SESSION.name())){
+        } else {
             return handleTrainingSessionRatingUpdate(rating);
         }
-        return null;
     }
 
     @Override
@@ -86,9 +92,30 @@ public class RatingImpl implements RatingService {
             handleCoachRatingDelete(user, id);
         }else if (type.equals(ObjectType.SPORT_FACILITY.name())){
             handleSportFacilityRatingDelete(user, id);
-        } else if(type.equals(ObjectType.TRAINING_SESSION.name())){
+        } else {
             handleTrainingSessionRatingDelete(user, id);
         }
+    }
+
+    private Double handleCoachRatingSearch(ObjectRating objectRating){
+        Coach coach = coachRepository.findById(objectRating.getObjectId())
+                .orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
+
+        return coachRatingRepository.findCoachAverage(coach);
+    }
+
+    private Double handleSportFacilityRatingSearch(ObjectRating objectRating){
+        SportFacility sportFacility = sportFacilityRepository.findById(objectRating.getObjectId())
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
+
+        return sportFacilityRatingRepository.findSportFacilityAverage(sportFacility);
+    }
+
+    private Double handleTrainingSessionRatingSearch(ObjectRating objectRating){
+        TrainingSession trainingSession = trainingSessionRepository.findById(objectRating.getObjectId())
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono zajęć"));
+
+        return trainingSessionRatingRepository.findTrainingSessionAverage(trainingSession);
     }
 
     private Rating handleCoachRatingCreat(Rating rating){
