@@ -19,7 +19,7 @@ public class SportFacility {
     private String description;
     private String address;
     private String type;
-    private Integer membershipRequired;
+    private boolean membershipRequired;
     private String imageUrl;
 
     @ManyToMany(mappedBy = "managedFacilities")

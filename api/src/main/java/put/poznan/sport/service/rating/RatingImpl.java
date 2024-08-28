@@ -4,21 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.dto.Rating.ObjectType;
 import put.poznan.sport.dto.Rating.Rating;
-import put.poznan.sport.entity.Coach;
-import put.poznan.sport.entity.SportFacility;
-import put.poznan.sport.entity.TrainingSession;
-import put.poznan.sport.entity.User;
+import put.poznan.sport.entity.*;
 import put.poznan.sport.entity.rating.CoachRating;
 import put.poznan.sport.entity.rating.SportFacilityRating;
 import put.poznan.sport.entity.rating.TrainingSessionRating;
 import put.poznan.sport.exception.exceptionClasses.*;
 import put.poznan.sport.repository.CoachRepository;
+import put.poznan.sport.repository.SportFacilityParticipantRepository;
 import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.repository.TrainingSessionRepository;
 import put.poznan.sport.repository.rating.CoachRatingRepository;
 import put.poznan.sport.repository.rating.SportFacilityRatingRepository;
 import put.poznan.sport.repository.rating.TrainingSessionRatingRepository;
-import put.poznan.sport.service.user.UserService;
 
 import java.util.List;
 
@@ -43,6 +40,9 @@ public class RatingImpl implements RatingService {
     @Autowired
     private SportFacilityRepository sportFacilityRepository;
 
+    @Autowired
+    private SportFacilityParticipantRepository sportFacilityParticipantRepository;
+
 
     @Override
     public List<Rating> getAllRatings() {
@@ -57,11 +57,11 @@ public class RatingImpl implements RatingService {
     @Override
     public Rating createRating(Rating rating) {
 
-        if (rating.getObjectType().equals(ObjectType.COACH)){
+        if (rating.getObjectType().equals(ObjectType.COACH.name())){
             return handleCoachRatingCreat(rating);
-        } else if(rating.getObjectType().equals(ObjectType.SPORT_FACILITY)){
+        } else if(rating.getObjectType().equals(ObjectType.SPORT_FACILITY.name())){
             return handleSportFacilityRatingCreate(rating);
-        } else if(rating.getObjectType().equals(ObjectType.TRAINING_SESSION)){
+        } else if(rating.getObjectType().equals(ObjectType.TRAINING_SESSION.name())){
             return handleTrainingSessionRatingCreate(rating);
         }
 
@@ -70,11 +70,11 @@ public class RatingImpl implements RatingService {
 
     @Override
     public Rating updateRating(Rating rating) {
-        if (rating.getObjectType().equals(ObjectType.COACH)){
+        if (rating.getObjectType().equals(ObjectType.COACH.name())){
             return handleCoachRatingUpdate(rating);
-        } else if(rating.getObjectType().equals(ObjectType.SPORT_FACILITY)){
+        } else if(rating.getObjectType().equals(ObjectType.SPORT_FACILITY.name())){
             return handleSportFacilityRatingUpdate(rating);
-        } else if(rating.getObjectType().equals(ObjectType.TRAINING_SESSION)){
+        } else if(rating.getObjectType().equals(ObjectType.TRAINING_SESSION.name())){
             return handleTrainingSessionRatingUpdate(rating);
         }
         return null;
@@ -100,6 +100,8 @@ public class RatingImpl implements RatingService {
                     throw new RatingAlreadyExistsException("Opinia została już prędzej wystawiona");
                 });
 
+        checkIsUserMember(rating.getAddedBy(), coach.getSportFacility());
+
         CoachRating coachRating = CoachRating.builder()
                 .coach(coach)
                 .rate(rating.getRate())
@@ -117,6 +119,8 @@ public class RatingImpl implements RatingService {
                 .orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
 
         CoachRating coachRating = coachRatingRepository.findByUserAndCoach(rating.getAddedBy(), coach).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono opini"));
+
+        checkIsUserMember(rating.getAddedBy(), coach.getSportFacility());
 
         coachRating.setRate(rating.getRate());
 
@@ -143,6 +147,8 @@ public class RatingImpl implements RatingService {
                     throw new RatingAlreadyExistsException("Opinia została już prędzej wystawiona");
                 });
 
+        checkIsUserMember(rating.getAddedBy(), sportFacility);
+
         SportFacilityRating sportFacilityRating = SportFacilityRating.builder()
                 .rate(rating.getRate())
                 .sportFacility(sportFacility)
@@ -160,6 +166,8 @@ public class RatingImpl implements RatingService {
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
 
         SportFacilityRating sportFacilityRating = sportFacilityRatingRepository.findByUserAndSportFacility(rating.getAddedBy(), sportFacility).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono opini"));
+
+        checkIsUserMember(rating.getAddedBy(), sportFacility);
 
         sportFacilityRating.setRate(rating.getRate());
 
@@ -183,6 +191,8 @@ public class RatingImpl implements RatingService {
                     throw new RatingAlreadyExistsException("Opinia została już prędzej wystawiona");
                 });
 
+        checkIsUserMember(rating.getAddedBy(), trainingSession.getSportFacility());
+
         TrainingSessionRating trainingSessionRating = TrainingSessionRating.builder()
                 .rate(rating.getRate())
                 .trainingSession(trainingSession)
@@ -201,6 +211,8 @@ public class RatingImpl implements RatingService {
 
         TrainingSessionRating trainingSessionRating = trainingSessionRatingRepository.findByUserAndTrainingSession(rating.getAddedBy(), trainingSession).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono opini"));
 
+        checkIsUserMember(rating.getAddedBy(), trainingSession.getSportFacility());
+
         trainingSessionRating.setRate(rating.getRate());
 
         TrainingSessionRating newTrainingSessionRating = trainingSessionRatingRepository.save(trainingSessionRating);
@@ -212,6 +224,14 @@ public class RatingImpl implements RatingService {
     private void handleTrainingSessionRatingDelete(User user, int id){
         TrainingSessionRating trainingSessionRating = trainingSessionRatingRepository.findByUserAndId(user, id).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono opini"));
         trainingSessionRatingRepository.delete(trainingSessionRating);
+    }
+
+    private void checkIsUserMember(User user, SportFacility sportFacility){
+        if (sportFacility.isMembershipRequired()) {
+            sportFacilityParticipantRepository.findByUserAndSportFacilityAndIsActive(user, sportFacility,1)
+                    .orElseThrow(() -> new UserIsNotMember("Użytkownik nie posiada wykupionego karnetu w obiekcie"));
+        }
+
     }
 
 }
