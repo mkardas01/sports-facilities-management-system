@@ -1,9 +1,11 @@
 package put.poznan.sport.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @IdClass(TrainingSessionParticipantId.class)
+@Data
 public class TrainingSessionParticipant {
     @Id
     private Integer userId;

@@ -1,18 +1,16 @@
 package put.poznan.sport.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
+@AllArgsConstructor
 public class TrainingSessionParticipantId implements Serializable {
     private Integer userId;
     private Integer trainingSessionId;
-
-    // Default constructor
-
-    public TrainingSessionParticipantId() {}
-
-    // Getters, Setters, hashCode, and equals
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,16 +1,19 @@
 package put.poznan.sport.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class TrainingSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private Integer coachesId;
     private Integer sportFacilitiesId;
     private String name;
@@ -31,6 +34,4 @@ public class TrainingSession {
 
     @OneToMany(mappedBy = "trainingSession", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TrainingSessionParticipant> trainingSessionParticipants;
-
-    // Getters and Setters
 }

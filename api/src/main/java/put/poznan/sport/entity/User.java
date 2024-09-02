@@ -46,16 +46,25 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Collection<Authority> authorities;
+
+    @ManyToMany
+    @JoinTable(
+            name = "manager_sport_facilities",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "facility_id")
+    )
+    private List<SportFacility> managedFacilities;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TrainingSessionParticipant> trainingSessionParticipants;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SportFacilityParticipant> sportFacilityParticipants;
-
+  
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
