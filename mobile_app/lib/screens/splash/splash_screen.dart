@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
 import 'package:sport_plus/screens/splash/sign_in_screen.dart';
@@ -68,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Column(
                   children: [
                     Text(
-                      AppStrings.appName,
+                      AppConsts.appName,
                       style: AppTypography.titleStyle,
                     ),
                     Padding(

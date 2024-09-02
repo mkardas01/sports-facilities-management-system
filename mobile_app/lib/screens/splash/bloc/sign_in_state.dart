@@ -1,8 +1,15 @@
 part of 'sign_in_bloc.dart';
 
+enum SignInLoadingStatus { idle, loading, error, registerSuccess, loggedIn }
+
 class SignInState extends Equatable {
-  const SignInState();
+  final SignInLoadingStatus status;
+  const SignInState({this.status = SignInLoadingStatus.idle});
+
+  SignInState copyWith({SignInLoadingStatus? status}) {
+    return SignInState(status: status ?? this.status);
+  }
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [status];
 }
