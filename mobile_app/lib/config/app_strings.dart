@@ -1,4 +1,5 @@
 class AppStrings {
+  static const String appName = "Sport+";
   static const String loadingError = "Wystąpił błąd podczas ładowania danych";
   static const String yourFacilities = "Twoje obiekty";
   static const String propositions = "Propozycje";
@@ -41,4 +42,12 @@ class AppStrings {
   static const String surname = "Nazwisko";
   static const String save = "Zapisz";
   static const String savingError = "Wystąpił błąd podczas zapisywania danych";
+  static const String signIn = "Zaloguj się";
+  static const String signOut = "Wyloguj się";
+  static const String signUp = "Zarejestruj się";
+  static const String signInemail = "E-mail";
+  static const String password = "Hasło";
+  static const String confirmPassword = "Potwierdź hasło";
+  static const String requiredText = "Pole wymagane";
+  static const String passwordNotConfirmed = "Hasła róźnią się";
 }

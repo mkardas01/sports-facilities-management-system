@@ -20,9 +20,11 @@ class TrainingParticipationDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Expanded(
-            child: ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text(AppStrings.no)),
+            child: GenericButton(
+                takeLessSpace: true,
+                isPrimary: false,
+                onTap: () => Navigator.pop(context),
+                title: AppStrings.no),
           ),
           const SizedBox(width: 50),
           Expanded(

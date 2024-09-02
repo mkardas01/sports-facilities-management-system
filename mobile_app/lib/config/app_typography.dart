@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sport_plus/config/app_colors.dart';
 
 class AppTypography {
   static TextStyle defaultTextStyle = const TextStyle(fontSize: 16);
@@ -9,4 +10,6 @@ class AppTypography {
       fontSize: 22, fontWeight: FontWeight.bold, color: color ?? Colors.black);
   static TextStyle littleTextStyle =
       const TextStyle(fontSize: 13, color: Colors.grey);
+  static TextStyle titleStyle = const TextStyle(
+      fontSize: 30, color: AppColors.mainColor, fontWeight: FontWeight.bold);
 }

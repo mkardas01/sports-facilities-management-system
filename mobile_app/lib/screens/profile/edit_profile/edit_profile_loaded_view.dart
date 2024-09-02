@@ -6,6 +6,7 @@ import 'package:sport_plus/config/app_typography.dart';
 import 'package:sport_plus/models/user.dart';
 import 'package:sport_plus/screens/profile/bloc/profile_bloc.dart';
 import 'package:sport_plus/screens/profile/edit_profile/widgets/edit_avatar.dart';
+import 'package:sport_plus/utils/form_validators.dart';
 import 'package:sport_plus/widgets/app_scaffold.dart';
 import 'package:sport_plus/widgets/generic_button.dart';
 
@@ -41,6 +42,8 @@ class _EditProfileLoadingViewState extends State<EditProfileLoadingView> {
             children: [
               const EditAvatar(),
               TextFormField(
+                validator: (value) =>
+                    FormValidators.notEmpty(_nameController.text),
                 controller: _nameController,
                 decoration: InputDecoration(
                   label: Text(
@@ -51,6 +54,8 @@ class _EditProfileLoadingViewState extends State<EditProfileLoadingView> {
                 ),
               ),
               TextFormField(
+                validator: (value) =>
+                    FormValidators.notEmpty(_surnameController.text),
                 controller: _surnameController,
                 decoration: InputDecoration(
                   label: Text(
@@ -63,10 +68,13 @@ class _EditProfileLoadingViewState extends State<EditProfileLoadingView> {
               Padding(
                 padding: const EdgeInsets.only(top: 100),
                 child: GenericButton(
-                    onTap: () => context.read<ProfileBloc>().add(
-                        UpdateProfileEvent(
+                    onTap: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        context.read<ProfileBloc>().add(UpdateProfileEvent(
                             name: _nameController.text,
-                            surname: _surnameController.text)),
+                            surname: _surnameController.text));
+                      }
+                    },
                     title: AppStrings.save),
               ),
             ],
