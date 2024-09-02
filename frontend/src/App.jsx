@@ -8,6 +8,7 @@ import Coaches from './pages/Coaches';
 import AddCoach from './pages/AddCoach';
 import AddSportFacility from './pages/AddSportFacility';
 import ManageOpenHours from './pages/ManageOpenHours';
+import UserProfile from './pages/UserProfile';
 import Navbar from './components/Navbar';
 import icon from './assets/icon.png';
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/add-coach" element={<AddCoach />} />
         <Route path="/add-sport-facility" element={<AddSportFacility />} />
         <Route path="/manage-open-hours" element={<ManageOpenHours />} />
+        <Route path="/user-profile" element={<UserProfile />} />
       </Routes>
     </Router>
   );

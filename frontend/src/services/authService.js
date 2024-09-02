@@ -1,23 +1,31 @@
-import axios from 'axios';
+import apiClient from './axiosConfig';
 
-const API_URL = 'http://localhost:8080/auth';
+const API_URL = '/auth'; // baza URL jest teraz zarządzana w axiosConfig
 
 export const login = async (email, password) => {
-  const response = await axios.post(`${API_URL}/login`, { email, password });
-  if (response.data.token) {
-    localStorage.setItem('user', JSON.stringify(response.data));
+  try {
+    const response = await apiClient.post(`${API_URL}/login`, { email, password });
+    if (response.data.token) {
+      localStorage.setItem('user', JSON.stringify(response.data)); // Zapisz dane użytkownika z tokenem w localStorage
+    }
+    return response.data;
+  } catch (error) {
+    throw new Error('Login failed. Please check your email and password.');
   }
-  return response.data;
 };
 
 export const register = async (userData) => {
-  const response = await axios.post(`${API_URL}/signup`, userData);
-  if (response.data.token) {
-    localStorage.setItem('user', JSON.stringify(response.data));
+  try {
+    const response = await apiClient.post(`${API_URL}/signup`, userData);
+    if (response.data.token) {
+      localStorage.setItem('user', JSON.stringify(response.data)); // Zapisz dane użytkownika z tokenem w localStorage
+    }
+    return response.data;
+  } catch (error) {
+    throw new Error('Registration failed. Please check your input.');
   }
-  return response.data;
 };
 
 export const logout = () => {
-  localStorage.removeItem('user');
+  localStorage.removeItem('user'); // Usuń dane użytkownika z localStorage podczas wylogowania
 };

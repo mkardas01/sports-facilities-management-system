@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -13,7 +14,7 @@ const LoginForm = () => {
       await login(email, password);
       navigate('/sport-facilities');
     } catch (error) {
-      console.error('Login failed', error);
+      setErrorMessage('Login failed. Please check your email and password.');
     }
   };
 
@@ -27,6 +28,7 @@ const LoginForm = () => {
         <label>Password</label>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
       </div>
+      {errorMessage && <p>{errorMessage}</p>}
       <button type="submit">Login</button>
     </form>
   );
