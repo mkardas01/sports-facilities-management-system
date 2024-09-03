@@ -14,21 +14,18 @@ import 'package:sport_plus/screens/splash/splash_screen.dart';
 import 'package:sport_plus/screens/trainings/bloc/trainings_bloc.dart';
 import 'package:sport_plus/screens/trainings/trainings_screen.dart';
 import 'package:sport_plus/services/locator.dart';
-import 'package:sport_plus/services/training_service.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
   HomeScreen.route: (context) => BlocProvider(
-        create: (context) => HomeBloc()..add(HomeLoadingEvent()),
+        create: (context) => locator.get<HomeBloc>()..add(HomeLoadingEvent()),
         child: const HomeScreen(),
       ),
   FacilityDetailsScreen.route: (context) => BlocProvider(
-        create: (context) => FacilityDetailsBloc(
-          trainingService: locator.get<TrainingService>(),
-        ),
+        create: (context) => locator.get<FacilityDetailsBloc>(),
         child: const FacilityDetailsScreen(),
       ),
   TrainingsScreen.route: (context) => BlocProvider(
-        create: (context) => TrainingsBloc(),
+        create: (context) => locator.get<TrainingsBloc>(),
         child: const TrainingsScreen(),
       ),
   ProfileScreen.route: (context) => BlocProvider(
@@ -39,7 +36,10 @@ Map<String, Widget Function(BuildContext)> routes = {
         create: (context) => locator.get<ProfileBloc>(),
         child: const EditProfileScreen(),
       ),
-  SplashScreen.route: (context) => const SplashScreen(),
+  SplashScreen.route: (context) => BlocProvider(
+        create: (context) => locator.get<SignInBloc>(),
+        child: const SplashScreen(),
+      ),
   SignInScreen.route: (context) => BlocProvider(
         create: (context) => locator.get<SignInBloc>(),
         child: const SignInScreen(),

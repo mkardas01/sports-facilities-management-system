@@ -8,29 +8,25 @@ class AuthRepository {
   final HttpClient _client = locator.get<HttpClient>();
   final Logger _logger = locator.get<Logger>();
 
-  Future<bool> registerUser(RegisterUserDto user) async {
+  Future<String?> registerUser(RegisterUserDto user) async {
     const String url = "/auth/signup";
     try {
       var response = await _client.dio.post(url, data: user.toJson());
-      /* GenericResponse<ClaimApplication> result = GenericResponse.fromJson(
-          response.data, (p0) => ClaimApplication.fromJson(p0));*/
-      return true;
+      return response.data["token"];
     } catch (e) {
       _logger.e("Błąd na endpoincie $url: $e");
-      return false;
+      return null;
     }
   }
 
-  Future<bool> logIn(LoginUserDto user) async {
+  Future<String?> logIn(LoginUserDto user) async {
     const String url = "auth/login";
     try {
       var response = await _client.dio.post(url, data: user.toJson());
-      /* GenericResponse<ClaimApplication> result = GenericResponse.fromJson(
-          response.data, (p0) => ClaimApplication.fromJson(p0));*/
-      return true;
+      return response.data["token"];
     } catch (e) {
       _logger.e("Błąd na endpoincie $url: $e");
-      return false;
+      return null;
     }
   }
 }

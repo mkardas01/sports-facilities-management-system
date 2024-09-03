@@ -8,7 +8,7 @@ class TokenInterceptor extends Interceptor {
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    String? jwt = await storage.getToken();
+    String jwt = await storage.getToken() ?? "";
     options.headers.addAll({"Authorization": "Bearer $jwt"});
     return super.onRequest(options, handler);
   }

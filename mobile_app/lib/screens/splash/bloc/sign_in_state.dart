@@ -1,6 +1,6 @@
 part of 'sign_in_bloc.dart';
 
-enum SignInLoadingStatus { idle, loading, error, registerSuccess, loggedIn }
+enum SignInLoadingStatus { idle, loading, error, loggedIn }
 
 class SignInState extends Equatable {
   final SignInLoadingStatus status;

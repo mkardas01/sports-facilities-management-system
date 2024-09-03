@@ -15,3 +15,5 @@ class RegisterEvent extends SignInEvent {
   final String surname;
   RegisterEvent(this.name, this.surname, this.email, this.password);
 }
+
+class OnStartEvent extends SignInEvent {}

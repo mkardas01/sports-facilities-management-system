@@ -29,6 +29,7 @@ class _SignInScreenState extends State<SignInScreen> {
       listener: (context, state) {
         switch (state.status) {
           case SignInLoadingStatus.error:
+            Navigator.pop(context);
             Fluttertoast.showToast(
                 msg: AppStrings.error,
                 toastLength: Toast.LENGTH_SHORT,
@@ -45,9 +46,6 @@ class _SignInScreenState extends State<SignInScreen> {
               context: context,
               builder: (context) => const LoadingDialog(),
             );
-            break;
-          case SignInLoadingStatus.registerSuccess:
-            Navigator.pop(context);
             break;
           case SignInLoadingStatus.loggedIn:
             Navigator.popUntil(context, (route) => false);

@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
+import 'package:sport_plus/screens/home/home_screen.dart';
 import 'package:sport_plus/screens/splash/bloc/sign_in_bloc.dart';
 import 'package:sport_plus/utils/form_validators.dart';
 import 'package:sport_plus/widgets/app_scaffold.dart';
@@ -51,10 +52,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               builder: (context) => const LoadingDialog(),
             );
             break;
-          case SignInLoadingStatus.registerSuccess:
           case SignInLoadingStatus.loggedIn:
-            Navigator.pop(context);
-            break;
+            Navigator.popUntil(context, (route) => false);
+            Navigator.pushNamed(context, HomeScreen.route);
         }
       },
       child: AppScaffold(

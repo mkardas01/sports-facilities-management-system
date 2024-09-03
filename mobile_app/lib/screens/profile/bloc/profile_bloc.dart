@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:sport_plus/models/dummy_data.dart';
 import 'package:sport_plus/models/user.dart';
+import 'package:sport_plus/repository/user_repository.dart';
 import 'package:sport_plus/screens/profile/edit_profile/models/image_picker_source.dart';
 import 'package:sport_plus/services/image_service.dart';
 
@@ -12,23 +12,25 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ImageService imageService;
-  ProfileBloc({required this.imageService}) : super(const ProfileState()) {
+  final UserRepository userRepository;
+  ProfileBloc({required this.imageService, required this.userRepository})
+      : super(const ProfileState()) {
     on<InitDateEvent>(_initData);
     on<UpdateProfileEvent>(_updateUser);
     on<PickImageEvent>(_pickImage);
   }
   Future<void> _initData(
       InitDateEvent event, Emitter<ProfileState> emitter) async {
-    var user = DummyData.getUsers()[0];
+    var user = await userRepository.getCurrentUser();
     if (user == null) {
       emitter(state.copyWith(status: ProfileLoadingStatus.error));
       return;
     }
-    var avatarFile = await imageService.openImage(user.imageUrl);
+    /* var avatarFile = await imageService.openImage(user.imageUrl);
     emitter(state.copyWith(
         status: ProfileLoadingStatus.loaded,
         user: user,
-        avatarUrl: user.imageUrl));
+        avatarUrl: user.imageUrl)); */
   }
 
   Future<void> _updateUser(
