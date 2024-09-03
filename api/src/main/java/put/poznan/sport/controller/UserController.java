@@ -8,7 +8,7 @@ import put.poznan.sport.entity.User;
 import put.poznan.sport.service.user.UserService;
 
 @RestController
-@RequestMapping("api/User/")
+@RequestMapping("api/user/")
 public class UserController {
 
     @Autowired
@@ -21,11 +21,11 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-   @GetMapping("{id}")
+   @GetMapping
    @CrossOrigin
    @ResponseBody
-   public ResponseEntity<?> getUserById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+   public ResponseEntity<?> getUser() {
+        return new ResponseEntity<>(userService.getUser(), HttpStatus.OK);
    }
 
    @PostMapping("create")

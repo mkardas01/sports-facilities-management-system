@@ -56,7 +56,7 @@ public class RatingImpl implements RatingService {
         }
 
         if (objectRating.getRatingAvg() == null){
-            throw new ObjectNullRating("Nie znaleziono żadnych opini");
+            throw new ObjectNullRating("Nie znaleziono żadnych opinii");
         }
 
         return objectRating;
