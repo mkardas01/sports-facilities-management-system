@@ -2,10 +2,7 @@ package put.poznan.sport.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.dto.LoginUserDto;
 import put.poznan.sport.dto.RegisterUserDto;
 import put.poznan.sport.entity.User;
@@ -14,6 +11,7 @@ import put.poznan.sport.service.jwt.JwtService;
 import put.poznan.sport.response.AccountResponse;
 @RequestMapping("/auth")
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthenticationController {
     private final JwtService jwtService;
 

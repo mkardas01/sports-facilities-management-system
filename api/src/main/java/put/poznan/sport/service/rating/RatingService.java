@@ -18,4 +18,7 @@ public interface RatingService {
 
     public void deleteRating(User user, String type, int id);
 
+    public Double getCoachAverageRating(Integer coachId);
+    public Double getSportFacilityAverageRating(Integer sportFacilityId);
+
 }
