@@ -31,6 +31,7 @@ public class WebConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("api/details/**").hasAnyAuthority("USER", "MANAGER", "ADMIN")
                         .requestMatchers(
                                 "api/coach/create",
                                 "api/coach/update",
