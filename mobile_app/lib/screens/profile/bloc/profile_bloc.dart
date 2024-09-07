@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:sport_plus/models/user.dart';
+import 'package:sport_plus/models/user/user_dto.dart';
 import 'package:sport_plus/repository/user_repository.dart';
 import 'package:sport_plus/screens/profile/edit_profile/models/image_picker_source.dart';
 import 'package:sport_plus/services/image_service.dart';
@@ -26,11 +26,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emitter(state.copyWith(status: ProfileLoadingStatus.error));
       return;
     }
-    /* var avatarFile = await imageService.openImage(user.imageUrl);
+    var avatarFile = await imageService.openImage(user.imageUrl);
     emitter(state.copyWith(
         status: ProfileLoadingStatus.loaded,
         user: user,
-        avatarUrl: user.imageUrl)); */
+        avatarUrl: user.imageUrl,
+        avatarFile: avatarFile));
   }
 
   Future<void> _updateUser(
@@ -40,9 +41,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     updatedUser?.imageUrl = state.avatarUrl;
     updatedUser?.name = event.name;
     updatedUser?.surname = event.surname;
-    await Future.delayed(const Duration(seconds: 5));
-    //TODO zapisz dane
-    if (true) {
+    if (updatedUser == null) {
+      emitter(state.copyWith(status: ProfileLoadingStatus.savingError));
+      emitter(state.copyWith(status: ProfileLoadingStatus.loaded));
+      return;
+    }
+    var updateResult = await userRepository.updateUser(updatedUser);
+    if (updateResult) {
       emitter(state.copyWith(
           status: ProfileLoadingStatus.saved, user: updatedUser));
     } else {

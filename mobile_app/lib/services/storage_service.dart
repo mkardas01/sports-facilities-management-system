@@ -41,9 +41,8 @@ class StorageService {
       if (exp * 1000 - DateTime.now().millisecondsSinceEpoch > 0) {
         return true;
       }
-    } else {
-      removeToken();
     }
+    removeToken();
     return false;
   }
 }

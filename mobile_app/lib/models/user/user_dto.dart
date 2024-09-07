@@ -2,18 +2,18 @@ enum Authority { MANAGER }
 
 class UserDto {
   int? id;
-  String name;
-  String surname;
-  String email;
-  String imageUrl;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<Authority> authorities;
-  String username;
-  bool enabled;
-  bool credentialsNonExpired;
-  bool accountNonExpired;
-  bool accountNonLocked;
+  String? name;
+  String? surname;
+  String? email;
+  String? imageUrl;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<Authority>? authorities;
+  String? username;
+  bool? enabled;
+  bool? credentialsNonExpired;
+  bool? accountNonExpired;
+  bool? accountNonLocked;
 
   UserDto({
     this.id,
@@ -59,15 +59,22 @@ class UserDto {
       'surname': surname,
       'email': email,
       'imageUrl': imageUrl,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
       'authorities':
-          authorities.map((a) => a.toString().split('.').last).toList(),
+          authorities?.map((a) => a.toString().split('.').last).toList(),
       'username': username,
       'enabled': enabled,
       'credentialsNonExpired': credentialsNonExpired,
       'accountNonExpired': accountNonExpired,
       'accountNonLocked': accountNonLocked,
     };
+  }
+
+  String get getInitials {
+    if (name != null && surname != null) {
+      return "${name![0]}${surname![0]}";
+    }
+    return "-";
   }
 }

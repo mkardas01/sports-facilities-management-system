@@ -12,4 +12,6 @@ class AppTypography {
       const TextStyle(fontSize: 13, color: Colors.grey);
   static TextStyle titleStyle = const TextStyle(
       fontSize: 30, color: AppColors.mainColor, fontWeight: FontWeight.bold);
+  static TextStyle detailTextStyle =
+      const TextStyle(fontSize: 15, color: AppColors.mainColor);
 }

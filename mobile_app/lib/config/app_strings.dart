@@ -50,4 +50,7 @@ class AppStrings {
   static const String requiredText = "Pole wymagane";
   static const String passwordNotConfirmed = "Hasła róźnią się";
   static const String error = "Wystąpił niespodziewany błąd";
+  static const String addRating = "Oceń";
+  static const String addRatingSuccess = "Dodano ocenę";
+  static const String facilityMap = "Znajdź na mapie";
 }

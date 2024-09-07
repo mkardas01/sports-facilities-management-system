@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/screens/profile/bloc/profile_bloc.dart';
 import 'package:sport_plus/screens/profile/edit_profile/edit_profile_loaded_view.dart';
@@ -26,14 +25,9 @@ class EditProfileScreen extends StatelessWidget {
           Navigator.popUntil(context, ModalRoute.withName(ProfileScreen.route));
         } else if (state.status == ProfileLoadingStatus.savingError) {
           Navigator.pop(context);
-          Fluttertoast.showToast(
-              msg: AppStrings.savingError,
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 2,
-              backgroundColor: Colors.red,
-              textColor: Colors.black,
-              fontSize: 16.0);
+           ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text(AppStrings.savingError)));
+         
         }
       },
       builder: (context, state) {

@@ -21,13 +21,15 @@ class InfoLabel extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
+              Flexible(
+                flex: 1,
                 child: Text(
                   title,
                   style: AppTypography.defaultTextStyle,
                 ),
               ),
-              Expanded(
+              Flexible(
+                flex: 2,
                 child: Align(alignment: Alignment.centerRight, child: data),
               ),
             ],

@@ -3,8 +3,10 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
 import 'package:sport_plus/models/coach.dart';
+import 'package:sport_plus/models/rating/object_type.dart';
 import 'package:sport_plus/screens/facility_details/models/day_training.dart';
 import 'package:sport_plus/screens/trainings/trainings_screen.dart';
+import 'package:sport_plus/widgets/add_rating_button.dart';
 
 class CoachTab extends StatelessWidget {
   final List<Coach> coaches;
@@ -41,9 +43,21 @@ class CoachTab extends StatelessWidget {
                         children: [
                           Align(
                             alignment: Alignment.topRight,
-                            child: RatingStars(
-                              value: coach.rating.rate.toDouble(),
-                              valueLabelVisibility: false,
+                            child: Column(
+                              children: [
+                                RatingStars(
+                                  value: coach.rating.rate.toDouble(),
+                                  valueLabelVisibility: false,
+                                ),
+                                const SizedBox(height: 5),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  child: AddRatingButton(
+                                      objectId: coach.id,
+                                      objectType: ObjectType.COACH),
+                                )
+                              ],
                             ),
                           ),
                           const SizedBox(height: 20),

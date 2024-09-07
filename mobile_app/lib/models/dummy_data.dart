@@ -5,7 +5,6 @@ import 'package:sport_plus/models/sport_equipment.dart';
 import 'package:sport_plus/models/sport_facility.dart';
 import 'package:sport_plus/models/sport_facility_news.dart';
 import 'package:sport_plus/models/training_session.dart';
-import 'package:sport_plus/models/user.dart';
 
 class DummyData {
   static final Rating rating1 = Rating(id: 1, rate: 5);
@@ -70,22 +69,6 @@ class DummyData {
         "https://comcomzone.pl/uploads/images/podstrona_nowa_huta_silownia.png",
   );
 
-  static final User user1 = User(
-    id: 1,
-    name: "Jane",
-    surname: "Doe",
-    email: "jane.doe@example.com",
-    imageUrl: null,
-  );
-
-  static final User user2 = User(
-    id: 2,
-    name: "John",
-    surname: "Smith",
-    email: "john.smith@example.com",
-    imageUrl: "https://example.com/john.png",
-  );
-
   static final Coach coach1 = Coach(
     id: 1,
     name: "Emily",
@@ -113,7 +96,6 @@ class DummyData {
     capacity: 20,
     freeBooked: true,
     rating: rating3,
-    participants: [user1],
   );
 
   static final TrainingSession session2 = TrainingSession(
@@ -127,14 +109,13 @@ class DummyData {
     capacity: 15,
     freeBooked: false,
     rating: rating3,
-    participants: [user2],
   );
 
   static final SportFacility facility1 = SportFacility(
     id: 1,
     name: "Main Gym",
     description: "A large gym with modern equipment.",
-    address: "123 Fitness St.",
+    address: "Poznań, Półwiejska 17",
     type: "Gym",
     membershipRequired: true,
     imageUrl:
@@ -142,7 +123,6 @@ class DummyData {
     openHours: openHours1,
     rating: rating3,
     news: [news1, news2],
-    participants: [user1, user2],
     equipment: [equipment1, equipment2],
     tranings: [session1, session2],
     coaches: [coach1, coach2],
@@ -160,7 +140,6 @@ class DummyData {
     openHours: openHours2,
     rating: rating2,
     news: [news2],
-    participants: [user1],
     equipment: [],
     coaches: [coach2],
     tranings: [session1, session2],
@@ -169,10 +148,6 @@ class DummyData {
   // Static getters for data retrieval
   static List<SportFacility> getSportFacilities() {
     return [facility1, facility2];
-  }
-
-  static List<User> getUsers() {
-    return [user1, user2];
   }
 
   static List<Coach> getCoaches() {

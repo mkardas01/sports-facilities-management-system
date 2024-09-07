@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
-import 'package:sport_plus/models/user.dart';
+import 'package:sport_plus/models/user/user_dto.dart';
 import 'package:sport_plus/screens/profile/edit_profile/edit_profile_screen.dart';
 import 'package:sport_plus/screens/profile/profile/widgets/profil_info_label.dart';
 import 'package:sport_plus/widgets/app_scaffold.dart';
 import 'package:sport_plus/widgets/generic_button.dart';
 
 class ProfileLoadedView extends StatelessWidget {
-  final User user;
+  final UserDto user;
   final File? avatarFile;
   const ProfileLoadedView(
       {super.key, required this.user, required this.avatarFile});

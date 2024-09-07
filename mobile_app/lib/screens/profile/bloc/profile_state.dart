@@ -7,7 +7,7 @@ enum AvatarLoadingStatus { idle, saving, saved, savingError }
 class ProfileState extends Equatable {
   final ProfileLoadingStatus status;
   final AvatarLoadingStatus avatarStatus;
-  final User? user;
+  final UserDto? user;
   final String avatarUrl;
   final File? avatarFile;
   const ProfileState(
@@ -20,7 +20,7 @@ class ProfileState extends Equatable {
   ProfileState copyWith(
       {ProfileLoadingStatus? status,
       AvatarLoadingStatus? avatarStatus,
-      User? user,
+      UserDto? user,
       String? avatarUrl,
       File? avatarFile}) {
     return ProfileState(

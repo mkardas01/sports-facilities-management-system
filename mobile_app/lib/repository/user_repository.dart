@@ -8,15 +8,24 @@ class UserRepository {
   final Logger _logger = locator.get<Logger>();
 
   Future<UserDto?> getCurrentUser() async {
-    const String url = "/api/User";
+    const String url = "/api/user/";
     try {
       var response = await _client.dio.get(url);
-      var x = 2;
-      var result = UserDto.fromJson(response.data);
-      return result;
+      return UserDto.fromJson(response.data);
     } catch (e) {
       _logger.e("Błąd na endpoincie $url: $e");
       return null;
+    }
+  }
+
+  Future<bool> updateUser(UserDto user) async {
+    const String url = "/api/user/update";
+    try {
+      await _client.dio.put(url, data: user.toJson());
+      return true;
+    } catch (e) {
+      _logger.e("Błąd na endpoincie $url: $e");
+      return false;
     }
   }
 }

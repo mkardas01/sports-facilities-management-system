@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
@@ -35,14 +34,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         switch (state.status) {
           case SignInLoadingStatus.error:
             Navigator.pop(context);
-            Fluttertoast.showToast(
-                msg: AppStrings.error,
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 2,
-                backgroundColor: Colors.red,
-                textColor: Colors.black,
-                fontSize: 16.0);
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text(AppStrings.error)));
             break;
           case SignInLoadingStatus.idle:
             break;
