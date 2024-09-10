@@ -1,5 +1,6 @@
 package put.poznan.sport.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,7 @@ public class SportFacilityNews {
 
     @ManyToOne
     @JoinColumn(name = "sportFacilitiesId", insertable = false, updatable = false)
+    @JsonIgnore
     private SportFacility sportFacility;
 
     // Getters and Setters
