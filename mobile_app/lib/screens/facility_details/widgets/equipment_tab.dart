@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sport_plus/config/app_typography.dart';
-import 'package:sport_plus/models/sport_equipment.dart';
+import 'package:sport_plus/models/details/sport_equipment.dart';
 
 class EquipmentTab extends StatelessWidget {
   final List<SportEquipment> equipment;
@@ -25,8 +25,15 @@ class EquipmentTab extends StatelessWidget {
                         topLeft: Radius.circular(15),
                         bottomLeft: Radius.circular(15)),
                     child: Image.network(
-                      eq.imageUrl,
+                      eq.imageUrl ?? "",
                       width: MediaQuery.of(context).size.width * 0.35,
+                      errorBuilder: (context, error, stackTrace) => SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        child: const Icon(
+                          Icons.fitness_center,
+                          size: 60,
+                        ),
+                      ),
                     ),
                   ),
                   Expanded(
@@ -36,7 +43,7 @@ class EquipmentTab extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            eq.type,
+                            eq.type ?? "",
                             style: AppTypography.bigBoldTextStyle(),
                           ),
                           Text(
@@ -44,7 +51,7 @@ class EquipmentTab extends StatelessWidget {
                             style: AppTypography.defaultTextStyle,
                           ),
                           Text(
-                            eq.description,
+                            eq.description ?? "",
                             style: AppTypography.littleTextStyle,
                           ),
                         ],

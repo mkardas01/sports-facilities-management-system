@@ -4,7 +4,7 @@ import 'package:sport_plus/models/rating/object_type.dart';
 import 'package:sport_plus/widgets/add_rating_button.dart';
 
 class RatingRow extends StatelessWidget {
-  final int rating;
+  final double? rating;
   final int objectId;
   final ObjectType objectType;
   const RatingRow(
@@ -29,10 +29,12 @@ class RatingRow extends StatelessWidget {
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,
-                child: RatingStars(
-                  value: rating.toDouble(),
-                  valueLabelVisibility: false,
-                ),
+                child: rating != null
+                    ? RatingStars(
+                        value: rating!,
+                        valueLabelVisibility: false,
+                      )
+                    : const SizedBox(),
               ),
             ),
           ],

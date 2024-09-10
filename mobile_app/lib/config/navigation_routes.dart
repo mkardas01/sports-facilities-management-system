@@ -16,36 +16,36 @@ import 'package:sport_plus/screens/trainings/trainings_screen.dart';
 import 'package:sport_plus/services/locator.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
-  HomeScreen.route: (context) => BlocProvider(
-        create: (context) => locator.get<HomeBloc>()..add(HomeLoadingEvent()),
+  HomeScreen.route: (context) => BlocProvider.value(
+        value: locator.get<HomeBloc>()..add(HomeLoadingEvent()),
         child: const HomeScreen(),
       ),
-  FacilityDetailsScreen.route: (context) => BlocProvider(
-        create: (context) => locator.get<FacilityDetailsBloc>(),
+  FacilityDetailsScreen.route: (context) => BlocProvider.value(
+        value: locator.get<FacilityDetailsBloc>(),
         child: const FacilityDetailsScreen(),
       ),
-  TrainingsScreen.route: (context) => BlocProvider(
-        create: (context) => locator.get<TrainingsBloc>(),
+  TrainingsScreen.route: (context) => BlocProvider.value(
+        value: locator.get<TrainingsBloc>(),
         child: const TrainingsScreen(),
       ),
-  ProfileScreen.route: (context) => BlocProvider(
-        create: (context) => locator.get<ProfileBloc>()..add(InitDateEvent()),
+  ProfileScreen.route: (context) => BlocProvider.value(
+        value: locator.get<ProfileBloc>()..add(InitDateEvent()),
         child: const ProfileScreen(),
       ),
-  EditProfileScreen.route: (context) => BlocProvider(
-        create: (context) => locator.get<ProfileBloc>(),
+  EditProfileScreen.route: (context) => BlocProvider.value(
+        value: locator.get<ProfileBloc>(),
         child: const EditProfileScreen(),
       ),
-  SplashScreen.route: (context) => BlocProvider(
-        create: (context) => locator.get<SignInBloc>(),
+  SplashScreen.route: (context) => BlocProvider.value(
+        value: locator.get<SignInBloc>(),
         child: const SplashScreen(),
       ),
-  SignInScreen.route: (context) => BlocProvider(
-        create: (context) => locator.get<SignInBloc>(),
+  SignInScreen.route: (context) => BlocProvider.value(
+        value: locator.get<SignInBloc>(),
         child: const SignInScreen(),
       ),
-  SignUpScreen.route: (context) => BlocProvider(
-        create: (context) => locator.get<SignInBloc>(),
+  SignUpScreen.route: (context) => BlocProvider.value(
+        value: locator.get<SignInBloc>(),
         child: const SignUpScreen(),
       ),
 };

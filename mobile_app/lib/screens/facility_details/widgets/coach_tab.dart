@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
-import 'package:sport_plus/models/coach.dart';
 import 'package:sport_plus/models/rating/object_type.dart';
-import 'package:sport_plus/screens/facility_details/models/day_training.dart';
+import 'package:sport_plus/screens/facility_details/models/facility_data.dart';
 import 'package:sport_plus/screens/trainings/trainings_screen.dart';
 import 'package:sport_plus/widgets/add_rating_button.dart';
 
 class CoachTab extends StatelessWidget {
-  final List<Coach> coaches;
-  final List<DayTrainings> trainings;
-  const CoachTab({super.key, required this.coaches, required this.trainings});
+  final FacilityData facility;
+  const CoachTab({super.key, required this.facility});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class CoachTab extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ...coaches.map(
+          ...facility.coaches.map(
             (coach) => Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -34,6 +32,13 @@ class CoachTab extends StatelessWidget {
                     child: Image.network(
                       coach.imageUrl,
                       width: MediaQuery.of(context).size.width * 0.35,
+                      errorBuilder: (context, error, stackTrace) => SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        child: const Icon(
+                          Icons.person,
+                          size: 60,
+                        ),
+                      ),
                     ),
                   ),
                   Expanded(
@@ -45,9 +50,12 @@ class CoachTab extends StatelessWidget {
                             alignment: Alignment.topRight,
                             child: Column(
                               children: [
-                                RatingStars(
-                                  value: coach.rating.rate.toDouble(),
-                                  valueLabelVisibility: false,
+                                Visibility(
+                                  visible: coach.averageRating != null,
+                                  child: RatingStars(
+                                    value: coach.averageRating ?? 0,
+                                    valueLabelVisibility: false,
+                                  ),
                                 ),
                                 const SizedBox(height: 5),
                                 SizedBox(
@@ -68,7 +76,7 @@ class CoachTab extends StatelessWidget {
                           TextButton(
                               onPressed: () => Navigator.pushNamed(
                                   context, TrainingsScreen.route,
-                                  arguments: trainings
+                                  arguments: facility.trainings
                                       .where((element) =>
                                           element.coachId == coach.id)
                                       .toList()),

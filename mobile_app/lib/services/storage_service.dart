@@ -13,6 +13,7 @@ class StorageService {
 
   Future<void> addToken(String token) async {
     await storage.write(key: "token", value: token);
+    log(token);
   }
 
   Future<void> removeToken() async {

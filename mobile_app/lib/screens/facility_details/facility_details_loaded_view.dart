@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/models/rating/object_type.dart';
-import 'package:sport_plus/screens/facility_details/models/day_training.dart';
-import 'package:sport_plus/models/sport_facility.dart';
-import 'package:sport_plus/screens/facility_details/models/open_hours_item.dart';
+import 'package:sport_plus/screens/facility_details/models/facility_data.dart';
 import 'package:sport_plus/screens/facility_details/widgets/coach_tab.dart';
 import 'package:sport_plus/screens/facility_details/widgets/equipment_tab.dart';
 import 'package:sport_plus/screens/facility_details/widgets/info_tab.dart';
@@ -12,14 +10,8 @@ import 'package:sport_plus/screens/facility_details/widgets/rating_row.dart';
 import 'package:sport_plus/widgets/app_scaffold.dart';
 
 class FacilityDetailsLoadedView extends StatelessWidget {
-  final SportFacility facility;
-  final List<DayTrainings> trainings;
-  final List<OpenHoursItem> openHours;
-  const FacilityDetailsLoadedView(
-      {super.key,
-      required this.facility,
-      required this.trainings,
-      required this.openHours});
+  final FacilityData facility;
+  const FacilityDetailsLoadedView({super.key, required this.facility});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +24,11 @@ class FacilityDetailsLoadedView extends StatelessWidget {
           Stack(
             alignment: Alignment.bottomRight,
             children: [
-              Image.network(facility.imageUrl),
+              Image.network(facility.imageUrl,
+                  errorBuilder: (context, error, stackTrace) =>
+                      const SizedBox()),
               RatingRow(
-                rating: facility.rating.rate,
+                rating: facility.rating,
                 objectId: facility.id,
                 objectType: ObjectType.SPORT_FACILITY,
               )
@@ -64,12 +58,9 @@ class FacilityDetailsLoadedView extends StatelessWidget {
                       children: [
                         InfoTab(
                           facility: facility,
-                          trainings: trainings,
-                          openHours: openHours,
                         ),
                         CoachTab(
-                          coaches: facility.coaches,
-                          trainings: trainings,
+                          facility: facility,
                         ),
                         EquipmentTab(
                           equipment: facility.equipment,

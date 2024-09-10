@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_plus/config/app_strings.dart';
-import 'package:sport_plus/models/sport_facility.dart';
 import 'package:sport_plus/screens/facility_details/bloc/facility_details_bloc.dart';
 import 'package:sport_plus/screens/facility_details/facility_details_loaded_view.dart';
 import 'package:sport_plus/widgets/error_view.dart';
@@ -22,7 +21,7 @@ class _FacilityDetailsScreenState extends State<FacilityDetailsScreen> {
     var modalRoute = ModalRoute.of(context);
     if (modalRoute != null) {
       var arg = modalRoute.settings.arguments;
-      if (arg is SportFacility) {
+      if (arg is int) {
         context
             .read<FacilityDetailsBloc>()
             .add(LoadingFacilityDetailsEvent(arg));
@@ -67,8 +66,6 @@ class _FacilityDetailsScreenState extends State<FacilityDetailsScreen> {
             }
             return FacilityDetailsLoadedView(
               facility: facility,
-              trainings: state.trainings,
-              openHours: state.openHours,
             );
           case FacilityDetailsLoadingStatus.error:
             return const ErrorView();

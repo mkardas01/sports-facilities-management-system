@@ -54,6 +54,8 @@ class NewsDialog extends StatelessWidget {
                           child: Image.network(
                             element.imageUrl,
                             fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const SizedBox(),
                           ),
                         ),
                       ),

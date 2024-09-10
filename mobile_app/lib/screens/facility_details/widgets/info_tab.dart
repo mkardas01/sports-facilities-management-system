@@ -1,26 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
-import 'package:sport_plus/screens/facility_details/models/day_training.dart';
-import 'package:sport_plus/models/sport_facility.dart';
-import 'package:sport_plus/screens/facility_details/models/open_hours_item.dart';
+import 'package:sport_plus/screens/facility_details/models/facility_data.dart';
 import 'package:sport_plus/screens/facility_details/widgets/info_label.dart';
 import 'package:sport_plus/screens/facility_details/widgets/news_dialog.dart';
 import 'package:sport_plus/screens/trainings/trainings_screen.dart';
 
 class InfoTab extends StatelessWidget {
-  final SportFacility facility;
-  final List<DayTrainings> trainings;
-  final List<OpenHoursItem> openHours;
-  const InfoTab(
-      {super.key,
-      required this.facility,
-      required this.trainings,
-      required this.openHours});
+  final FacilityData facility;
+  const InfoTab({super.key, required this.facility});
 
   @override
   Widget build(BuildContext context) {
@@ -48,24 +38,26 @@ class InfoTab extends StatelessWidget {
                       facility.address,
                       style: AppTypography.defaultBoldTextStyle(),
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        await MapsLauncher.launchQuery(facility.address);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const Icon(
-                            Icons.location_on_outlined,
-                            color: AppColors.mainColor,
-                          ),
-                          Text(
-                            AppStrings.facilityMap,
-                            style: AppTypography.detailTextStyle,
-                          ),
-                        ],
-                      ),
-                    ),
+                    facility.address.isNotEmpty
+                        ? GestureDetector(
+                            onTap: () async {
+                              await MapsLauncher.launchQuery(facility.address);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                const Icon(
+                                  Icons.location_on_outlined,
+                                  color: AppColors.mainColor,
+                                ),
+                                Text(
+                                  AppStrings.facilityMap,
+                                  style: AppTypography.detailTextStyle,
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(),
                   ],
                 ),
                 title: AppStrings.address),
@@ -80,18 +72,21 @@ class InfoTab extends StatelessWidget {
                         color: Colors.red,
                       ),
                 title: AppStrings.membershipRequired),
-            Text(
-              AppStrings.openHours,
-              style: AppTypography.defaultBoldTextStyle(),
+            Visibility(
+              visible: facility.openHours.isNotEmpty,
+              child: Text(
+                AppStrings.openHours,
+                style: AppTypography.defaultBoldTextStyle(),
+              ),
             ),
-            ...openHours.map(
+            ...facility.openHours.entries.map(
               (hour) => InfoLabel(
                 showDivider: false,
                 data: Text(
                   hour.value,
                   style: AppTypography.defaultBoldTextStyle(),
                 ),
-                title: hour.day,
+                title: hour.key,
               ),
             ),
             Row(
@@ -100,7 +95,7 @@ class InfoTab extends StatelessWidget {
                   child: TextButton(
                     onPressed: () => Navigator.pushNamed(
                         context, TrainingsScreen.route,
-                        arguments: trainings),
+                        arguments: facility.trainings),
                     child: const Text(AppStrings.checkTrainings),
                   ),
                 ),

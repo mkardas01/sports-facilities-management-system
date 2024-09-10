@@ -29,7 +29,7 @@ class SportFacilitiesSlider extends StatelessWidget {
             return GestureDetector(
               onTap: () => Navigator.pushNamed(
                   context, FacilityDetailsScreen.route,
-                  arguments: element),
+                  arguments: element.id),
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
