@@ -39,6 +39,11 @@ public class TrainingSessionImpl implements TrainingSessionService {
     }
 
     @Override
+    public List<TrainingSession> getTrainingSessionsBySportFacilityId(int sportFacilityId) {
+        return trainingSessionRepository.findBySportFacilityId(sportFacilityId);
+    }
+
+    @Override
     public boolean deleteSession(int id) {
         TrainingSession trainingSession = trainingSessionRepository.findById(id)
                 .orElseThrow(() -> new TrainingSessionNotFoundException("TrainingSession with id " + id + " not found"));
