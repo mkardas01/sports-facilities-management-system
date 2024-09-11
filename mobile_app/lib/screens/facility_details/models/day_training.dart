@@ -5,7 +5,7 @@ class DayTrainings {
   final DateTime end;
   final int coachId;
   final int trainingId;
-  final bool freeBooked;
+  final int freeBooked;
   const DayTrainings(
       {required this.description,
       required this.end,

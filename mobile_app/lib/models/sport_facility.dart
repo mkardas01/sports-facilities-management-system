@@ -2,7 +2,6 @@ import 'package:sport_plus/models/coach.dart';
 import 'package:sport_plus/models/open_hours.dart';
 import 'package:sport_plus/models/rating.dart';
 import 'package:sport_plus/models/sport_equipment.dart';
-import 'package:sport_plus/models/sport_facility_news.dart';
 import 'package:sport_plus/models/training_session.dart';
 
 class SportFacility {
@@ -15,7 +14,6 @@ class SportFacility {
   final String imageUrl;
   final OpenHours openHours;
   final Rating rating;
-  final List<SportFacilityNews> news;
 
   final List<SportEquipment> equipment;
   final List<Coach> coaches;
@@ -29,7 +27,6 @@ class SportFacility {
       required this.type,
       required this.membershipRequired,
       required this.imageUrl,
-      required this.news,
       required this.equipment,
       required this.coaches,
       required this.openHours,

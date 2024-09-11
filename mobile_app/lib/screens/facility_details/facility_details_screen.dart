@@ -17,17 +17,20 @@ class FacilityDetailsScreen extends StatefulWidget {
 
 class _FacilityDetailsScreenState extends State<FacilityDetailsScreen> {
   @override
-  void didChangeDependencies() {
-    var modalRoute = ModalRoute.of(context);
-    if (modalRoute != null) {
-      var arg = modalRoute.settings.arguments;
-      if (arg is int) {
-        context
-            .read<FacilityDetailsBloc>()
-            .add(LoadingFacilityDetailsEvent(arg));
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var modalRoute = ModalRoute.of(context);
+      if (modalRoute != null) {
+        var arg = modalRoute.settings.arguments;
+        if (arg is int) {
+          context
+              .read<FacilityDetailsBloc>()
+              .add(LoadingFacilityDetailsEvent(arg));
+        }
       }
-    }
-    super.didChangeDependencies();
+    });
   }
 
   @override

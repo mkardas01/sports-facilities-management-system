@@ -135,7 +135,7 @@ class _TrainingsScreenState extends State<TrainingsScreen>
                       end: training.end,
                       onTap: () => showDialog(
                         context: context,
-                        builder: (ctx) => training.freeBooked
+                        builder: (ctx) => training.freeBooked != 0
                             ? BlocProvider.value(
                                 value: context.read<TrainingsBloc>(),
                                 child: TrainingParticipationDialog(

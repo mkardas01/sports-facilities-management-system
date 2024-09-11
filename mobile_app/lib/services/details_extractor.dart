@@ -6,8 +6,12 @@ import 'package:sport_plus/models/details/open_time.dart';
 import 'package:sport_plus/models/details/opening_time.dart';
 import 'package:sport_plus/screens/facility_details/models/coach_with_rating.dart';
 import 'package:sport_plus/screens/facility_details/models/facility_data.dart';
+import 'package:sport_plus/services/training_service.dart';
 
 class DetailsExtractor {
+  final TrainingService trainingService;
+  DetailsExtractor({required this.trainingService});
+
   FacilityData getData(SportFacilityDetails details) {
     return FacilityData(
         id: details.id ?? -1,
@@ -21,8 +25,9 @@ class DetailsExtractor {
         coaches: _getCoachesData(details.coaches, details.coachRatings),
         equipment: details.equipment ?? [],
         rating: details.averageRating,
-        trainings: [], //TODO
-        news: []); //TODO
+        trainings:
+            trainingService.extractTrainings(details.trainingSessions ?? []),
+        news: details.news ?? []);
   }
 
   List<CoachWithRating> _getCoachesData(

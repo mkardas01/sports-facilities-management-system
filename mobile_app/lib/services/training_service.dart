@@ -1,34 +1,44 @@
+import 'package:sport_plus/models/details/training_session.dart';
 import 'package:sport_plus/screens/facility_details/models/day_training.dart';
-import 'package:sport_plus/models/sport_facility.dart';
 
 class TrainingService {
-  List<DayTrainings> extractTrainings(SportFacility facility) {
+  List<DayTrainings> extractTrainings(List<TrainingSession> data) {
     List<DayTrainings> trainings = [];
-    for (var training in facility.tranings) {
-      if (training.isWeekly) {
-        var trainingDate = _getTrainingDateThisWeek(training.trainingDate);
+    for (var training in data) {
+      var date = training.trainingDate;
+      var startTime = training.startHour?.split(":") ?? []; //TODO check
+      var startHour = int.tryParse(startTime[0]);
+      var startMin = int.tryParse(startTime[1]) ?? 0;
+      var duration = training.duration;
+      if (date == null || startHour == null || duration == null) continue;
+      var trainingId = training.id ?? -1;
+      var freeBooked = training.freeBooked ?? 0;
+      var coachId = training.coachesId ?? -1;
+      var coachName = training.coach?.name ?? "";
+      var coachSurname = training.coach?.surname ?? "";
+      var trainingName = training.name ?? "";
+      if (training.isWeekly == 1) {
+        var trainingDate = _getTrainingDateThisWeek(date);
         trainings.add(DayTrainings(
-            trainingId: training.id,
-            freeBooked: training.freeBooked,
-            coachId: training.coach.id,
-            description:
-                "prowadzone przez: ${training.coach.name} ${training.coach.surname}",
+            trainingId: trainingId,
+            freeBooked: freeBooked,
+            coachId: coachId,
+            description: "prowadzone przez: $coachName $coachSurname",
             end: trainingDate
-                .add(Duration(hours: training.startHour + training.duration)),
-            start: trainingDate.add(Duration(hours: training.startHour)),
-            title: training.name));
-      } else if (_isSameWeek(training.trainingDate)) {
-        trainings.add(DayTrainings(
-            trainingId: training.id,
-            freeBooked: training.freeBooked,
-            coachId: training.coach.id,
-            description:
-                "prowadzone przez: ${training.coach.name} ${training.coach.surname}",
-            end: training.trainingDate
-                .add(Duration(hours: training.startHour + training.duration)),
+                .add(Duration(hours: startHour, minutes: startMin + duration)),
             start:
-                training.trainingDate.add(Duration(hours: training.startHour)),
-            title: training.name));
+                trainingDate.add(Duration(hours: startHour, minutes: startMin)),
+            title: trainingName));
+      } else if (_isSameWeek(date)) {
+        trainings.add(DayTrainings(
+            trainingId: trainingId,
+            freeBooked: freeBooked,
+            coachId: coachId,
+            description: "prowadzone przez: $coachName $coachSurname",
+            end: date
+                .add(Duration(hours: startHour, minutes: startMin + duration)),
+            start: date.add(Duration(hours: startHour, minutes: startMin)),
+            title: trainingName));
       }
     }
     return trainings;

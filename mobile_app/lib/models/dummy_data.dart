@@ -3,7 +3,6 @@ import 'package:sport_plus/models/open_hours.dart';
 import 'package:sport_plus/models/rating.dart';
 import 'package:sport_plus/models/sport_equipment.dart';
 import 'package:sport_plus/models/sport_facility.dart';
-import 'package:sport_plus/models/sport_facility_news.dart';
 import 'package:sport_plus/models/training_session.dart';
 
 class DummyData {
@@ -49,24 +48,6 @@ class DummyData {
     description: "Set of adjustable dumbbells.",
     imageUrl:
         "https://as1.ftcdn.net/v2/jpg/02/68/20/24/1000_F_268202443_KkdJz3xUEFXlMYhdUMn1yh77c2a6jt6u.jpg",
-  );
-
-  static final SportFacilityNews news1 = SportFacilityNews(
-    id: 1,
-    title: "New Yoga Classes",
-    description:
-        "Join our new morning yoga classes every Monday and Wednesday.",
-    imageUrl:
-        "https://comcomzone.pl/uploads/images/podstrona_nowa_huta_silownia.png",
-  );
-
-  static final SportFacilityNews news2 = SportFacilityNews(
-    id: 2,
-    title: "Renovation Completed",
-    description:
-        "We are excited to announce the completion of our facility renovation.",
-    imageUrl:
-        "https://comcomzone.pl/uploads/images/podstrona_nowa_huta_silownia.png",
   );
 
   static final Coach coach1 = Coach(
@@ -122,7 +103,6 @@ class DummyData {
         "https://comcomzone.pl/uploads/images/podstrona_nowa_huta_silownia.png",
     openHours: openHours1,
     rating: rating3,
-    news: [news1, news2],
     equipment: [equipment1, equipment2],
     tranings: [session1, session2],
     coaches: [coach1, coach2],
@@ -139,7 +119,6 @@ class DummyData {
         "https://thyroset.pl/blog/wp-content/uploads/2020/07/Tarczyca-a-joga-scaled-1200x675.jpeg",
     openHours: openHours2,
     rating: rating2,
-    news: [news2],
     equipment: [],
     coaches: [coach2],
     tranings: [session1, session2],
@@ -156,10 +135,6 @@ class DummyData {
 
   static List<SportEquipment> getSportEquipment() {
     return [equipment1, equipment2];
-  }
-
-  static List<SportFacilityNews> getSportFacilityNews() {
-    return [news1, news2];
   }
 
   static List<Rating> getRatings() {

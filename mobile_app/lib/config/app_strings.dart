@@ -23,7 +23,7 @@ class AppStrings {
   static const String no = "Nie";
   static const String agree = "Rozumiem";
   static const String trainingNotAvaliable =
-      "Aby zapisać się na trening musisz posiadać członowstwo obiektu";
+      "Brak wolnych miejsc na te zajęcia";
   static const String trainingParticipation =
       "Chcesz się zapisać na ten trening?";
   static const String participationSaved =

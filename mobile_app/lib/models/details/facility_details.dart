@@ -2,6 +2,8 @@ import 'package:sport_plus/models/details/coach.dart';
 import 'package:sport_plus/models/details/coach_avarege_rating.dart';
 import 'package:sport_plus/models/details/open_time.dart';
 import 'package:sport_plus/models/details/sport_equipment.dart';
+import 'package:sport_plus/models/details/sport_facility_news.dart';
+import 'package:sport_plus/models/details/training_session.dart';
 
 class SportFacilityDetails {
   int? id;
@@ -16,21 +18,24 @@ class SportFacilityDetails {
   List<SportEquipment>? equipment;
   double? averageRating;
   List<CoachAverageRating>? coachRatings;
+  List<SportFacilityNews>? news;
+  List<TrainingSession>? trainingSessions;
 
-  SportFacilityDetails({
-    this.id,
-    this.name,
-    this.description,
-    this.address,
-    this.type,
-    this.membershipRequired = false,
-    this.imageUrl,
-    this.openHours,
-    this.coaches,
-    this.equipment,
-    this.averageRating,
-    this.coachRatings,
-  });
+  SportFacilityDetails(
+      {this.id,
+      this.name,
+      this.description,
+      this.address,
+      this.type,
+      this.membershipRequired = false,
+      this.imageUrl,
+      this.openHours,
+      this.coaches,
+      this.equipment,
+      this.averageRating,
+      this.coachRatings,
+      this.news,
+      this.trainingSessions});
 
   factory SportFacilityDetails.fromJson(Map<String, dynamic> json) {
     return SportFacilityDetails(

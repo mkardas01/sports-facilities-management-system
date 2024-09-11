@@ -24,7 +24,8 @@ void setUp() {
   locator.registerLazySingleton<Logger>(() => Logger());
   locator.registerLazySingleton<HttpClient>(() => HttpClient());
   locator.registerLazySingleton<TrainingService>(() => TrainingService());
-  locator.registerLazySingleton<DetailsExtractor>(() => DetailsExtractor());
+  locator.registerLazySingleton<DetailsExtractor>(
+      () => DetailsExtractor(trainingService: locator.get<TrainingService>()));
   locator.registerLazySingleton<ImageService>(() => ImageService());
   locator.registerLazySingleton<LocationService>(() => LocationService());
 
