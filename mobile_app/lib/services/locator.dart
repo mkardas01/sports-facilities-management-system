@@ -6,12 +6,14 @@ import 'package:sport_plus/repository/rating_repository.dart';
 import 'package:sport_plus/repository/user_repository.dart';
 import 'package:sport_plus/screens/facility_details/bloc/facility_details_bloc.dart';
 import 'package:sport_plus/screens/home/bloc/home_bloc.dart';
+import 'package:sport_plus/screens/map/bloc/map_bloc.dart';
 import 'package:sport_plus/screens/profile/bloc/profile_bloc.dart';
 import 'package:sport_plus/screens/splash/bloc/sign_in_bloc.dart';
 import 'package:sport_plus/screens/trainings/bloc/trainings_bloc.dart';
 import 'package:sport_plus/services/details_extractor.dart';
 import 'package:sport_plus/services/http/http_client.dart';
 import 'package:sport_plus/services/image_service.dart';
+import 'package:sport_plus/services/location_service.dart';
 import 'package:sport_plus/services/storage_service.dart';
 import 'package:sport_plus/services/training_service.dart';
 
@@ -24,6 +26,7 @@ void setUp() {
   locator.registerLazySingleton<TrainingService>(() => TrainingService());
   locator.registerLazySingleton<DetailsExtractor>(() => DetailsExtractor());
   locator.registerLazySingleton<ImageService>(() => ImageService());
+  locator.registerLazySingleton<LocationService>(() => LocationService());
 
   //REPOS
   locator.registerLazySingleton<AuthRepository>(() => AuthRepository());
@@ -47,4 +50,6 @@ void setUp() {
   locator.registerLazySingleton<SignInBloc>(() => SignInBloc(
       authRepository: locator.get<AuthRepository>(),
       storageService: locator.get<StorageService>()));
+  locator.registerLazySingleton<MapBloc>(
+      () => MapBloc(locationService: locator.get<LocationService>()));
 }

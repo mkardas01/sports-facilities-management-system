@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/screens/home/bloc/home_bloc.dart';
+import 'package:sport_plus/screens/map/map_screen.dart';
 import 'package:sport_plus/screens/profile/profile/profile_screen.dart';
 import 'package:sport_plus/screens/splash/splash_screen.dart';
 import 'package:sport_plus/services/locator.dart';
@@ -42,6 +43,11 @@ class AppScaffold extends StatelessWidget {
                         Navigator.pushNamed(context, ProfileScreen.route),
                     leading: const Icon(Icons.person),
                     title: const Text(AppStrings.profile),
+                  ),
+                  ListTile(
+                    onTap: () => Navigator.pushNamed(context, MapScreen.route),
+                    leading: const Icon(Icons.map),
+                    title: const Text(AppStrings.facilitiesMap),
                   ),
                   BlocProvider.value(
                     value: locator.get<HomeBloc>(),

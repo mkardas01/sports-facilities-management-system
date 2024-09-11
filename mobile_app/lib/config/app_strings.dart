@@ -53,4 +53,11 @@ class AppStrings {
   static const String addRating = "Oceń";
   static const String addRatingSuccess = "Dodano ocenę";
   static const String facilityMap = "Znajdź na mapie";
+  static const String facilitiesMap = "Znajdź w pobliżu";
+  static const String goToDetails = "Przejdź do szczegółów";
+  static const String legend = "LEGENDA";
+  static const String icerink = "Lodowisko";
+  static const String gym = "Siłownia";
+  static const String field = "Boisko";
+  static const String otherType = "Inne";
 }
