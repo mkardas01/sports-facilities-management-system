@@ -1,5 +1,6 @@
 package put.poznan.sport.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public class TrainingSession {
 
     @ManyToOne
     @JoinColumn(name = "sportFacilitiesId", insertable = false, updatable = false)
+    @JsonIgnore
     private SportFacility sportFacility;
 
     @OneToMany(mappedBy = "trainingSession", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

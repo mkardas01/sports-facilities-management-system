@@ -6,6 +6,8 @@ import put.poznan.sport.dto.Coach.CoachCreateResponse;
 import put.poznan.sport.entity.Coach;
 import put.poznan.sport.entity.SportEquipment;
 import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.SportFacilityNews;
+import put.poznan.sport.entity.TrainingSession;
 import put.poznan.sport.entity.openHour.OpenHour;
 import put.poznan.sport.response.CoachAverageRating;
 import put.poznan.sport.response.SportFacilityDetailsResponse;
@@ -13,6 +15,8 @@ import put.poznan.sport.service.coach.CoachService;
 import put.poznan.sport.service.openHour.OpenHourService;
 import put.poznan.sport.service.rating.RatingService;
 import put.poznan.sport.service.sportEquipment.SportEquipmentService;
+import put.poznan.sport.service.sportFacilityNews.SportFacilityNewsService;
+import put.poznan.sport.service.trainingSession.TrainingSessionService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,12 +36,19 @@ public class SportFacilityDetailsService {
     @Autowired
     private RatingService ratingService;
 
-    public SportFacilityDetailsResponse getSportFacilityDetails(SportFacility sportFacility) {
+    @Autowired
+    private SportFacilityNewsService sportFacilityNewsService;
 
-        // Pobranie godzin otwarcia
+    @Autowired
+    private TrainingSessionService trainingSessionService;
+
+    public SportFacilityDetailsResponse getSportFacilityDetails(SportFacility sportFacility) {
+        // Pobierz wszystkie niezbędne dane na raz w momencie ładowania obiektu SportFacility
+
+        // Godziny otwarcia
         OpenHour openHour = sportFacility.getOpenHour();
 
-        // Pobranie listy trenerów i obliczenie średnich ocen
+        // Trenerzy i ich oceny
         List<Coach> coaches = sportFacility.getCoaches();
         List<CoachAverageRating> coachRatings = coaches.stream()
                 .map(coach -> CoachAverageRating.builder()
@@ -47,10 +58,26 @@ public class SportFacilityDetailsService {
                         .build())
                 .collect(Collectors.toList());
 
-        // Pobranie sprzętu sportowego
+        List<CoachCreateResponse> coachResponses = coaches.stream()
+                .map(coach -> CoachCreateResponse.builder()
+                        .id(coach.getId())
+                        .name(coach.getName())
+                        .surname(coach.getSurname())
+                        .sportFacilitiesId(coach.getSportFacility().getId())
+                        .imageUrl(coach.getImageUrl())
+                        .build())
+                .collect(Collectors.toList());
+
+        // Sprzęt sportowy
         List<SportEquipment> equipment = sportFacility.getSportEquipments();
 
-        // Obliczenie średniej oceny obiektu
+        // Newsy dotyczące obiektu
+        List<SportFacilityNews> news = sportFacilityNewsService.getFacilityNewsBySportFacilityId(sportFacility.getId());
+
+        // Sesje treningowe odbywające się w obiekcie
+        List<TrainingSession> trainingSessions = trainingSessionService.getTrainingSessionsBySportFacilityId(sportFacility.getId());
+
+        // Średnia ocena obiektu
         Double averageRating = ratingService.getSportFacilityAverageRating(sportFacility.getId());
 
         // Zbudowanie odpowiedzi
@@ -63,16 +90,12 @@ public class SportFacilityDetailsService {
                 .membershipRequired(sportFacility.isMembershipRequired())
                 .imageUrl(sportFacility.getImageUrl())
                 .openHours(openHour)
-                .coaches(coaches.stream().map(c -> CoachCreateResponse.builder()
-                        .id(c.getId())
-                        .name(c.getName())
-                        .surname(c.getSurname())
-                        .sportFacilitiesId(c.getSportFacility().getId())
-                        .imageUrl(c.getImageUrl())
-                        .build()).collect(Collectors.toList()))
+                .coaches(coachResponses)
                 .equipment(equipment)
                 .averageRating(averageRating)
                 .coachRatings(coachRatings)
+                .news(news)
+                .trainingSessions(trainingSessions)
                 .build();
     }
 }

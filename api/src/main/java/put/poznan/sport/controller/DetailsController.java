@@ -27,5 +27,11 @@ public class DetailsController {
 
         SportFacilityDetailsResponse response = sportFacilityDetailsService.getSportFacilityDetails(sportFacility);
         return ResponseEntity.ok(response);
+//@GetMapping("/{id}")
+//@CrossOrigin
+//public ResponseEntity<SportFacilityDetailsResponse> getSportFacilityDetails(@PathVariable Integer id) {
+//    SportFacilityDetailsResponse response = sportFacilityDetailsService.getSportFacilityDetails(id);
+//    return ResponseEntity.ok(response);
+//        }
     }
 }

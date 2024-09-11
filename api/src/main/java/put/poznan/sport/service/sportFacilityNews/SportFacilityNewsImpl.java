@@ -26,6 +26,11 @@ public class SportFacilityNewsImpl implements SportFacilityNewsService {
     }
 
     @Override
+    public List<SportFacilityNews> getFacilityNewsBySportFacilityId(int sportFacilityId) {
+        return sportFacilityNewsRepository.findBySportFacilitiesId(sportFacilityId); // Zakładając, że repozytorium obsługuje tę metodę
+    }
+
+    @Override
     public SportFacilityNews createFacilityNews(SportFacilityNews facilityNews) {
         return sportFacilityNewsRepository.save(facilityNews);
     }

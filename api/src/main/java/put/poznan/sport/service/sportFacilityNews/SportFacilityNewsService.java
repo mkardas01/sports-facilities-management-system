@@ -13,6 +13,8 @@ public interface SportFacilityNewsService {
 
     public SportFacilityNews getFacilityNewsById(int id);
 
+    List<SportFacilityNews> getFacilityNewsBySportFacilityId(int sportFacilityId);
+
     public SportFacilityNews updateFacilityNews(SportFacilityNews facilityNews);
 
     public SportFacilityNews createFacilityNews(SportFacilityNews news);

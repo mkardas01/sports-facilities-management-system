@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import put.poznan.sport.dto.Coach.CoachCreateResponse;
 import put.poznan.sport.entity.SportEquipment;
+import put.poznan.sport.entity.SportFacilityNews;
+import put.poznan.sport.entity.TrainingSession;
 import put.poznan.sport.entity.openHour.OpenHour;
 
 import java.util.List;
@@ -23,4 +25,6 @@ public class SportFacilityDetailsResponse {
     private List<SportEquipment> equipment;
     private Double averageRating;
     private List<CoachAverageRating> coachRatings;
+    private List<SportFacilityNews> news;
+    private List<TrainingSession> trainingSessions;
 }
