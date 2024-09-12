@@ -6,8 +6,10 @@ import put.poznan.sport.entity.SportFacilityParticipant;
 import put.poznan.sport.entity.SportFacilityParticipantId;
 import put.poznan.sport.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SportFacilityParticipantRepository extends JpaRepository<SportFacilityParticipant, SportFacilityParticipantId> {
     Optional <SportFacilityParticipant> findByUserAndSportFacilityAndIsActive(User user, SportFacility sportFacility, Integer isActive );
+    List<SportFacilityParticipant> findAllByUser(User user);
 }
