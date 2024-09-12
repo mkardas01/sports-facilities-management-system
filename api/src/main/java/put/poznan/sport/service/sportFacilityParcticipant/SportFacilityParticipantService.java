@@ -22,9 +22,8 @@ public interface SportFacilityParticipantService {
 
     public SportFacilityParticipant updateSportFacilityParticipant(SportFacilityParticipant sportFacilityParticipant);
 
-    public List<SportFacility> getFacilitiesByUserId(Integer userId);
 
-    List<Integer> getSportFacilityIdsByUserId(Integer userId);
+    List<SportFacility> getSportFacilitiesByLoggedInUser();
 
     public boolean deleteSportFacilityParticipant(SportFacilityParticipantId id);
 }
