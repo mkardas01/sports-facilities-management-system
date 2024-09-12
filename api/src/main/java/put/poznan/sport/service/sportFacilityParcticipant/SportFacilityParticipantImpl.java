@@ -1,14 +1,19 @@
 package put.poznan.sport.service.sportFacilityParcticipant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.SportFacilityParticipant;
 import put.poznan.sport.entity.SportFacilityParticipantId;
 import put.poznan.sport.entity.User;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityParticipantNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
 import put.poznan.sport.repository.SportFacilityParticipantRepository;
 import put.poznan.sport.repository.UserRepository;
+import put.poznan.sport.service.user.UserService;
+import put.poznan.sport.service.user.UserImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +24,9 @@ public class SportFacilityParticipantImpl implements SportFacilityParticipantSer
     @Autowired
     private SportFacilityParticipantRepository sportFacilityParticipantRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public List<SportFacilityParticipant> getAllFacilityParticipants() {
         return sportFacilityParticipantRepository.findAll();
@@ -28,25 +36,11 @@ public class SportFacilityParticipantImpl implements SportFacilityParticipantSer
     private UserRepository userRepository;
 
     @Override
-    public List<SportFacility> getFacilitiesByUserId(Integer userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
+    public List<SportFacility> getSportFacilitiesByLoggedInUser() {
+        User user = userService.getUser();
         return sportFacilityParticipantRepository.findAllByUser(user)
                 .stream()
                 .map(SportFacilityParticipant::getSportFacility)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Integer> getSportFacilityIdsByUserId(Integer userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Pobieramy ID obiektów sportowych, na które użytkownik jest zapisany
-        return sportFacilityParticipantRepository.findAllByUser(user)
-                .stream()
-                .map(participant -> participant.getSportFacility().getId())
                 .collect(Collectors.toList());
     }
 

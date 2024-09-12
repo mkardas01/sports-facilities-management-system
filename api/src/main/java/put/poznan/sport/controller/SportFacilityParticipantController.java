@@ -26,19 +26,19 @@ public class SportFacilityParticipantController {
         return new ResponseEntity<>(sportFacilityParticipantService.getAllFacilityParticipants(), HttpStatus.OK);
     }
 
-    @GetMapping("user/{userId}/facilities")
+    @GetMapping("facilities")
     @CrossOrigin
-    public ResponseEntity<List<SportFacility>> getFacilitiesByUserId(@PathVariable Integer userId) {
-        List<SportFacility> facilities = sportFacilityParticipantService.getFacilitiesByUserId(userId);
+    @ResponseBody
+    public ResponseEntity<List<SportFacility>> getSportFacilitiesForLoggedInUser() {
+        List<SportFacility> facilities = sportFacilityParticipantService.getSportFacilitiesByLoggedInUser();
         return ResponseEntity.ok(facilities);
     }
 
-    @GetMapping("user/{userId}/facility-ids")
+    @PostMapping("assign")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> getSportFacilityIdsByUserId(@PathVariable Integer userId) {
-        List<Integer> facilityIds = sportFacilityParticipantService.getSportFacilityIdsByUserId(userId);
-        return new ResponseEntity<>(facilityIds, HttpStatus.OK);
+    public ResponseEntity<?> assignUserToFacility(@RequestBody SportFacilityParticipant participant) {
+        return new ResponseEntity<>(sportFacilityParticipantService.createSportFacilityParticipant(participant), HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
