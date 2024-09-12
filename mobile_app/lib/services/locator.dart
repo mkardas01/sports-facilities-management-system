@@ -4,6 +4,7 @@ import 'package:sport_plus/repository/auth_repository.dart';
 import 'package:sport_plus/repository/facility_details_repository.dart';
 import 'package:sport_plus/repository/rating_repository.dart';
 import 'package:sport_plus/repository/user_repository.dart';
+import 'package:sport_plus/screens/calendar/bloc/calendar_bloc.dart';
 import 'package:sport_plus/screens/facility_details/bloc/facility_details_bloc.dart';
 import 'package:sport_plus/screens/home/bloc/home_bloc.dart';
 import 'package:sport_plus/screens/map/bloc/map_bloc.dart';
@@ -53,4 +54,5 @@ void setUp() {
       storageService: locator.get<StorageService>()));
   locator.registerLazySingleton<MapBloc>(
       () => MapBloc(locationService: locator.get<LocationService>()));
+  locator.registerLazySingleton<CalendarBloc>(() => CalendarBloc());
 }

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/screens/map/models/coordinates.dart';
 import 'package:sport_plus/models/dummy_data.dart';
 import 'package:sport_plus/screens/map/models/facility_coords.dart';
@@ -15,6 +16,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   }
 
   Future<void> _initData(InitDataEvent event, Emitter<MapState> emitter) async {
+    emitter(state.copyWith(isLoaded: false));
     var userCords = await locationService.getCoordinates();
     List<FacilityCoords> cords = [];
     var gyms = DummyData.getSportFacilities();

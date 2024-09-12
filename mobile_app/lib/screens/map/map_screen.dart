@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/screens/map/bloc/map_bloc.dart';
 import 'package:sport_plus/screens/map/widgets/facility_map_dialog.dart';
 import 'package:sport_plus/screens/map/widgets/legend.dart';
@@ -31,6 +32,8 @@ class _MapScreenState extends State<MapScreen> {
             children: [
               FlutterMap(
                 options: MapOptions(
+                    initialZoom:
+                        state.userLocation == AppConsts.centerCoords ? 6 : 14,
                     initialCenter: LatLng(state.userLocation.latitude,
                         state.userLocation.longitude)),
                 children: [

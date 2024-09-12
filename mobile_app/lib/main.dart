@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/navigation_routes.dart';
 import 'package:sport_plus/screens/splash/splash_screen.dart';
 import 'package:sport_plus/services/locator.dart';
 
-void main() {
+void main() async {
   setUp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('pl_PL');
   runApp(const MyApp());
 }
 

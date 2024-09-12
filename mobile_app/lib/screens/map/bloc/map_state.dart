@@ -7,7 +7,7 @@ class MapState extends Equatable {
   const MapState({
     this.isLoaded = false,
     this.cords = const [],
-    this.userLocation = const Coordinates(52.04, 19.28),
+    this.userLocation = AppConsts.centerCoords,
   });
 
   MapState copyWith(

@@ -60,4 +60,6 @@ class AppStrings {
   static const String gym = "Siłownia";
   static const String field = "Boisko";
   static const String otherType = "Inne";
+  static const String yourTrainings = "Twoje zajęcia";
+  static const String giveup = "Zrezygnuj";
 }
