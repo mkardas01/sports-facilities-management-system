@@ -25,15 +25,6 @@ import java.util.stream.Collectors;
 public class SportFacilityDetailsService {
 
     @Autowired
-    private CoachService coachService;
-
-    @Autowired
-    private OpenHourService openHourService;
-
-    @Autowired
-    private SportEquipmentService sportEquipmentService;
-
-    @Autowired
     private RatingService ratingService;
 
     @Autowired
@@ -43,12 +34,9 @@ public class SportFacilityDetailsService {
     private TrainingSessionService trainingSessionService;
 
     public SportFacilityDetailsResponse getSportFacilityDetails(SportFacility sportFacility) {
-        // Pobierz wszystkie niezbędne dane na raz w momencie ładowania obiektu SportFacility
 
-        // Godziny otwarcia
         OpenHour openHour = sportFacility.getOpenHour();
 
-        // Trenerzy i ich oceny
         List<Coach> coaches = sportFacility.getCoaches();
         List<CoachAverageRating> coachRatings = coaches.stream()
                 .map(coach -> CoachAverageRating.builder()
@@ -68,19 +56,14 @@ public class SportFacilityDetailsService {
                         .build())
                 .collect(Collectors.toList());
 
-        // Sprzęt sportowy
         List<SportEquipment> equipment = sportFacility.getSportEquipments();
 
-        // Newsy dotyczące obiektu
         List<SportFacilityNews> news = sportFacilityNewsService.getFacilityNewsBySportFacilityId(sportFacility.getId());
 
-        // Sesje treningowe odbywające się w obiekcie
         List<TrainingSession> trainingSessions = trainingSessionService.getTrainingSessionsBySportFacilityId(sportFacility.getId());
 
-        // Średnia ocena obiektu
         Double averageRating = ratingService.getSportFacilityAverageRating(sportFacility.getId());
 
-        // Zbudowanie odpowiedzi
         return SportFacilityDetailsResponse.builder()
                 .id(sportFacility.getId())
                 .name(sportFacility.getName())
