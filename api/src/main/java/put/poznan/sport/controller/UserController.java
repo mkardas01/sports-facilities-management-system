@@ -15,25 +15,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("all")
-    @CrossOrigin
-    @ResponseBody
-    public ResponseEntity<?> getAllUsers() {
-        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
-    }
-
    @GetMapping
    @CrossOrigin
    @ResponseBody
    public ResponseEntity<?> getUser() {
         return new ResponseEntity<>(userService.getUser(), HttpStatus.OK);
-   }
-
-   @PostMapping("create")
-   @CrossOrigin
-   @ResponseBody
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
    }
 
    @PutMapping("update")
@@ -42,10 +28,11 @@ public class UserController {
     public ResponseEntity<?> updateUser(@RequestBody UserDTO user) {
         return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
    }
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("delete")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> deleteUser(@PathVariable("id") int id) {
-        return new ResponseEntity<>(userService.deleteUserById(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUser() {
+        userService.deleteUser();
     }
 }

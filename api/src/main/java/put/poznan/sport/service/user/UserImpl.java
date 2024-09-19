@@ -64,9 +64,10 @@ public class UserImpl implements UserService {
 
 
     @Override
-    public boolean deleteUserById(int id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+    public boolean deleteUser() {
+        String currentUserEmail = getCurrentUsername();
+        User user = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika z adresem" + currentUserEmail));
 
         userRepository.delete(user);
         return true;

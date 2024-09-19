@@ -22,7 +22,7 @@ public interface UserService {
 
     public User updateUser(UserDTO user);
 
-    public boolean deleteUserById(int id);
+    public boolean deleteUser();
     public String getCurrentUsername();
 
     public void checkIfUserIsManager(SportFacility sportFacility);
