@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import put.poznan.sport.dto.User.UserDTO;
 import put.poznan.sport.entity.User;
 import put.poznan.sport.service.user.UserService;
 
@@ -38,7 +39,7 @@ public class UserController {
    @PutMapping("update")
    @CrossOrigin
    @ResponseBody
-    public ResponseEntity<?> updateUser(@RequestBody User user) {
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO user) {
         return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
    }
     @DeleteMapping("delete/{id}")

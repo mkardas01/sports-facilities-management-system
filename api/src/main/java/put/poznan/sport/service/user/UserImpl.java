@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import put.poznan.sport.dto.User.UserDTO;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.User;
 import put.poznan.sport.exception.exceptionClasses.*;
@@ -43,12 +44,24 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
-        userRepository.findById(user.getId())
-                .orElseThrow(() -> new UserNotFoundException("User with id " + user.getId() + " not found"));
+    public User updateUser(UserDTO userDTO) {
+        String currentUserEmail = getCurrentUsername();
+        User currentUser = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika z adresem " + currentUserEmail));
 
-        return userRepository.save(user);
+        if (userDTO.getName() != null) {
+            currentUser.setName(userDTO.getName());
+        }
+        if (userDTO.getSurname() != null) {
+            currentUser.setSurname(userDTO.getSurname());
+        }
+        if (userDTO.getImageUrl() != null) {
+            currentUser.setImageUrl(userDTO.getImageUrl());
+        }
+
+        return userRepository.save(currentUser);
     }
+
 
     @Override
     public boolean deleteUserById(int id) {
