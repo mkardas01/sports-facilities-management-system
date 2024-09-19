@@ -1,6 +1,7 @@
 package put.poznan.sport.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import put.poznan.sport.entity.openHour.OpenHour;
@@ -37,21 +38,27 @@ public class SportFacility {
     private String imageUrl;
 
     @ManyToMany(mappedBy = "managedFacilities")
+    @JsonIgnore
     private List<User> managers;
 
     @OneToOne(mappedBy = "sportFacility", orphanRemoval = true)
+    @JsonIgnore
     private OpenHour openHour;
 
     @OneToMany(mappedBy = "sportFacility", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Coach> coaches;
 
     @OneToMany(mappedBy = "sportFacility", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<TrainingSession> trainingSessions;
 
     @OneToMany(mappedBy = "sportFacility", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<SportFacilityNews> sportFacilityNews;
 
     @OneToMany(mappedBy = "ownerSportFacility", orphanRemoval = true)
+    @JsonIgnore
     private List<SportEquipment> sportEquipments;
 
 }
