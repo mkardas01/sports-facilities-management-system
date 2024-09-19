@@ -2,8 +2,7 @@ package put.poznan.sport.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import put.poznan.sport.entity.openHour.OpenHour;
 
 import java.util.List;
@@ -11,6 +10,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SportFacility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
