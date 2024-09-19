@@ -1,14 +1,10 @@
 package put.poznan.sport.service.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import put.poznan.sport.dto.User.UserDTO;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.User;
-import put.poznan.sport.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface UserService {
@@ -25,6 +21,6 @@ public interface UserService {
     public boolean deleteUser();
     public String getCurrentUsername();
 
-    public void checkIfUserIsManager(SportFacility sportFacility);
+    public void checkIfUserIsManagerOrAdmin(SportFacility sportFacility);
 
 }

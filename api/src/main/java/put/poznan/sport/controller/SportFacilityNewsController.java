@@ -18,44 +18,34 @@ public class SportFacilityNewsController {
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllSportFacilityNews() {
-
         return new ResponseEntity<>(sportFacilityNewsService.getAllFacilityNews(), HttpStatus.OK);
-
     }
 
     @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getSportFacilityNewsById(@PathVariable("id") Integer id) {
-
         return new ResponseEntity<>(sportFacilityNewsService.getFacilityNewsById(id),HttpStatus.OK);
-
     }
 
     @PostMapping("create")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createSportFacilityNews(@RequestBody SportFacilityNews news) {
-
         return new ResponseEntity<>(sportFacilityNewsService.createFacilityNews(news), HttpStatus.CREATED);
-
     }
 
     @PutMapping("update")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateSportFacilityNews(@RequestBody SportFacilityNews news) {
-
         return new ResponseEntity<>(sportFacilityNewsService.updateFacilityNews(news), HttpStatus.OK);
-
     }
 
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> deleteSportFacilityNews(@PathVariable("id") Integer id) {
-
         return new ResponseEntity<>(sportFacilityNewsService.deleteFacilityNews(id), HttpStatus.OK);
-
     }
 }

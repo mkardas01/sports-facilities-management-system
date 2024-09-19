@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.dto.User.UserDTO;
+import put.poznan.sport.entity.Authority;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.User;
 import put.poznan.sport.exception.exceptionClasses.*;
@@ -88,7 +89,7 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public void checkIfUserIsManager(SportFacility sportFacility){
+    public void checkIfUserIsManagerOrAdmin(SportFacility sportFacility){
 
         if (sportFacility == null) {
             throw new SportFacilityNotFoundException("Nie znaleziono podanego obiektu sportowego w bazie danych");
@@ -96,13 +97,15 @@ public class UserImpl implements UserService {
 
         String currentUser = this.getCurrentUsername();
 
+        User user = userRepository.findByEmail(currentUser).orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika o emailu " + currentUser));
+
         List<String> managerUserNames = sportFacility
                 .getManagers()
                 .stream()
                 .map(User::getUsername)
                 .toList();
 
-        if(!managerUserNames.contains(currentUser)){
+        if(!managerUserNames.contains(currentUser) && !user.getAuthorities().contains(Authority.ADMIN)){
             throw new InvalidUserException("Nie możesz zarządzać tym obiektem z poziomu tego konta");
         }
 

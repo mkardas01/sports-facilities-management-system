@@ -54,7 +54,7 @@ public class SportEquipmentImpl implements SportEquipmentService {
        SportFacility sportFacility = sportFacilityRepository.findById(equipment.getSportFacilityId())
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego o podanym id: " + equipment.getSportFacilityId()));
 
-        userService.checkIfUserIsManager(sportFacility);
+        userService.checkIfUserIsManagerOrAdmin(sportFacility);
 
         SportEquipment newSportEquipment = SportEquipment.builder()
                 .type(equipment.getType())
@@ -77,7 +77,7 @@ public class SportEquipmentImpl implements SportEquipmentService {
         SportEquipment oldEquipment = sportEquipmentRepository.findById(requestEquipment.getId())
                 .orElseThrow(() -> new SportEquipmentNotFoundException("Nie znaleziono przedmiotu: " + requestEquipment.getBrand() + requestEquipment.getModel()));
 
-        userService.checkIfUserIsManager(oldEquipment.getOwnerSportFacility());
+        userService.checkIfUserIsManagerOrAdmin(oldEquipment.getOwnerSportFacility());
 
         SportEquipment newEquipment = SportEquipment.builder()
                 .id(oldEquipment.getId())
@@ -100,7 +100,7 @@ public class SportEquipmentImpl implements SportEquipmentService {
         SportEquipment equipment = sportEquipmentRepository.findById(equipmentDeleteID)
                 .orElseThrow(() -> new SportEquipmentNotFoundException("Nie znaleziono przedmiotu o id: " + equipmentDeleteID));
 
-        userService.checkIfUserIsManager(equipment.getOwnerSportFacility());
+        userService.checkIfUserIsManagerOrAdmin(equipment.getOwnerSportFacility());
 
         sportEquipmentRepository.deleteById(equipmentDeleteID);
     }

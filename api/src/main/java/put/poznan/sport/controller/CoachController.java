@@ -71,7 +71,7 @@ public class CoachController {
         SportFacility sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId())
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie zaleziono obiektu sportowego"));
 
-        userService.checkIfUserIsManager(sportFacility);
+        userService.checkIfUserIsManagerOrAdmin(sportFacility);
 
         Coach coach = Coach.builder()
                 .name(coachDTO.getName())
@@ -91,7 +91,7 @@ public class CoachController {
         SportFacility sportFacility = sportFacilityRepository.findById(coachDTO.getSportFacilitiesId())
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie zaleziono obiektu sportowego"));
 
-        userService.checkIfUserIsManager(sportFacility);
+        userService.checkIfUserIsManagerOrAdmin(sportFacility);
 
         Coach coach = sportFacility.getCoaches()
                 .stream()
@@ -111,7 +111,7 @@ public class CoachController {
 
         Coach coach = coachRepository.findById(id).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono podanego trenera"));
 
-        userService.checkIfUserIsManager(coach.getSportFacility());
+        userService.checkIfUserIsManagerOrAdmin(coach.getSportFacility());
 
         coachService.deleteCoach(coach);
 
