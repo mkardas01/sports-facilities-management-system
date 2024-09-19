@@ -52,7 +52,7 @@ public class OpenHourController {
         SportFacility sportFacility = sportFacilityRepository.findById(openHour.getSportFacilityId())
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie zaleziono obiektu sportowego"));
 
-        userService.checkIfUserIsManager(sportFacility);
+        userService.checkIfUserIsManagerOrAdmin(sportFacility);
 
         OpenHour newOpenHour =  OpenHour.builder()
                 .sportFacility(sportFacility)
@@ -78,7 +78,7 @@ public class OpenHourController {
         OpenHour existingOpenHour = openHourRepository.findById(openHour.getSportFacilityId())
                 .orElseThrow(() -> new OpenHourNotFoundException("Nie znaleziono godzin otwarcia dla podanego obiektu"));
 
-        userService.checkIfUserIsManager(existingOpenHour.getSportFacility());
+        userService.checkIfUserIsManagerOrAdmin(existingOpenHour.getSportFacility());
 
         OpenHour newOpenHour =  OpenHour.builder()
                 .id(existingOpenHour.getId())
@@ -106,7 +106,7 @@ public class OpenHourController {
         OpenHour openHour = openHourRepository.findById(id)
                 .orElseThrow(() -> new OpenHourNotFoundException("Nie znaleziono godzin otwarcia dla podanego obiektu"));
 
-        userService.checkIfUserIsManager(openHour.getSportFacility());
+        userService.checkIfUserIsManagerOrAdmin(openHour.getSportFacility());
 
         openHourService.deleteOpenHour(openHour);
 
