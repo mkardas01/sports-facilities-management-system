@@ -55,19 +55,37 @@ public class SportFacilityImpl implements SportFacilityService {
     }
 
     @Override
-    public SportFacility updateSportFacility(SportFacility facility) {
-        sportFacilityRepository.findById(facility.getId())
-                .orElseThrow(() -> new SportFacilityNotFoundException("SportFacility with id " + facility.getId() + " not found"));
+    public SportFacility updateSportFacility(SportFacilityDTO facilityDTO) {
+        SportFacility sportFacility = sportFacilityRepository.findById(facilityDTO.getId())
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu o id " + facilityDTO.getId()));
 
-        return sportFacilityRepository.save(facility);
+        if (facilityDTO.getName() != null) {
+            sportFacility.setName(facilityDTO.getName());
+        }
+        if (facilityDTO.getDescription() != null) {
+            sportFacility.setDescription(facilityDTO.getDescription());
+        }
+        if (facilityDTO.getAddress() != null) {
+            sportFacility.setAddress(facilityDTO.getAddress());
+        }
+        if (facilityDTO.getType() != null) {
+            sportFacility.setType(facilityDTO.getType());
+        }
+
+        sportFacility.setMembershipRequired(facilityDTO.isMembershipRequired());
+
+        if (facilityDTO.getImageUrl() != null) {
+            sportFacility.setImageUrl(facilityDTO.getImageUrl());
+        }
+
+        return sportFacilityRepository.save(sportFacility);
     }
 
     @Override
-    public boolean deleteSportFacility(int id) {
+    public void deleteSportFacility(int id) {
         SportFacility facility = sportFacilityRepository.findById(id)
-                .orElseThrow(() -> new SportFacilityNotFoundException("SportFacility with id " + id + " not found"));
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu o id " + id));
 
         sportFacilityRepository.delete(facility);
-        return true;
     }
 }

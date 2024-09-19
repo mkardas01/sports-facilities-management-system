@@ -17,11 +17,23 @@ public class SportFacility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private String address;
+
+    @Column(nullable = false)
     private String type;
+
+    @Column(nullable = false)
     private boolean membershipRequired;
+
+    @Column(nullable = false)
     private String imageUrl;
 
     @ManyToMany(mappedBy = "managedFacilities")

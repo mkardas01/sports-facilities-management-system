@@ -39,7 +39,7 @@ public class WebConfig {
                                 "api/equipment/delete"
                         )
                         .hasAnyAuthority(Authority.MANAGER.name(), Authority.ADMIN.name())
-                        .requestMatchers("api/sportFacility/create").hasAnyAuthority(Authority.ADMIN.name())
+                        .requestMatchers("api/sportFacility/create", "api/sportFacility/delete").hasAnyAuthority(Authority.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

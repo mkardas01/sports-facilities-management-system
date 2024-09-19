@@ -39,14 +39,15 @@ public class SportFacilityController {
     @PutMapping("update")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> updateSportFacility(@RequestBody SportFacility sportFacility) {
+    public ResponseEntity<?> updateSportFacility(@RequestBody SportFacilityDTO sportFacility) {
         return new ResponseEntity<>(sportFacilityService.updateSportFacility(sportFacility), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> deleteSportFacility(@PathVariable("id") int id) {
-        return new ResponseEntity<>(sportFacilityService.deleteSportFacility(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteSportFacility(@PathVariable("id") int id) {
+        sportFacilityService.deleteSportFacility(id);
     }
 }

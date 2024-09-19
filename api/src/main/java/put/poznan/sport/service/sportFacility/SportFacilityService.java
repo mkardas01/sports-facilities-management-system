@@ -14,7 +14,7 @@ public interface SportFacilityService {
 
     public SportFacility createSportFacility(SportFacilityDTO sportFacility) ;
 
-    public SportFacility updateSportFacility(SportFacility sportFacility);
+    public SportFacility updateSportFacility(SportFacilityDTO sportFacility);
 
-    public boolean deleteSportFacility(int id);
+    public void deleteSportFacility(int id);
 }

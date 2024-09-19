@@ -26,4 +26,5 @@ public interface UserService {
     public String getCurrentUsername();
 
     public void checkIfUserIsManager(SportFacility sportFacility);
+
 }
