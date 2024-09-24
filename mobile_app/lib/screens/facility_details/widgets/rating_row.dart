@@ -7,11 +7,13 @@ class RatingRow extends StatelessWidget {
   final double? rating;
   final int objectId;
   final ObjectType objectType;
+  final bool canRate;
   const RatingRow(
       {super.key,
       required this.rating,
       required this.objectId,
-      required this.objectType});
+      required this.objectType,
+      required this.canRate});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,8 @@ class RatingRow extends StatelessWidget {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.3,
-              child:
-                  AddRatingButton(objectId: objectId, objectType: objectType),
+              child: AddRatingButton(
+                  canRate: canRate, objectId: objectId, objectType: objectType),
             ),
             Expanded(
               child: Align(

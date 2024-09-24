@@ -42,6 +42,10 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: _navigatorKey,
         builder: (ctx, child) {
           return BlocListener<SignInBloc, SignInState>(
+            listenWhen: (previous, current) {
+              return previous.authenticationStatus !=
+                  current.authenticationStatus;
+            },
             listener: (ctx2, state) {
               switch (state.authenticationStatus) {
                 case AuthenticationStatus.authenticated:

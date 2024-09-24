@@ -62,6 +62,7 @@ class CoachTab extends StatelessWidget {
                                   width:
                                       MediaQuery.of(context).size.width * 0.2,
                                   child: AddRatingButton(
+                                      canRate: facility.canRate,
                                       objectId: coach.id,
                                       objectType: ObjectType.COACH),
                                 )

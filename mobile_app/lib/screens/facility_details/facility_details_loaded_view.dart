@@ -28,6 +28,7 @@ class FacilityDetailsLoadedView extends StatelessWidget {
                   errorBuilder: (context, error, stackTrace) =>
                       const SizedBox()),
               RatingRow(
+                canRate: facility.canRate,
                 rating: facility.rating,
                 objectId: facility.id,
                 objectType: ObjectType.SPORT_FACILITY,

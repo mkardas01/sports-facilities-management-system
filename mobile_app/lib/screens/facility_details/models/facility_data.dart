@@ -17,6 +17,7 @@ class FacilityData {
   List<SportEquipment> equipment;
   List<DayTrainings> trainings;
   List<SportFacilityNews> news;
+  bool canRate;
 
   FacilityData(
       {required this.id,
@@ -31,5 +32,6 @@ class FacilityData {
       required this.equipment,
       required this.rating,
       required this.trainings,
-      required this.news});
+      required this.news,
+      required this.canRate});
 }

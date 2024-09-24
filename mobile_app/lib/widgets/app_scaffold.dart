@@ -7,7 +7,6 @@ import 'package:sport_plus/screens/facilities/all_facilities_screen.dart';
 import 'package:sport_plus/screens/home/bloc/home_bloc.dart';
 import 'package:sport_plus/screens/map/map_screen.dart';
 import 'package:sport_plus/screens/profile/profile/profile_screen.dart';
-import 'package:sport_plus/screens/splash/splash_screen.dart';
 import 'package:sport_plus/services/locator.dart';
 import 'package:sport_plus/widgets/images/bar_logo.dart';
 
@@ -77,8 +76,6 @@ class AppScaffold extends StatelessWidget {
                     child: ListTile(
                       onTap: () {
                         context.read<HomeBloc>().add(SignOutEvent());
-                        Navigator.popUntil(context, (route) => false);
-                        Navigator.pushNamed(context, SplashScreen.route);
                       },
                       leading: const Icon(Icons.logout),
                       title: const Text(AppStrings.signOut),

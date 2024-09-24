@@ -28,7 +28,6 @@ class AuthRepository {
     const String url = "/auth/signup";
     try {
       var response = await _client.dio.post(url, data: user.toJson());
-      controller?.add(AuthenticationStatus.authenticated);
       return response.data["token"];
     } catch (e) {
       _logger.e("Błąd na endpoincie $url: $e");
@@ -40,7 +39,6 @@ class AuthRepository {
     const String url = "auth/login";
     try {
       var response = await _client.dio.post(url, data: user.toJson());
-      controller?.add(AuthenticationStatus.authenticated);
       return response.data["token"];
     } catch (e) {
       _logger.e("Błąd na endpoincie $url: $e");
