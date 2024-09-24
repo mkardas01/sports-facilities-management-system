@@ -14,6 +14,7 @@ public class SportFacilityNews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer sportFacilitiesId;
     private String title;
     private String description;
     private String imageUrl;
