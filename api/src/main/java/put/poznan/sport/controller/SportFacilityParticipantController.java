@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.SportFacilityParticipant;
 import put.poznan.sport.entity.SportFacilityParticipantId;
 import put.poznan.sport.service.sportFacilityParcticipant.SportFacilityParticipantService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/SportFacilityParticipant/")
@@ -21,7 +24,21 @@ public class SportFacilityParticipantController {
     public ResponseEntity<?> getAllSportFacilityParticipants() {
 
         return new ResponseEntity<>(sportFacilityParticipantService.getAllFacilityParticipants(), HttpStatus.OK);
+    }
 
+    @GetMapping("facilities")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<List<SportFacility>> getSportFacilitiesForLoggedInUser() {
+        List<SportFacility> facilities = sportFacilityParticipantService.getSportFacilitiesByLoggedInUser();
+        return ResponseEntity.ok(facilities);
+    }
+
+    @PostMapping("assign")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> assignUserToFacility(@RequestBody SportFacilityParticipant participant) {
+        return new ResponseEntity<>(sportFacilityParticipantService.createSportFacilityParticipant(participant), HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
