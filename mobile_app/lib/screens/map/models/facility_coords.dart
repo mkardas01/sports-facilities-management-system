@@ -7,7 +7,7 @@ class FacilityCoords {
   final int facilityId;
   final String name;
   final String address;
-  final Coordinates cords;
+  final Coordinates? cords;
   final Color pinColor;
   FacilityCoords(
       {required this.cords,

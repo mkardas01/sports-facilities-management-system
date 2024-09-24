@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/screens/home/bloc/home_bloc.dart';
+import 'package:sport_plus/screens/home/widgets/news_slider.dart';
 import 'package:sport_plus/screens/home/widgets/sport_facilities_slider.dart';
 import 'package:sport_plus/widgets/app_scaffold.dart';
 
@@ -22,6 +23,10 @@ class HomeLoadedView extends StatelessWidget {
                 SportFacilitiesSlider(
                     title: AppStrings.yourFacilities,
                     facilities: state.userFacility),
+                NewsSlider(
+                  title: AppStrings.whatsNew,
+                  news: state.news,
+                ),
                 SportFacilitiesSlider(
                     title: AppStrings.propositions,
                     facilities: state.propositions),

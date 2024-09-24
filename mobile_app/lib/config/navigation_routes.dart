@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_plus/screens/calendar/bloc/calendar_bloc.dart';
 import 'package:sport_plus/screens/calendar/calendar_screen.dart';
+import 'package:sport_plus/screens/facilities/all_facilities_screen.dart';
+import 'package:sport_plus/screens/facilities/bloc/all_facilities_bloc.dart';
 import 'package:sport_plus/screens/facility_details/bloc/facility_details_bloc.dart';
 import 'package:sport_plus/screens/facility_details/facility_details_screen.dart';
 import 'package:sport_plus/screens/home/bloc/home_bloc.dart';
@@ -59,5 +61,9 @@ Map<String, Widget Function(BuildContext)> routes = {
   CalendarScreen.route: (context) => BlocProvider.value(
         value: locator.get<CalendarBloc>()..add(InitTrainingDataEvent()),
         child: const CalendarScreen(),
+      ),
+  AllFacilitiesScreen.route: (context) => BlocProvider.value(
+        value: locator.get<AllFacilitiesBloc>()..add(InitFacilityDataEvent()),
+        child: const AllFacilitiesScreen(),
       ),
 };

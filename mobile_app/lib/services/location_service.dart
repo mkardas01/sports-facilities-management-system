@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
+import 'package:sport_plus/models/sport_facility.dart';
 import 'package:sport_plus/screens/map/models/coordinates.dart';
 import 'package:sport_plus/services/locator.dart';
 
@@ -35,9 +38,13 @@ class LocationService {
     return true;
   }
 
-  Future<Coordinates> getCoordsFromAddres(String addres) async {
-    List<Location> locations = await locationFromAddress(addres);
-    return Coordinates(locations[0].latitude, locations[0].longitude);
+  Future<Coordinates?> getCoordsFromAddres(String addres) async {
+    try {
+      List<Location> locations = await locationFromAddress(addres);
+      return Coordinates(locations[0].latitude, locations[0].longitude);
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<Coordinates?> getCoordinates() async {
@@ -48,5 +55,34 @@ class LocationService {
 
     var position = await Geolocator.getCurrentPosition();
     return Coordinates(position.latitude, position.longitude);
+  }
+
+  Future<List<SportFacility>> getTheClosestFacilities(
+      List<SportFacility> facilities) async {
+    if (!await checkIsLocationEnabled()) {
+      _logger.e("Can't check location, enable location in phone settings");
+      return facilities.getRange(0, 5).toList();
+    }
+
+    var position = await Geolocator.getCurrentPosition();
+    Map<SportFacility, double> distances = {};
+    for (var facility in facilities) {
+      var facilityCoords = await getCoordsFromAddres(facility.address);
+      if (facilityCoords == null) continue;
+      var distance = Geolocator.distanceBetween(
+          position.latitude,
+          position.longitude,
+          facilityCoords.latitude,
+          facilityCoords.longitude);
+      log(distance.toString());
+      distances.addAll({facility: distance});
+    }
+    var sortedEntries = distances.entries.toList()
+      ..sort((a, b) => a.value.compareTo(b.value));
+    Map<SportFacility, double> sortedMap = {
+      for (var entry in sortedEntries) entry.key: entry.value
+    };
+    List<SportFacility> closestFacilities = sortedMap.keys.take(5).toList();
+    return closestFacilities;
   }
 }

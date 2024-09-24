@@ -42,25 +42,26 @@ class _MapScreenState extends State<MapScreen> {
                         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   ),
                   MarkerLayer(markers: [
-                    ...state.cords.map(
-                      (cord) => Marker(
-                        rotate: true,
-                        point:
-                            LatLng(cord.cords.latitude, cord.cords.longitude),
-                        child: GestureDetector(
-                          onTap: () => showDialog(
-                            context: context,
-                            builder: (context) =>
-                                FacilityMapDialog(facility: cord),
-                          ),
-                          child: Icon(
-                            Icons.location_pin,
-                            color: cord.pinColor,
-                            size: 40,
+                    ...state.cords.where((cord) => cord.cords != null).map(
+                          (cord) => Marker(
+                            alignment: Alignment.topCenter,
+                            rotate: true,
+                            point: LatLng(
+                                cord.cords!.latitude, cord.cords!.longitude),
+                            child: GestureDetector(
+                              onTap: () => showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    FacilityMapDialog(facility: cord),
+                              ),
+                              child: Icon(
+                                Icons.location_pin,
+                                color: cord.pinColor,
+                                size: 40,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
                   ])
                 ],
               ),

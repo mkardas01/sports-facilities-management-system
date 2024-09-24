@@ -59,6 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) =>
                       FormValidators.notEmpty(_nameController.text),
                   controller: _nameController,
@@ -71,6 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) =>
                       FormValidators.notEmpty(_surnameController.text),
                   controller: _surnameController,
@@ -83,8 +85,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) =>
-                      FormValidators.notEmpty(_emailController.text),
+                      FormValidators.emailValidator(_emailController.text),
                   controller: _emailController,
                   decoration: InputDecoration(
                     label: Text(
@@ -95,6 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   obscureText: true,
                   validator: (value) =>
                       FormValidators.notEmpty(_passwordController.text),
@@ -108,6 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   obscureText: true,
                   validator: (value) => FormValidators.confirmPasswordValidator(
                       _passwordController.text,

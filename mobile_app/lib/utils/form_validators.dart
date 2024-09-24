@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:sport_plus/config/app_strings.dart';
 
 class FormValidators {
@@ -14,6 +15,16 @@ class FormValidators {
   static String? notEmpty(String value) {
     if (value.isEmpty) {
       return AppStrings.requiredText;
+    }
+    return null;
+  }
+
+  static String? emailValidator(String value) {
+    if (value.isEmpty) {
+      return AppStrings.requiredText;
+    }
+    if (!EmailValidator.validate(value)) {
+      return AppStrings.emailValidator;
     }
     return null;
   }

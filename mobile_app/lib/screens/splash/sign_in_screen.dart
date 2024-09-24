@@ -53,8 +53,9 @@ class _SignInScreenState extends State<SignInScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) =>
-                    FormValidators.notEmpty(_passwordController.text),
+                    FormValidators.notEmpty(_emailController.text),
                 controller: _emailController,
                 decoration: InputDecoration(
                   label: Text(
@@ -65,6 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 obscureText: true,
                 validator: (value) =>
                     FormValidators.notEmpty(_passwordController.text),

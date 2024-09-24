@@ -12,6 +12,7 @@ class SportFacilitiesSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (facilities.isEmpty) return const SizedBox();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -23,8 +24,8 @@ class SportFacilitiesSlider extends StatelessWidget {
           ),
         ),
         CarouselSlider(
-          options: CarouselOptions(
-              height: 200, enableInfiniteScroll: false, disableCenter: true),
+          options:
+              CarouselOptions(enableInfiniteScroll: false, disableCenter: true),
           items: facilities.map((element) {
             return GestureDetector(
               onTap: () => Navigator.pushNamed(
@@ -47,6 +48,8 @@ class SportFacilitiesSlider extends StatelessWidget {
                         child: Image.network(
                           element.imageUrl,
                           fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const SizedBox(),
                         ),
                       ),
                     ),

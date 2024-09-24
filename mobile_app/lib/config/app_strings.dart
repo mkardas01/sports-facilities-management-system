@@ -1,7 +1,9 @@
 class AppStrings {
   static const String loadingError = "Wystąpił błąd podczas ładowania danych";
   static const String yourFacilities = "Twoje obiekty";
+  static const String allFacilities = "Obiekty";
   static const String propositions = "Propozycje";
+  static const String whatsNew = "Co nowego?";
   static const String profile = "Profil";
   static const String infoTab = "Informacje";
   static const String trainersTab = "Trenerzy";
@@ -47,6 +49,7 @@ class AppStrings {
   static const String signInemail = "E-mail";
   static const String password = "Hasło";
   static const String confirmPassword = "Potwierdź hasło";
+  static const String emailValidator = "Wpisz poprawny email";
   static const String requiredText = "Pole wymagane";
   static const String passwordNotConfirmed = "Hasła róźnią się";
   static const String error = "Wystąpił niespodziewany błąd";

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/screens/calendar/calendar_screen.dart';
+import 'package:sport_plus/screens/facilities/all_facilities_screen.dart';
 import 'package:sport_plus/screens/home/bloc/home_bloc.dart';
 import 'package:sport_plus/screens/map/map_screen.dart';
 import 'package:sport_plus/screens/profile/profile/profile_screen.dart';
@@ -40,21 +41,36 @@ class AppScaffold extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ListTile(
-                    onTap: () =>
-                        Navigator.pushNamed(context, ProfileScreen.route),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, ProfileScreen.route);
+                    },
                     leading: const Icon(Icons.person),
                     title: const Text(AppStrings.profile),
                   ),
                   ListTile(
-                    onTap: () =>
-                        Navigator.pushNamed(context, CalendarScreen.route),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, CalendarScreen.route);
+                    },
                     leading: const Icon(Icons.calendar_month),
                     title: const Text(AppStrings.yourTrainings),
                   ),
                   ListTile(
-                    onTap: () => Navigator.pushNamed(context, MapScreen.route),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, MapScreen.route);
+                    },
                     leading: const Icon(Icons.map),
                     title: const Text(AppStrings.facilitiesMap),
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AllFacilitiesScreen.route);
+                    },
+                    leading: const Icon(Icons.fitness_center),
+                    title: const Text(AppStrings.allFacilities),
                   ),
                   BlocProvider.value(
                     value: locator.get<HomeBloc>(),

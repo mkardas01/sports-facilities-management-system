@@ -42,6 +42,7 @@ class _EditProfileLoadingViewState extends State<EditProfileLoadingView> {
             children: [
               const EditAvatar(),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) =>
                     FormValidators.notEmpty(_nameController.text),
                 controller: _nameController,
@@ -54,6 +55,7 @@ class _EditProfileLoadingViewState extends State<EditProfileLoadingView> {
                 ),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) =>
                     FormValidators.notEmpty(_surnameController.text),
                 controller: _surnameController,
