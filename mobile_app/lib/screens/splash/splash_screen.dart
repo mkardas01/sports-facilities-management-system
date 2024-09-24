@@ -4,7 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
-import 'package:sport_plus/screens/home/home_screen.dart';
 import 'package:sport_plus/screens/splash/bloc/sign_in_bloc.dart';
 import 'package:sport_plus/screens/splash/sign_in_screen.dart';
 import 'package:sport_plus/screens/splash/sign_up_screen.dart';
@@ -46,64 +45,54 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SignInBloc, SignInState>(
-      listener: (context, state) {
-        if (state.status == SignInLoadingStatus.loggedIn) {
-          Navigator.popUntil(context, (route) => false);
-          Navigator.pushNamed(context, HomeScreen.route);
-        }
-      },
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: Column(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Lottie.asset('assets/sport.json',
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      repeat: false,
-                      fit: BoxFit.fitHeight,
-                      controller: _controller, onLoaded: (composition) {
-                    _controller
-                      ..duration = composition.duration
-                      ..forward();
-                  }),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(50, 60, 50, 0),
-                child: AnimatedOpacity(
-                  opacity: animationEnded ? 1.0 : 0,
-                  duration: const Duration(milliseconds: 500),
-                  child: Column(
-                    children: [
-                      Text(
-                        AppConsts.appName,
-                        style: AppTypography.titleStyle,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 150, bottom: 10),
-                        child: GenericButton(
-                          onTap: () =>
-                              Navigator.pushNamed(context, SignInScreen.route),
-                          title: AppStrings.signIn,
-                        ),
-                      ),
-                      GenericButton(
-                        isPrimary: false,
-                        onTap: () =>
-                            Navigator.pushNamed(context, SignUpScreen.route),
-                        title: AppStrings.signUp,
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              Lottie.asset('assets/sport.json',
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  repeat: false,
+                  fit: BoxFit.fitHeight,
+                  controller: _controller, onLoaded: (composition) {
+                _controller
+                  ..duration = composition.duration
+                  ..forward();
+              }),
             ],
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(50, 60, 50, 0),
+            child: AnimatedOpacity(
+              opacity: animationEnded ? 1.0 : 0,
+              duration: const Duration(milliseconds: 500),
+              child: Column(
+                children: [
+                  Text(
+                    AppConsts.appName,
+                    style: AppTypography.titleStyle,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 150, bottom: 10),
+                    child: GenericButton(
+                      onTap: () =>
+                          Navigator.pushNamed(context, SignInScreen.route),
+                      title: AppStrings.signIn,
+                    ),
+                  ),
+                  GenericButton(
+                    isPrimary: false,
+                    onTap: () =>
+                        Navigator.pushNamed(context, SignUpScreen.route),
+                    title: AppStrings.signUp,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

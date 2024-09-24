@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
@@ -14,16 +15,27 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   final AuthRepository authRepository;
   final StorageService storageService;
 
+  late StreamSubscription<AuthenticationStatus>
+      authenticationStatusSubscription;
+
   SignInBloc({required this.authRepository, required this.storageService})
       : super(const SignInState()) {
     on<LogInEvent>(_logIn);
     on<RegisterEvent>(_registerUser);
     on<OnStartEvent>(_onStart);
+    on<AuthenticationStatusChangedEvent>(_onAuthenticationStatusChanged);
+
+    authenticationStatusSubscription = authRepository.status
+        .listen((status) => add(AuthenticationStatusChangedEvent(status)));
   }
   Future<void> _onStart(
       OnStartEvent event, Emitter<SignInState> emitter) async {
     if (await storageService.isTokenValid()) {
-      emitter(state.copyWith(status: SignInLoadingStatus.loggedIn));
+      emitter(state.copyWith(
+          authenticationStatus: AuthenticationStatus.authenticated));
+    } else {
+      emitter(state.copyWith(
+          authenticationStatus: AuthenticationStatus.unauthenticated));
     }
   }
 
@@ -36,7 +48,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     if (result != null) {
       log(result);
       storageService.addToken(result);
-      emitter(state.copyWith(status: SignInLoadingStatus.loggedIn));
+      emitter(state.copyWith(
+          status: SignInLoadingStatus.idle,
+          authenticationStatus: AuthenticationStatus.authenticated));
     } else {
       emitter(state.copyWith(status: SignInLoadingStatus.error));
     }
@@ -52,9 +66,17 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         surname: event.surname));
     if (result != null) {
       storageService.addToken(result);
-      emitter(state.copyWith(status: SignInLoadingStatus.loggedIn));
+      emitter(state.copyWith(
+          status: SignInLoadingStatus.idle,
+          authenticationStatus: AuthenticationStatus.authenticated));
     } else {
       emitter(state.copyWith(status: SignInLoadingStatus.error));
     }
+  }
+
+  Future<void> _onAuthenticationStatusChanged(
+      AuthenticationStatusChangedEvent event,
+      Emitter<SignInState> emitter) async {
+    emitter(state.copyWith(authenticationStatus: event.status));
   }
 }

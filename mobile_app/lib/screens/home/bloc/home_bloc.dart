@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_plus/models/details/sport_facility_news.dart';
 import 'package:sport_plus/models/sport_facility.dart';
+import 'package:sport_plus/repository/auth_repository.dart';
 import 'package:sport_plus/repository/news_repository.dart';
 import 'package:sport_plus/repository/sport_facility_repository.dart';
 import 'package:sport_plus/screens/home/models/news.dart';
@@ -16,11 +17,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final LocationService locationService;
   final SportFacilityRepository sportFacilityRepository;
   final NewsRepository newsRepository;
+  final AuthRepository authRepository;
   HomeBloc(
       {required this.storageService,
       required this.locationService,
       required this.sportFacilityRepository,
-      required this.newsRepository})
+      required this.newsRepository,
+      required this.authRepository})
       : super(const HomeState()) {
     on<HomeLoadingEvent>(_loadData);
     on<SignOutEvent>(_signOut);
@@ -56,6 +59,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _signOut(SignOutEvent event, Emitter<HomeState> emitter) async {
-    await storageService.removeToken();
+    await authRepository.logOut();
   }
 }

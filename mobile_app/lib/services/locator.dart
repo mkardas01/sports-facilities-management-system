@@ -48,7 +48,8 @@ void setUp() {
       storageService: locator.get<StorageService>(),
       sportFacilityRepository: locator.get<SportFacilityRepository>(),
       newsRepository: locator.get<NewsRepository>(),
-      locationService: locator.get<LocationService>()));
+      locationService: locator.get<LocationService>(),
+      authRepository: locator.get<AuthRepository>()));
   locator.registerLazySingleton<FacilityDetailsBloc>(() => FacilityDetailsBloc(
         ratingRepository: locator.get<RatingRepository>(),
         facilityDetailsRepository: locator.get<FacilityDetailsRepository>(),

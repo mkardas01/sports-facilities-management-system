@@ -17,3 +17,8 @@ class RegisterEvent extends SignInEvent {
 }
 
 class OnStartEvent extends SignInEvent {}
+
+class AuthenticationStatusChangedEvent extends SignInEvent {
+  final AuthenticationStatus status;
+  AuthenticationStatusChangedEvent(this.status);
+}
