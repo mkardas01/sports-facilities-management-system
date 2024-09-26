@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface SportFacilityNewsService {
 
+    List<SportFacilityNews> getAllFacilityNews();
     List<SportFacilityNews> getFacilityNewsBySportFacilityId(int sportFacilityId);
 
     public SportFacilityNews updateFacilityNews(SportFacilityNewsDTO facilityNews);
