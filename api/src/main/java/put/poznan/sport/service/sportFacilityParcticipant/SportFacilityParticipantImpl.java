@@ -4,13 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import put.poznan.sport.dto.SportFacilityParticipant.SportFacilityParticipantDTO;
 import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.SportFacilityParticipant;
 import put.poznan.sport.entity.SportFacilityParticipantId;
 import put.poznan.sport.entity.User;
+import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityParticipantNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.UserIsAlreadyMemberException;
 import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
 import put.poznan.sport.repository.SportFacilityParticipantRepository;
+import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.repository.UserRepository;
 import put.poznan.sport.service.user.UserService;
 import put.poznan.sport.service.user.UserImpl;
@@ -23,6 +28,10 @@ public class SportFacilityParticipantImpl implements SportFacilityParticipantSer
 
     @Autowired
     private SportFacilityParticipantRepository sportFacilityParticipantRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private SportFacilityRepository sportFacilityRepository;
 
     @Autowired
     private UserService userService;
@@ -32,45 +41,84 @@ public class SportFacilityParticipantImpl implements SportFacilityParticipantSer
         return sportFacilityParticipantRepository.findAll();
     }
 
-    @Autowired
-    private UserRepository userRepository;
+    @Override
+    public List<User> getUsersBySportFacility(Integer facilityID) {
+        List<SportFacilityParticipant> participants = sportFacilityParticipantRepository.findAllBySportFacilitiesId(facilityID)
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono członków podanego obiektu"));
+
+        return  participants
+                .stream()
+                .map(SportFacilityParticipant::getUser)
+                .collect(Collectors.toList());
+    }
 
     @Override
-    public List<SportFacility> getSportFacilitiesByLoggedInUser() {
+    public List<SportFacility> getSportFacilitiesByCurrentUser () {
         User user = userService.getUser();
         return sportFacilityParticipantRepository.findAllByUser(user)
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektów dla podanego użytkownika"))
                 .stream()
                 .map(SportFacilityParticipant::getSportFacility)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public SportFacilityParticipant getSportFacilityParticipantById(SportFacilityParticipantId id) {
-        return sportFacilityParticipantRepository.findById(id)
-                .orElseThrow(() -> new SportFacilityParticipantNotFoundException("SportFacilityParticipant with id " + id + " not found"));
+    public SportFacilityParticipant createSportFacilityParticipant(SportFacilityParticipantDTO participant) {
+        userRepository.findById(participant.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("Nie znaleziono takiego użytkownika"));
+
+        SportFacility sportFacility = sportFacilityRepository.findById(participant.getSportFacilitiesId())
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
+
+        userService.checkIfUserIsManagerOrAdmin(sportFacility);
+
+        if (userIsParticipant(participant.getUserId(), participant.getSportFacilitiesId())) {
+            throw new UserIsAlreadyMemberException("Użytkownik jest już członkiem");
+        }
+
+        SportFacilityParticipant newParticipant = SportFacilityParticipant.builder()
+                .userId(participant.getUserId())
+                .sportFacilitiesId(participant.getSportFacilitiesId())
+                .build();
+
+        return sportFacilityParticipantRepository.save(newParticipant);
     }
 
-    @Override
-    public SportFacilityParticipant createSportFacilityParticipant(SportFacilityParticipant participant) {
-        return sportFacilityParticipantRepository.save(participant);
-    }
 
     @Override
-    public SportFacilityParticipant updateSportFacilityParticipant(SportFacilityParticipant participant) {
+    public SportFacilityParticipant changeParticipantStatus(SportFacilityParticipantDTO participant) {
         SportFacilityParticipantId user = new SportFacilityParticipantId(participant.getUserId(), participant.getSportFacilitiesId());
 
-        sportFacilityParticipantRepository.findById(user)
-                .orElseThrow(() -> new SportFacilityParticipantNotFoundException("SportFacilityParticipant with id " + user.getUserId() + " not found"));
+        SportFacility sportFacility = sportFacilityRepository.findById(participant.getSportFacilitiesId())
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
 
-        return sportFacilityParticipantRepository.save(participant);
+        userService.checkIfUserIsManagerOrAdmin(sportFacility);
+
+        SportFacilityParticipant newParticipant = sportFacilityParticipantRepository.findById(user)
+                .orElseThrow(() -> new SportFacilityParticipantNotFoundException("Nie znaleziono podanego członka"));
+
+        newParticipant.setIsActive(newParticipant.getIsActive() == 1 ? 0 : 1);
+
+        return sportFacilityParticipantRepository.save(newParticipant);
     }
 
     @Override
-    public boolean deleteSportFacilityParticipant(SportFacilityParticipantId id) {
-        SportFacilityParticipant participant = sportFacilityParticipantRepository.findById(id)
-                .orElseThrow(() -> new SportFacilityParticipantNotFoundException("SportFacilityParticipant with id " + id + " not found"));
+    public void deleteSportFacilityParticipant(Integer userId,  Integer facilityId) {
+        SportFacilityParticipantId user = new SportFacilityParticipantId(userId, facilityId);
+
+        SportFacility sportFacility = sportFacilityRepository.findById(facilityId)
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
+
+        userService.checkIfUserIsManagerOrAdmin(sportFacility);
+
+        SportFacilityParticipant participant = sportFacilityParticipantRepository.findById(user)
+                .orElseThrow(() -> new SportFacilityParticipantNotFoundException("Nie znaleziono podanego członka"));
 
         sportFacilityParticipantRepository.delete(participant);
-        return true;
     }
+
+    private boolean userIsParticipant(int userId, int sportFacilityId) {
+        return sportFacilityParticipantRepository.existsSportFacilityParticipantByUserIdAndSportFacilitiesId(userId, sportFacilityId);
+    }
+
 }
