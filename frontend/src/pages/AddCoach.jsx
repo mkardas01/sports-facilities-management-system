@@ -56,7 +56,7 @@ const AddCoach = () => {
           />
         </div>
         <div>
-          <label>Sports Facility Name:</label>
+          <label>Sports Facility ID:</label>
           <input
             type="text"
             name="sportFacilitiesId"

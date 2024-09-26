@@ -3,12 +3,23 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8080/api/SportFacility';
 
 export const getAllSportFacilities = async () => {
-  const response = await axios.get(`${API_URL}/all`);
+  const token = localStorage.getItem('user');
+  const response = await axios.get(`${API_URL}/all`,{
+    headers:{
+      'Authorization': `Bearer ${token}`
+    }
+  });
   return response.data;
 };
 
 export const getSportFacilityById = async (id) => {
-  const response = await axios.get(`${API_URL}/${id}`);
+  const token = localStorage.getItem('user');
+  const response = await axios.get(`${API_URL}/${id}`,{
+    headers:{
+          'Authorization': `Bearer ${token}`
+        }
+      })
+  ;
   return response.data;
 };
 

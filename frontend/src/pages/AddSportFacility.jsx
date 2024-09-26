@@ -8,7 +8,7 @@ const AddSportFacility = () => {
     description: '',
     address: '',
     type: '',
-    membershipRequired: 'no', // Domyślna wartość ustawiona na 'no'
+    membershipRequired: 'false', // Domyślna wartość ustawiona na 'no'
     imageUrl: ''
   });
 
@@ -24,7 +24,7 @@ const AddSportFacility = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/sport-facility/create', facility);
+      const response = await axios.post('http://localhost:8080/api/SportFacility/create', facility);
       if (response.status === 200) {
         setMessage('Sport facility added successfully');
       }
@@ -85,8 +85,8 @@ const AddSportFacility = () => {
             onChange={handleChange}
             required
           >
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
           </select>
         </div>
         <div>

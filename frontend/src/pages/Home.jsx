@@ -3,27 +3,9 @@ import { Link } from 'react-router-dom';
 import '../styles/Home.css';
 
 const Home = () => {
+
   return (
     <div className="home-layout">
-      <nav className="vertical-nav">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-          <li>
-            <Link to="/sport-facilities">Sport Facilities</Link>
-          </li>
-          <li>
-            <Link to="/coaches">Coaches</Link>
-          </li>
-        </ul>
-      </nav>
       <div className="content">
         <h1>Welcome to the Sports Facilities Management System</h1>
         <p>This is the home page. Please use the navigation to access different parts of the application.</p>

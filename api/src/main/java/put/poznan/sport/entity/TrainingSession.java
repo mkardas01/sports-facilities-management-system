@@ -1,5 +1,6 @@
 package put.poznan.sport.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class TrainingSession {
     private Coach coach;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "sportFacilitiesId", insertable = false, updatable = false)
     private SportFacility sportFacility;
 
