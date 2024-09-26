@@ -79,6 +79,7 @@ public class SportFacilityParticipantImpl implements SportFacilityParticipantSer
         SportFacilityParticipant newParticipant = SportFacilityParticipant.builder()
                 .userId(participant.getUserId())
                 .sportFacilitiesId(participant.getSportFacilitiesId())
+                .isActive(1)
                 .build();
 
         return sportFacilityParticipantRepository.save(newParticipant);
