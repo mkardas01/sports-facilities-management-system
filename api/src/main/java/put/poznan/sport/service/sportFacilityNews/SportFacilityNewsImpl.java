@@ -47,6 +47,7 @@ public class SportFacilityNewsImpl implements SportFacilityNewsService {
 
         SportFacilityNews sportFacilityNews = SportFacilityNews.builder()
                 .title(facilityNews.getTitle())
+                .sportFacilitiesId(sportFacility.getId())
                 .description(facilityNews.getDescription())
                 .imageUrl(facilityNews.getImageUrl())
                 .sportFacility(sportFacility)
