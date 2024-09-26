@@ -1,9 +1,9 @@
 import 'package:sport_plus/config/app_strings.dart';
-import 'package:sport_plus/models/details/coach.dart';
-import 'package:sport_plus/models/details/coach_avarege_rating.dart';
+import 'package:sport_plus/models/coach/coach.dart';
+import 'package:sport_plus/models/coach/coach_avarege_rating.dart';
 import 'package:sport_plus/models/details/facility_details.dart';
-import 'package:sport_plus/models/details/open_time.dart';
-import 'package:sport_plus/models/details/opening_time.dart';
+import 'package:sport_plus/models/open_hours/open_time.dart';
+import 'package:sport_plus/models/open_hours/opening_time.dart';
 import 'package:sport_plus/models/sport_facility.dart';
 import 'package:sport_plus/screens/facility_details/models/coach_with_rating.dart';
 import 'package:sport_plus/screens/facility_details/models/facility_data.dart';

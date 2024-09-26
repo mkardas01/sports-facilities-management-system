@@ -1,9 +1,9 @@
-import 'package:sport_plus/models/details/coach.dart';
-import 'package:sport_plus/models/details/coach_avarege_rating.dart';
-import 'package:sport_plus/models/details/open_time.dart';
+import 'package:sport_plus/models/coach/coach.dart';
+import 'package:sport_plus/models/coach/coach_avarege_rating.dart';
+import 'package:sport_plus/models/open_hours/open_time.dart';
 import 'package:sport_plus/models/details/sport_equipment.dart';
-import 'package:sport_plus/models/details/sport_facility_news.dart';
-import 'package:sport_plus/models/details/training_session.dart';
+import 'package:sport_plus/models/sport_facility_news.dart';
+import 'package:sport_plus/models/training_session/training_session.dart';
 
 class SportFacilityDetails {
   int? id;

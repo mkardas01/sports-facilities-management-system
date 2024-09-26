@@ -1,5 +1,5 @@
-import 'package:sport_plus/models/details/coach.dart';
-import 'package:sport_plus/models/details/training_session_participant.dart';
+import 'package:sport_plus/models/coach/coach.dart';
+import 'package:sport_plus/models/training_session/training_session_participant.dart';
 
 class TrainingSession {
   int? id;

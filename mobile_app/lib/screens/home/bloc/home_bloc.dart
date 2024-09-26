@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sport_plus/models/details/sport_facility_news.dart';
+import 'package:sport_plus/models/sport_facility_news.dart';
 import 'package:sport_plus/models/sport_facility.dart';
 import 'package:sport_plus/repository/auth_repository.dart';
 import 'package:sport_plus/repository/news_repository.dart';
@@ -35,8 +35,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         await sportFacilityRepository.getAllFacilities();
     List<SportFacility>? userFacilities =
         await sportFacilityRepository.getUserFacilities();
-    // List<SportFacilityNews> news = await newsRepository.getAllNews(); //TODO uncomment
-    List<SportFacilityNews> news = [];
+    List<SportFacilityNews>? news = await newsRepository.getAllNews();
     if (allFacilities == null || userFacilities == null || news == null) {
       emitter(state.copyWith(status: HomeLoadingStatus.error));
       return;

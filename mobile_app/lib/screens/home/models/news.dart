@@ -1,4 +1,4 @@
-import 'package:sport_plus/models/details/sport_facility_news.dart';
+import 'package:sport_plus/models/sport_facility_news.dart';
 import 'package:sport_plus/models/sport_facility.dart';
 
 class News {

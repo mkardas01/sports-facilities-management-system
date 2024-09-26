@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
-import 'package:sport_plus/models/details/sport_facility_news.dart';
+import 'package:sport_plus/models/sport_facility_news.dart';
 import 'package:sport_plus/services/http/http_client.dart';
 import 'package:sport_plus/services/locator.dart';
 
@@ -9,7 +9,7 @@ class NewsRepository {
   final Logger _logger = locator.get<Logger>();
 
   Future<List<SportFacilityNews>?> getAllNews() async {
-    String url = "/api/SportFacilityNews/all";
+    String url = "/api/SportFacilityNews/";
     try {
       Response response = await _client.dio.get(url);
       List<SportFacilityNews> news = [];

@@ -1,4 +1,4 @@
-import 'package:sport_plus/models/details/training_session.dart';
+import 'package:sport_plus/models/training_session/training_session.dart';
 import 'package:sport_plus/screens/facility_details/models/day_training.dart';
 
 class TrainingService {

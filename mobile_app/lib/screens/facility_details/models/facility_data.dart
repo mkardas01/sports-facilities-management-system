@@ -1,5 +1,5 @@
 import 'package:sport_plus/models/details/sport_equipment.dart';
-import 'package:sport_plus/models/details/sport_facility_news.dart';
+import 'package:sport_plus/models/sport_facility_news.dart';
 import 'package:sport_plus/screens/facility_details/models/coach_with_rating.dart';
 import 'package:sport_plus/screens/facility_details/models/day_training.dart';
 

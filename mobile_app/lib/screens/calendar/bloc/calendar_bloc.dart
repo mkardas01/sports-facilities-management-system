@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:sport_plus/models/details/coach.dart';
-import 'package:sport_plus/models/details/training_session.dart';
+import 'package:sport_plus/models/coach/coach.dart';
+import 'package:sport_plus/models/training_session/training_session.dart';
 
 part 'calendar_event.dart';
 part 'calendar_state.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
-import 'package:sport_plus/models/details/sport_facility_news.dart';
+import 'package:sport_plus/models/sport_facility_news.dart';
 
 class NewsDialog extends StatelessWidget {
   final List<SportFacilityNews> news;
@@ -50,7 +50,7 @@ class NewsDialog extends StatelessWidget {
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15)),
                           child: Image.network(
-                            element.imageUrl ?? "",
+                            element.imageUrl,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
                                 const SizedBox(),
@@ -62,12 +62,12 @@ class NewsDialog extends StatelessWidget {
                         child: Column(
                           children: [
                             Text(
-                              element.title ?? "",
+                              element.title,
                               style: AppTypography.bigBoldTextStyle(),
                               textAlign: TextAlign.center,
                             ),
                             Text(
-                              element.description ?? "",
+                              element.description,
                               style: AppTypography.defaultTextStyle,
                               textAlign: TextAlign.center,
                             )
