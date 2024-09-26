@@ -15,6 +15,13 @@ public class SportFacilityNewsController {
     @Autowired
     private SportFacilityNewsService sportFacilityNewsService;
 
+    @GetMapping
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> getAllSportFacilityNews() {
+        return new ResponseEntity<>(sportFacilityNewsService.getAllFacilityNews(), HttpStatus.OK);
+    }
+
     @PostMapping("create")
     @CrossOrigin
     @ResponseBody

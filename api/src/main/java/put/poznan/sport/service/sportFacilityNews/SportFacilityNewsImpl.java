@@ -28,6 +28,11 @@ public class SportFacilityNewsImpl implements SportFacilityNewsService {
     private UserService userService;
 
     @Override
+    public List<SportFacilityNews> getAllFacilityNews() {
+        return sportFacilityNewsRepository.findAll();
+    }
+
+    @Override
     public List<SportFacilityNews> getFacilityNewsBySportFacilityId(int sportFacilityId) {
         return sportFacilityNewsRepository.findBySportFacilitiesId(sportFacilityId);
     }
