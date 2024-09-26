@@ -8,7 +8,7 @@ const AddSportFacility = () => {
     description: '',
     address: '',
     type: '',
-    membershipRequired: 'false', // Domyślna wartość ustawiona na 'no'
+    membershipRequired: 'false',
     imageUrl: ''
   });
 

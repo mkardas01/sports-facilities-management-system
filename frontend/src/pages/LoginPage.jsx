@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import { login } from '../services/authService.js';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function LoginPage() {
     const [email, setEmail] = useState("");
@@ -22,50 +21,46 @@ function LoginPage() {
         try{
             await login(email,password);
             setisLoggedIn(true);
-            navigate('/');
+            navigate('/sport-facilities');
         }catch(error){
             console.error('Login failed', error);
         }
     };
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-            {isLoggedIn ? (
-                <h2>You are logged in</h2>
-            ):(
-                <form onSubmit={handleSubmit} style={{border: "1px solid #ccc", padding: "20px", borderRadius: "5px"}}>
-                    <h2>Login</h2>
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            style={{ width: "100%", padding: "5px", margin: "5px 0", boxSizing: "border-box" }}
-                        />
-                    </div>
-                    <div style = {{textAlign: "center"}}>
-                        <label>Password:</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            style={{ width: "100%", padding: "5px", margin: "5px 0", boxSizing: "border-box" }}
-                        />
-                    </div>
-                    <button type="submit">Login</button>
-                    <div style={{textAlign: "center"}}>
-                        <p>Don t have an account?</p>
-                        <Link to="/register" style={{color: "blue", textDecoration: "underline"}}>
-                            Sign Up
-                        </Link>
-                    </div>
-                </form>
-            )}
+        <div className="auth-form">
+          {isLoggedIn ? (
+            <h2>You are logged in</h2>
+          ) : (
+            <form onSubmit={handleSubmit} className="form-content">
+              <h2>Login</h2>
+              <div className="input-container">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="input-container">
+                <label>Password:</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className="auth-button">Login</button>
+              <div className="redirect">
+                <p>Don't have an account?</p>
+                <Link to="/register">Sign Up</Link>
+              </div>
+            </form>
+          )}
         </div>
-    );
-}
-
-export default LoginPage;
+      );
+    }
+    
+    export default LoginPage;

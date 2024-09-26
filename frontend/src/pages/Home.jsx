@@ -9,6 +9,7 @@ const Home = () => {
       <div className="content">
         <h1>Welcome to the Sports Facilities Management System</h1>
         <p>This is the home page. Please use the navigation to access different parts of the application.</p>
+        <p>Here, in the future, you will see latest port Facility News!</p>
         <div className="tiles-container">
           <Link to="/add-coach" className="tile">
             <div className="tile-content">

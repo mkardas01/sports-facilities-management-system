@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../services/authService';
+import '../styles/AuthForm.css'; // Nowy plik CSS
 
 const Register = () => {
   const [userData, setUserData] = useState({
@@ -24,15 +25,15 @@ const Register = () => {
       navigate('/login');
     } catch (error) {
       console.error('Registration failed', error);
-      setError('Registration failed. Please try again.'); // Ustawienie błędu
+      setError('Registration failed. Please try again.');
     }
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="auth-form">
+      <form onSubmit={handleSubmit} className="form-content">
+        <h2>Register</h2>
+        <div className="input-container">
           <label>Name:</label>
           <input
             type="text"
@@ -42,7 +43,7 @@ const Register = () => {
             required
           />
         </div>
-        <div>
+        <div className="input-container">
           <label>Surname:</label>
           <input
             type="text"
@@ -52,7 +53,7 @@ const Register = () => {
             required
           />
         </div>
-        <div>
+        <div className="input-container">
           <label>Email:</label>
           <input
             type="email"
@@ -62,7 +63,7 @@ const Register = () => {
             required
           />
         </div>
-        <div>
+        <div className="input-container">
           <label>Password:</label>
           <input
             type="password"
@@ -72,7 +73,7 @@ const Register = () => {
             required
           />
         </div>
-        <div>
+        <div className="input-container">
           <label>Image URL:</label>
           <input
             type="text"
@@ -81,8 +82,8 @@ const Register = () => {
             onChange={handleChange}
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Wyświetlanie błędu */}
-        <button type="submit">Register</button>
+        {error && <p className="error-message">{error}</p>}
+        <button type="submit" className="auth-button">Register</button>
       </form>
     </div>
   );

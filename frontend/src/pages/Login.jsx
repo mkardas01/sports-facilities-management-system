@@ -1,51 +1,66 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../services/authService';
+import {useEffect, useState} from "react";
+import { login } from '../services/authService.js';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); // Stan na przechowywanie błędu
-  const navigate = useNavigate();
+function LoginPage() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const [isLoggedIn, setisLoggedIn] = useState(false)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await login(email, password);
-      navigate('/sport-facilities');
-    } catch (error) {
-      console.error('Login failed', error);
-      setError('Login failed. Please check your email and password.'); // Ustawienie błędu
+    useEffect(() => {
+        const token = localStorage.getItem("user");
+        if(token){
+            setisLoggedIn(true);
+        }
+    }, []);
+
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+        try{
+            await login(email,password);
+            setisLoggedIn(true);
+            navigate('/sport-facilities');
+        }catch(error){
+            console.error('Login failed', error);
+        }
+    };
+
+    return (
+        <div className="auth-form">
+          {isLoggedIn ? (
+            <h2>You are logged in</h2>
+          ) : (
+            <form onSubmit={handleSubmit} className="form-content">
+              <h2>Login</h2>
+              <div className="input-container">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="input-container">
+                <label>Password:</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className="auth-button">Login</button>
+              <div className="redirect">
+                <p>Don't have an account?</p>
+                <Link to="/register">Sign Up</Link>
+              </div>
+            </form>
+          )}
+        </div>
+      );
     }
-  };
-
-  return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Wyświetlanie błędu */}
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
-};
-
-export default Login;
+    
+    export default LoginPage;
