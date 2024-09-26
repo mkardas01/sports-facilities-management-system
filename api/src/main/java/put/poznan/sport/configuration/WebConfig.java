@@ -1,5 +1,6 @@
 package put.poznan.sport.configuration;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,11 +37,19 @@ public class WebConfig {
                                 "api/coach/update",
                                 "api/equipment/create",
                                 "api/equipment/update",
-                                "api/equipment/delete"
-                        )
-                        .hasAnyAuthority(Authority.MANAGER.name(), Authority.ADMIN.name())
+                                "api/equipment/delete",
+                                "api/participant/create",
+                                "api/participant/update",
+                                "api/participant/delete/**",
+                                "api/participant/facility/**"
+                        ).hasAnyAuthority(Authority.MANAGER.name(), Authority.ADMIN.name())
                         .requestMatchers("api/sportFacility/create", "api/sportFacility/delete").hasAnyAuthority(Authority.ADMIN.name())
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) ->
+                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
+                        )
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -50,5 +59,6 @@ public class WebConfig {
 
         return http.build();
     }
+
 
 }
