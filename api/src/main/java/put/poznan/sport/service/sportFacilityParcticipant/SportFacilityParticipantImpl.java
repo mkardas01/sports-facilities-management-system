@@ -72,7 +72,7 @@ public class SportFacilityParticipantImpl implements SportFacilityParticipantSer
 
         userService.checkIfUserIsManagerOrAdmin(sportFacility);
 
-        if (userIsParticipant(participant.getUserId(), participant.getSportFacilitiesId())) {
+        if (!userIsParticipant(participant.getUserId(), participant.getSportFacilitiesId())) {
             throw new UserIsAlreadyMemberException("Użytkownik jest już członkiem");
         }
 
