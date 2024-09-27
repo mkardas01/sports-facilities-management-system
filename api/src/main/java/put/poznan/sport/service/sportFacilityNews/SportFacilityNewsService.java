@@ -5,11 +5,12 @@ import put.poznan.sport.dto.SportFacilityNews.SportFacilityNewsDTO;
 import put.poznan.sport.entity.SportFacilityNews;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SportFacilityNewsService {
 
     List<SportFacilityNews> getAllFacilityNews();
-    List<SportFacilityNews> getFacilityNewsBySportFacilityId(int sportFacilityId);
+    Optional<List<SportFacilityNews>> getFacilityNewsBySportFacilityId(int sportFacilityId);
 
     public SportFacilityNews updateFacilityNews(SportFacilityNewsDTO facilityNews);
 

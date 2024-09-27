@@ -19,6 +19,7 @@ import put.poznan.sport.repository.rating.SportFacilityRatingRepository;
 import put.poznan.sport.repository.rating.TrainingSessionRatingRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RatingImpl implements RatingService {
@@ -105,10 +106,10 @@ public class RatingImpl implements RatingService {
     }
 
     @Override
-    public Double getSportFacilityAverageRating(Integer sportFacilityId) {
-        return sportFacilityRatingRepository.findSportFacilityAverage(
-                sportFacilityRepository.findById(sportFacilityId).orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"))
-        );
+    public Optional<Double> getSportFacilityAverageRating(Integer sportFacilityId) {
+        SportFacility facility = sportFacilityRepository.findById(sportFacilityId)
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
+        return Optional.of(sportFacilityRatingRepository.findSportFacilityAverage(facility));
     }
 
 

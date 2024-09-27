@@ -9,6 +9,9 @@ import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.SportFacilityNews;
 import put.poznan.sport.entity.TrainingSession;
 import put.poznan.sport.entity.openHour.OpenHour;
+import put.poznan.sport.exception.exceptionClasses.RatingNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.TrainingSessionNotFoundException;
 import put.poznan.sport.response.CoachAverageRating;
 import put.poznan.sport.response.SportFacilityDetailsResponse;
 import put.poznan.sport.service.coach.CoachService;
@@ -58,11 +61,14 @@ public class SportFacilityDetailsService {
 
         List<SportEquipment> equipment = sportFacility.getSportEquipments();
 
-        List<SportFacilityNews> news = sportFacilityNewsService.getFacilityNewsBySportFacilityId(sportFacility.getId());
+        List<SportFacilityNews> news = sportFacilityNewsService.getFacilityNewsBySportFacilityId(sportFacility.getId())
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
 
-        List<TrainingSession> trainingSessions = trainingSessionService.getTrainingSessionsBySportFacilityId(sportFacility.getId());
+        List<TrainingSession> trainingSessions = trainingSessionService.getTrainingSessionsBySportFacilityId(sportFacility.getId())
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
 
-        Double averageRating = ratingService.getSportFacilityAverageRating(sportFacility.getId());
+        Double averageRating = ratingService.getSportFacilityAverageRating(sportFacility.getId())
+                .orElseThrow(() -> new RatingNotFoundException("Nie znaleziono ocen"));
 
         return SportFacilityDetailsResponse.builder()
                 .id(sportFacility.getId())

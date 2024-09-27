@@ -11,13 +11,15 @@ public interface TrainingSessionService {
 
     public Optional<List<TrainingSession>> getAllSessions() ;
 
+    public Optional<List<TrainingSession>> getTrainingsByFacility(int id) ;
+
     public TrainingSession getSessionById(int id);
 
     public TrainingSession createSession(TrainingSessionDTO trainingSession) ;
 
     public TrainingSession updateSession(TrainingSessionDTO trainingSession);
 
-    List<TrainingSession> getTrainingSessionsBySportFacilityId(int sportFacilityId);
+    Optional<List<TrainingSession>> getTrainingSessionsBySportFacilityId(int sportFacilityId);
 
     public void deleteSession(int id) ;
 

@@ -27,6 +27,15 @@ public class TrainingSessionController {
         return new ResponseEntity<>(allTrainingSession, HttpStatus.OK);
     }
 
+    @GetMapping("facility/{id}")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> getFacilityTrainings(int id) {
+        List<TrainingSession> allTrainingSession = trainingSessionService.getAllSessions()
+                .orElseThrow(()-> new TrainingSessionNotFoundException("Nie znaleziono treningów"));
+        return new ResponseEntity<>(allTrainingSession, HttpStatus.OK);
+    }
+
     @GetMapping("{id}")
     @CrossOrigin
     @ResponseBody

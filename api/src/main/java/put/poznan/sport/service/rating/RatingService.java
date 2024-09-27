@@ -6,6 +6,7 @@ import put.poznan.sport.dto.Rating.Rating;
 import put.poznan.sport.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RatingService {
 
@@ -19,6 +20,6 @@ public interface RatingService {
     public void deleteRating(User user, String type, int id);
 
     public Double getCoachAverageRating(Integer coachId);
-    public Double getSportFacilityAverageRating(Integer sportFacilityId);
+    public Optional<Double> getSportFacilityAverageRating(Integer sportFacilityId);
 
 }

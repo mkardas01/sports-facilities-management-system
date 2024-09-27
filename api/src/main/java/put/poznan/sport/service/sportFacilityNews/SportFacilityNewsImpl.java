@@ -12,6 +12,7 @@ import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.service.user.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SportFacilityNewsImpl implements SportFacilityNewsService {
@@ -32,8 +33,8 @@ public class SportFacilityNewsImpl implements SportFacilityNewsService {
     }
 
     @Override
-    public List<SportFacilityNews> getFacilityNewsBySportFacilityId(int sportFacilityId) {
-        return sportFacilityNewsRepository.findBySportFacilitiesId(sportFacilityId);
+    public Optional<List<SportFacilityNews>> getFacilityNewsBySportFacilityId(int sportFacilityId) {
+        return Optional.ofNullable(sportFacilityNewsRepository.findBySportFacilitiesId(sportFacilityId));
     }
 
     @Override
