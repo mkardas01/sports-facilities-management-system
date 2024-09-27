@@ -2,8 +2,7 @@ package put.poznan.sport.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -11,12 +10,15 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TrainingSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer coachesId;
-    private Integer sportFacilitiesId;
+    private Integer coachId;
+    private Integer sportFacilityId;
     private String name;
     private String startHour;
     private Integer duration;
@@ -26,14 +28,16 @@ public class TrainingSession {
     private Integer freeBooked;
 
     @ManyToOne
-    @JoinColumn(name = "coachesId", insertable = false, updatable = false)
+    @JoinColumn(name = "coachId", insertable = false, updatable = false)
+    @JsonIgnore
     private Coach coach;
 
     @ManyToOne
-    @JoinColumn(name = "sportFacilitiesId", insertable = false, updatable = false)
+    @JoinColumn(name = "sportFacilityId", insertable = false, updatable = false)
     @JsonIgnore
     private SportFacility sportFacility;
 
     @OneToMany(mappedBy = "trainingSession", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<TrainingSessionParticipant> trainingSessionParticipants;
 }

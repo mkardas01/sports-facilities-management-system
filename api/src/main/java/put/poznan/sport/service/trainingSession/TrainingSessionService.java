@@ -1,17 +1,19 @@
 package put.poznan.sport.service.trainingSession;
 
+import put.poznan.sport.dto.TraningSession.TrainingSessionDTO;
 import put.poznan.sport.entity.TrainingSession;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface TrainingSessionService {
 
-    public List<TrainingSession> getAllSessions() ;
+    public Optional<List<TrainingSession>> getAllSessions() ;
 
     public TrainingSession getSessionById(int id);
 
-    public TrainingSession createSession(TrainingSession trainingSession) ;
+    public TrainingSession createSession(TrainingSessionDTO trainingSession) ;
 
     public TrainingSession updateSession(TrainingSession trainingSession);
 

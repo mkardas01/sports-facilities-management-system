@@ -2,32 +2,69 @@ package put.poznan.sport.service.trainingSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import put.poznan.sport.dto.TraningSession.TrainingSessionDTO;
+import put.poznan.sport.entity.Coach;
+import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.TrainingSession;
+import put.poznan.sport.exception.exceptionClasses.CoachNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.TrainingSessionNotFoundException;
+import put.poznan.sport.repository.CoachRepository;
+import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.repository.TrainingSessionRepository;
+import put.poznan.sport.service.user.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TrainingSessionImpl implements TrainingSessionService {
 
     @Autowired
     private TrainingSessionRepository trainingSessionRepository;
+    @Autowired
+    private CoachRepository coachRepository;
+    @Autowired
+    private SportFacilityRepository sportFacilityRepository;
+    @Autowired
+    private UserService userService;
 
     @Override
-    public List<TrainingSession> getAllSessions() {
-        return trainingSessionRepository.findAll();
+    public Optional<List<TrainingSession>> getAllSessions() {
+        return Optional.of(trainingSessionRepository.findAll());
     }
 
     @Override
     public TrainingSession getSessionById(int id) {
         return trainingSessionRepository.findById(id)
-                .orElseThrow(() -> new TrainingSessionNotFoundException("TrainingSession with id " + id + " not found"));
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
     }
 
     @Override
-    public TrainingSession createSession(TrainingSession trainingSession) {
-        return trainingSessionRepository.save(trainingSession);
+    public TrainingSession createSession(TrainingSessionDTO request) {
+
+        SportFacility facility = sportFacilityRepository.findById(request.getSportFacilityId())
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
+
+        userService.checkIfUserIsManagerOrAdmin(facility);
+
+        coachRepository.findById(request.getCoachId())
+                .orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
+
+        TrainingSession session = TrainingSession.builder()
+                .coachId(request.getCoachId())
+                .sportFacilityId(request.getSportFacilityId())
+                .name(request.getName())
+                .startHour(request.getStartHour())
+                .duration(request.getDuration())
+                .isWeekly(request.getIsWeekly())
+                .trainingDate(request.getTrainingDate())
+                .capacity(request.getCapacity())
+                .freeBooked(request.getCapacity())
+                .build();
+
+
+        return trainingSessionRepository.save(session);
     }
 
     @Override
