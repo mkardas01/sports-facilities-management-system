@@ -11,7 +11,7 @@ public interface TrainingSessionService {
 
     public Optional<List<TrainingSession>> getAllSessions() ;
 
-    public Optional<List<TrainingSession>> getTrainingsByFacility(int id) ;
+    public List<TrainingSession> getTrainingsByFacility(int id) ;
 
     public TrainingSession getSessionById(int id);
 
@@ -19,7 +19,7 @@ public interface TrainingSessionService {
 
     public TrainingSession updateSession(TrainingSessionDTO trainingSession);
 
-    Optional<List<TrainingSession>> getTrainingSessionsBySportFacilityId(int sportFacilityId);
+    List<TrainingSession> getTrainingSessionsBySportFacilityId(int sportFacilityId);
 
     public void deleteSession(int id) ;
 

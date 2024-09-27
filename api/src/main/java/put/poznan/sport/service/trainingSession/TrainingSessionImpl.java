@@ -35,8 +35,9 @@ public class TrainingSessionImpl implements TrainingSessionService {
     }
 
     @Override
-    public Optional<List<TrainingSession>> getTrainingsByFacility(int id) {
-        return Optional.empty();
+    public List<TrainingSession> getTrainingsByFacility(int id) {
+        return trainingSessionRepository.findBySportFacilityId(id)
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
     }
 
     @Override
@@ -93,8 +94,9 @@ public class TrainingSessionImpl implements TrainingSessionService {
 
 
     @Override
-    public Optional<List<TrainingSession>> getTrainingSessionsBySportFacilityId(int sportFacilityId) {
-        return Optional.ofNullable(trainingSessionRepository.findBySportFacilityId(sportFacilityId));
+    public List<TrainingSession> getTrainingSessionsBySportFacilityId(int sportFacilityId) {
+        return trainingSessionRepository.findBySportFacilityId(sportFacilityId)
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
     }
 
     @Override
