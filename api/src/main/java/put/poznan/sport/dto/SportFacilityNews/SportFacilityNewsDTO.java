@@ -9,8 +9,8 @@ public class SportFacilityNewsDTO {
 
     private Integer sportFacilityNewsID;
 
-    @NotBlank(message = "Typ nie może być pusty")
-    private Integer sportFacilitiesId;
+    @NotNull(message = "Id obiektu sportowego nie może być puste")
+    private Integer sportFacilityId;
 
     @NotBlank(message = "Tytuł nie może być pusty")
     private String title;
