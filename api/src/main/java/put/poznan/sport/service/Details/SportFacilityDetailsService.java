@@ -45,7 +45,7 @@ public class SportFacilityDetailsService {
                 .map(coach -> CoachAverageRating.builder()
                         .coachId(coach.getId())
                         .coachName(coach.getName() + " " + coach.getSurname())
-                        .averageRating(ratingService.getCoachAverageRating(coach.getId()))
+                        .averageRating(ratingService.getCoachAverageRating(coach.getId()).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono ocen")))
                         .build())
                 .collect(Collectors.toList());
 
