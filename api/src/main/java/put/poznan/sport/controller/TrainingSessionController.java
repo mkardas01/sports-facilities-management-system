@@ -51,8 +51,9 @@ public class TrainingSessionController {
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> deleteSession(@PathVariable int id) {
-        return new ResponseEntity<>(trainingSessionService.deleteSession(id),HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteSession(@PathVariable int id) {
+        trainingSessionService.deleteSession(id);
     }
 
 }

@@ -93,11 +93,11 @@ public class TrainingSessionImpl implements TrainingSessionService {
     }
 
     @Override
-    public boolean deleteSession(int id) {
+    public void deleteSession(int id) {
         TrainingSession trainingSession = trainingSessionRepository.findById(id)
-                .orElseThrow(() -> new TrainingSessionNotFoundException("TrainingSession with id " + id + " not found"));
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
 
+        userService.checkIfUserIsManagerOrAdmin(trainingSession.getSportFacility());
         trainingSessionRepository.delete(trainingSession);
-        return true;
     }
 }

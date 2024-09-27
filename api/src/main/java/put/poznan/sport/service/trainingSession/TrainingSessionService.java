@@ -19,7 +19,7 @@ public interface TrainingSessionService {
 
     List<TrainingSession> getTrainingSessionsBySportFacilityId(int sportFacilityId);
 
-    public boolean deleteSession(int id) ;
+    public void deleteSession(int id) ;
 
 }
 
