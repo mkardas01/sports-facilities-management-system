@@ -15,7 +15,7 @@ public interface TrainingSessionService {
 
     public TrainingSession createSession(TrainingSessionDTO trainingSession) ;
 
-    public TrainingSession updateSession(TrainingSession trainingSession);
+    public TrainingSession updateSession(TrainingSessionDTO trainingSession);
 
     List<TrainingSession> getTrainingSessionsBySportFacilityId(int sportFacilityId);
 

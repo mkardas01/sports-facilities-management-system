@@ -44,7 +44,7 @@ public class TrainingSessionController {
     @PutMapping("update")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> updateSession(@RequestBody TrainingSession trainingSession) {
+    public ResponseEntity<?> updateSession(@RequestBody TrainingSessionDTO trainingSession) {
         return new ResponseEntity<>(trainingSessionService.updateSession(trainingSession), HttpStatus.OK);
     }
 

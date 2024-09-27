@@ -13,6 +13,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public class TrainingSessionDTO {
+
+    private Integer trainingSessionId;
+
     @NotNull(message = "Id trenera nie może pozostać puste")
     private Integer coachId;
 

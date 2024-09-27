@@ -68,12 +68,24 @@ public class TrainingSessionImpl implements TrainingSessionService {
     }
 
     @Override
-    public TrainingSession updateSession(TrainingSession trainingSession) {
-        trainingSessionRepository.findById(trainingSession.getId())
-                .orElseThrow(() -> new TrainingSessionNotFoundException("TrainingSession with id " + trainingSession.getId() + " not found"));
+    public TrainingSession updateSession(TrainingSessionDTO trainingSessionDTO) {
+        TrainingSession newSession = trainingSessionRepository.findById(trainingSessionDTO.getTrainingSessionId())
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
 
-        return trainingSessionRepository.save(trainingSession);
+        userService.checkIfUserIsManagerOrAdmin(newSession.getSportFacility());
+
+        newSession.setCoachId(trainingSessionDTO.getCoachId());
+        newSession.setSportFacilityId(trainingSessionDTO.getSportFacilityId());
+        newSession.setName(trainingSessionDTO.getName());
+        newSession.setStartHour(trainingSessionDTO.getStartHour());
+        newSession.setDuration(trainingSessionDTO.getDuration());
+        newSession.setIsWeekly(trainingSessionDTO.getIsWeekly());
+        newSession.setTrainingDate(trainingSessionDTO.getTrainingDate());
+        newSession.setCapacity(trainingSessionDTO.getCapacity());
+
+        return trainingSessionRepository.save(newSession);
     }
+
 
     @Override
     public List<TrainingSession> getTrainingSessionsBySportFacilityId(int sportFacilityId) {

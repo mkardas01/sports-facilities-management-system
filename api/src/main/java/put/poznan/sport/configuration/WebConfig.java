@@ -41,7 +41,10 @@ public class WebConfig {
                                 "api/participant/create",
                                 "api/participant/update",
                                 "api/participant/delete/**",
-                                "api/participant/facility/**"
+                                "api/participant/facility/**",
+                                "api/training/create",
+                                "api/training/update",
+                                "api/training/delete/**"
                         ).hasAnyAuthority(Authority.MANAGER.name(), Authority.ADMIN.name())
                         .requestMatchers("api/sportFacility/create", "api/sportFacility/delete").hasAnyAuthority(Authority.ADMIN.name())
                         .anyRequest().authenticated()
