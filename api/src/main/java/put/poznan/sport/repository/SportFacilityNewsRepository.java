@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SportFacilityNewsRepository extends JpaRepository<SportFacilityNews, Integer> {
-    Optional<List<SportFacilityNews>> findBySportFacilitiesId(Integer sportFacilitiesId);
+    Optional<List<SportFacilityNews>> findBySportFacilityId(Integer sportFacilitiesId);
 }
