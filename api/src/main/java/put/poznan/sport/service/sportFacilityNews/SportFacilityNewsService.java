@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface SportFacilityNewsService {
 
     List<SportFacilityNews> getAllFacilityNews();
-    Optional<List<SportFacilityNews>> getFacilityNewsBySportFacilityId(int sportFacilityId);
+    List<SportFacilityNews> getFacilityNewsBySportFacilityId(int sportFacilityId);
 
     public SportFacilityNews updateFacilityNews(SportFacilityNewsDTO facilityNews);
 

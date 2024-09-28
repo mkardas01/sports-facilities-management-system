@@ -99,16 +99,17 @@ public class RatingImpl implements RatingService {
     }
 
     @Override
-    public Optional<Double> getCoachAverageRating(Integer coachId) {
+    public Double getCoachAverageRating(Integer coachId) {
         Coach coach = coachRepository.findById(coachId).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
-        return Optional.of(coachRatingRepository.findCoachAverage(coach));
+        return coachRatingRepository.findCoachAverage(coach).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono opini"));
     }
 
     @Override
-    public Optional<Double> getSportFacilityAverageRating(Integer sportFacilityId) {
+    public Double getSportFacilityAverageRating(Integer sportFacilityId) {
         SportFacility facility = sportFacilityRepository.findById(sportFacilityId)
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
-        return Optional.of(sportFacilityRatingRepository.findSportFacilityAverage(facility));
+        return sportFacilityRatingRepository.findSportFacilityAverage(facility)
+                .orElseThrow(() -> new RatingNotFoundException("Nie zaleziono opini"));
     }
 
 
@@ -116,14 +117,15 @@ public class RatingImpl implements RatingService {
         Coach coach = coachRepository.findById(objectRating.getObjectId())
                 .orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
 
-        return coachRatingRepository.findCoachAverage(coach);
+        return coachRatingRepository.findCoachAverage(coach).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono opini"));
     }
 
     private Double handleSportFacilityRatingSearch(ObjectRating objectRating){
         SportFacility sportFacility = sportFacilityRepository.findById(objectRating.getObjectId())
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
 
-        return sportFacilityRatingRepository.findSportFacilityAverage(sportFacility);
+        return sportFacilityRatingRepository.findSportFacilityAverage(sportFacility)
+                .orElseThrow(() -> new RatingNotFoundException("Nie zaleziono opini"));
     }
 
     private Double handleTrainingSessionRatingSearch(ObjectRating objectRating){

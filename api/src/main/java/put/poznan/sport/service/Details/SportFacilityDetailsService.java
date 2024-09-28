@@ -45,7 +45,7 @@ public class SportFacilityDetailsService {
                 .map(coach -> CoachAverageRating.builder()
                         .coachId(coach.getId())
                         .coachName(coach.getName() + " " + coach.getSurname())
-                        .averageRating(ratingService.getCoachAverageRating(coach.getId()).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono ocen")))
+                        .averageRating(ratingService.getCoachAverageRating(coach.getId()))
                         .build())
                 .collect(Collectors.toList());
 
@@ -61,14 +61,11 @@ public class SportFacilityDetailsService {
 
         List<SportEquipment> equipment = sportFacility.getSportEquipments();
 
-        List<SportFacilityNews> news = sportFacilityNewsService.getFacilityNewsBySportFacilityId(sportFacility.getId())
-                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
+        List<SportFacilityNews> news = sportFacilityNewsService.getFacilityNewsBySportFacilityId(sportFacility.getId());
 
-        List<TrainingSession> trainingSessions = trainingSessionService.getTrainingSessionsBySportFacilityId(sportFacility.getId())
-                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
+        List<TrainingSession> trainingSessions = trainingSessionService.getTrainingSessionsBySportFacilityId(sportFacility.getId());
 
-        Double averageRating = ratingService.getSportFacilityAverageRating(sportFacility.getId())
-                .orElseThrow(() -> new RatingNotFoundException("Nie znaleziono ocen"));
+        Double averageRating = ratingService.getSportFacilityAverageRating(sportFacility.getId());
 
         return SportFacilityDetailsResponse.builder()
                 .id(sportFacility.getId())

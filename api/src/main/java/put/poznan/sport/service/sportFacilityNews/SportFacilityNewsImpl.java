@@ -33,8 +33,9 @@ public class SportFacilityNewsImpl implements SportFacilityNewsService {
     }
 
     @Override
-    public Optional<List<SportFacilityNews>> getFacilityNewsBySportFacilityId(int sportFacilityId) {
-        return Optional.ofNullable(sportFacilityNewsRepository.findBySportFacilitiesId(sportFacilityId));
+    public List<SportFacilityNews> getFacilityNewsBySportFacilityId(int sportFacilityId) {
+        return sportFacilityNewsRepository.findBySportFacilitiesId(sportFacilityId)
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
     }
 
     @Override
