@@ -14,13 +14,13 @@ public class SportFacilityNews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer sportFacilitiesId;
+    private Integer sportFacilityId;
     private String title;
     private String description;
     private String imageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "sportFacilitiesId", insertable = false, updatable = false)
+    @JoinColumn(name = "sportFacilityId", insertable = false, updatable = false)
     @JsonIgnore
     private SportFacility sportFacility;
 }

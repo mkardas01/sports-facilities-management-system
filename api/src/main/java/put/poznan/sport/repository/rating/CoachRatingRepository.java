@@ -15,6 +15,6 @@ public interface CoachRatingRepository extends JpaRepository<CoachRating, Intege
     Optional<CoachRating> findByUserAndId(User user, Integer id);
 
     @Query("SELECT AVG(sfp.rate) FROM CoachRating sfp WHERE sfp.coach = :coach")
-    Double findCoachAverage(Coach coach);
+    Optional<Double> findCoachAverage(Coach coach);
 
 }

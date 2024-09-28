@@ -17,7 +17,7 @@ public interface SportFacilityRatingRepository extends JpaRepository<SportFacili
     Optional<SportFacilityRating> findByUserAndId(User user, Integer id);
 
     @Query("SELECT AVG(sfp.rate) FROM SportFacilityRating sfp WHERE sfp.sportFacility = :sportFacility")
-    Double findSportFacilityAverage(SportFacility sportFacility);
+    Optional<Double> findSportFacilityAverage(SportFacility sportFacility);
 
 
 }

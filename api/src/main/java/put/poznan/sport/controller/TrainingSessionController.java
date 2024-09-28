@@ -4,11 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import put.poznan.sport.dto.TraningSession.TrainingSessionDTO;
 import put.poznan.sport.entity.TrainingSession;
+import put.poznan.sport.exception.exceptionClasses.TrainingSessionNotFoundException;
 import put.poznan.sport.service.trainingSession.TrainingSessionService;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("api/TrainingSession/")
+@RequestMapping("api/training/")
 public class TrainingSessionController {
 
     @Autowired
@@ -18,7 +22,16 @@ public class TrainingSessionController {
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllSessions() {
-        return new ResponseEntity<>(trainingSessionService.getAllSessions(), HttpStatus.OK);
+        List<TrainingSession> allTrainingSession = trainingSessionService.getAllSessions()
+                .orElseThrow(()-> new TrainingSessionNotFoundException("Nie znaleziono treningów"));
+        return new ResponseEntity<>(allTrainingSession, HttpStatus.OK);
+    }
+
+    @GetMapping("facility/{id}")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> getFacilityTrainings(@PathVariable  int id) {
+        return new ResponseEntity<>(trainingSessionService.getTrainingsByFacility(id), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
@@ -31,22 +44,23 @@ public class TrainingSessionController {
     @PostMapping("create")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> createSession(@RequestBody TrainingSession trainingSession) {
+    public ResponseEntity<?> createSession(@RequestBody TrainingSessionDTO trainingSession) {
         return new ResponseEntity<>(trainingSessionService.createSession(trainingSession), HttpStatus.OK);
     }
 
     @PutMapping("update")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> updateSession(@RequestBody TrainingSession trainingSession) {
+    public ResponseEntity<?> updateSession(@RequestBody TrainingSessionDTO trainingSession) {
         return new ResponseEntity<>(trainingSessionService.updateSession(trainingSession), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> deleteSession(@PathVariable int id) {
-        return new ResponseEntity<>(trainingSessionService.deleteSession(id),HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteSession(@PathVariable int id) {
+        trainingSessionService.deleteSession(id);
     }
 
 }
