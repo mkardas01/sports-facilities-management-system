@@ -30,7 +30,7 @@ public class TrainingSessionController {
     @GetMapping("facility/{id}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> getFacilityTrainings(int id) {
+    public ResponseEntity<?> getFacilityTrainings(@PathVariable  int id) {
         return new ResponseEntity<>(trainingSessionService.getTrainingsByFacility(id), HttpStatus.OK);
     }
 
