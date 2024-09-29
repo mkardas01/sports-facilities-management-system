@@ -35,11 +35,11 @@ public class TrainingSessionParticipantController {
         return new ResponseEntity<>(trainingSessionParticipantService.getAllParticipant(trainingId),HttpStatus.OK);
     }
 
-    @PostMapping("join/{id}")
+    @PostMapping("join/{trainingId}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> joinSession(@PathVariable int id) {
-        return new ResponseEntity<>(trainingSessionParticipantService.joinTraining(id),HttpStatus.OK);
+    public ResponseEntity<?> joinSession(@PathVariable int trainingId) {
+        return new ResponseEntity<>(trainingSessionParticipantService.joinTraining(trainingId),HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{trainingId}")
