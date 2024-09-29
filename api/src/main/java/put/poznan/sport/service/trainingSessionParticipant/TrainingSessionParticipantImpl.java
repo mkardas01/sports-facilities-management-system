@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import put.poznan.sport.entity.*;
-import put.poznan.sport.exception.exceptionClasses.TrainingSessionNotFoundException;
-import put.poznan.sport.exception.exceptionClasses.TrainingSessionParticipantNotFoundException;
-import put.poznan.sport.exception.exceptionClasses.UserIsAlreadyParticipantException;
-import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.*;
 import put.poznan.sport.repository.SportFacilityParticipantRepository;
 import put.poznan.sport.repository.TrainingSessionParticipantRepository;
 import put.poznan.sport.repository.TrainingSessionRepository;
@@ -51,16 +48,20 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
         TrainingSession trainingSession  = trainingSessionRepository.findById(id)
                 .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
 
+        if (trainingSession.getFreeBooked() <= 0){
+            throw new NoAvailableSpotsException("Brak dostępnych miejsc");
+        }
+
         String currentUserEmail = userService.getCurrentUsername();
         User currentUser = userRepository.findByEmail(currentUserEmail)
                 .orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika"));
 
         if (isMemberShipRequired(trainingSession.getSportFacility())) {
-
+            checkUserMemberShip(currentUser.getId(), trainingSession.getSportFacilityId());
         }
 
         if (isUserParticipant(currentUser.getId(), id)) {
-            throw new UserIsAlreadyParticipantException("Użytkownik jest juz uczestnikiem");
+            throw new UserIsAlreadyParticipantException("Użytkownik jest już uczestnikiem");
         }
 
         TrainingSessionParticipant newParticipant = TrainingSessionParticipant.builder()
@@ -68,8 +69,12 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
                 .userId(currentUser.getId())
                 .build();
 
+        trainingSession.setFreeBooked(trainingSession.getFreeBooked() - 1);
+        trainingSessionRepository.save(trainingSession);
+
         return trainingSessionParticipantRepository.save(newParticipant);
     }
+
 
     @Override
     public boolean deleteParticipant(TrainingSessionParticipantId id) {
@@ -88,7 +93,13 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
         return facility.isMembershipRequired();
     }
 
-    void checkUserMemberShip (SportFacility facility) {
+    void checkUserMemberShip (int userId, int sportFacilityId) {
+        boolean isMember = sportFacilityParticipantRepository
+                .existsSportFacilityParticipantByUserIdAndSportFacilitiesIdAndIsActive(userId, sportFacilityId, 1);
+
+        if (!isMember){
+            throw new UserIsNotMember("Użytkownik musi być członkiem aby zapisać się na trening");
+        }
 
     }
 }
