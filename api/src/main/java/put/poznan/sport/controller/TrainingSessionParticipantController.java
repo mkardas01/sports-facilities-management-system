@@ -36,13 +36,6 @@ public class TrainingSessionParticipantController {
         return new ResponseEntity<>(trainingSessionParticipantService.joinTraining(id),HttpStatus.OK);
     }
 
-    @PutMapping("update")
-    @CrossOrigin
-    @ResponseBody
-    public ResponseEntity<?> updateParticipant(@RequestBody TrainingSessionParticipant participant) {
-        return new ResponseEntity<>(trainingSessionParticipantService.updateParticipant(participant),HttpStatus.OK);
-    }
-
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     @ResponseBody
