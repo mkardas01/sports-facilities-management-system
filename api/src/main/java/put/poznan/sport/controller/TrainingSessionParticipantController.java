@@ -22,11 +22,11 @@ public class TrainingSessionParticipantController {
         return new ResponseEntity<>(trainingSessionParticipantService.getAllParticipants(), HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{userId}/{trainingId}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> getParticipantById(@PathVariable("id") TrainingSessionParticipantId id) {
-        return new ResponseEntity<>(trainingSessionParticipantService.getParticipantById(id),HttpStatus.OK);
+    public ResponseEntity<?> getParticipantById(@PathVariable int userId, @PathVariable  int trainingId) {
+        return new ResponseEntity<>(trainingSessionParticipantService.getParticipantById(userId, trainingId),HttpStatus.OK);
     }
 
     @PostMapping("join/{id}")

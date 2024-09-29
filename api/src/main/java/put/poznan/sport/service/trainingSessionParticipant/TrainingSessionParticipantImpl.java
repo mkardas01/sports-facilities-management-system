@@ -37,9 +37,14 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
     }
 
     @Override
-    public TrainingSessionParticipant getParticipantById(TrainingSessionParticipantId id) {
-        return trainingSessionParticipantRepository.findById(id)
-                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("TrainingSessionParticipant with id " + id + " not found"));
+    public TrainingSessionParticipant getParticipantById(int userId, int trainingId) {
+        TrainingSessionParticipantId user = TrainingSessionParticipantId.builder()
+                .userId(userId)
+                .trainingSessionId(trainingId)
+                .build();
+
+        return trainingSessionParticipantRepository.findById(user)
+                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("Nie znaleziono uczestnika"));
     }
 
     @Override
