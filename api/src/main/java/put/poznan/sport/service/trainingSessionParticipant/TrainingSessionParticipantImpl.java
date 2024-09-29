@@ -37,13 +37,23 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
     }
 
     @Override
-    public TrainingSessionParticipant getParticipantById(int userId, int trainingId) {
+    public TrainingSessionParticipant getParticipantById(int trainingId) {
+        String currentUserEmail = userService.getCurrentUsername();
+        User currentUser = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika"));
+
         TrainingSessionParticipantId user = TrainingSessionParticipantId.builder()
-                .userId(userId)
+                .userId(currentUser.getId())
                 .trainingSessionId(trainingId)
                 .build();
 
         return trainingSessionParticipantRepository.findById(user)
+                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("Nie znaleziono uczestnika"));
+    }
+
+    @Override
+    public List<TrainingSessionParticipant> getAllParticipant(int trainingId) {
+        return trainingSessionParticipantRepository.findAllByTrainingSessionId(trainingId)
                 .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("Nie znaleziono uczestnika"));
     }
 
@@ -82,12 +92,27 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
 
 
     @Override
-    public boolean deleteParticipant(TrainingSessionParticipantId id) {
-        TrainingSessionParticipant participant = trainingSessionParticipantRepository.findById(id)
-                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("TrainingSessionParticipant with id " + id + " not found"));
+    public void leaveTraining(int trainingId) {
+        TrainingSession trainingSession  = trainingSessionRepository.findById(trainingId)
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
 
-        trainingSessionParticipantRepository.deleteById(id);
-        return true;
+        String currentUserEmail = userService.getCurrentUsername();
+        User currentUser = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika"));
+
+
+        TrainingSessionParticipantId user = TrainingSessionParticipantId.builder()
+                .userId(currentUser.getId())
+                .trainingSessionId(trainingId)
+                .build();
+
+        trainingSessionParticipantRepository.findById(user)
+                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("Nie znaleziono treningu użytkownika"));
+
+        trainingSession.setFreeBooked(trainingSession.getFreeBooked() + 1);
+        trainingSessionRepository.save(trainingSession);
+
+        trainingSessionParticipantRepository.deleteById(user);
     }
 
     boolean isUserParticipant(int userId, int trainingSessionId) {

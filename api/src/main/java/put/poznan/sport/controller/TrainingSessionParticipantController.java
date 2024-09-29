@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import put.poznan.sport.entity.TrainingSessionParticipant;
 import put.poznan.sport.entity.TrainingSessionParticipantId;
 import put.poznan.sport.service.trainingSessionParticipant.TrainingSessionParticipantService;
 
@@ -22,11 +21,18 @@ public class TrainingSessionParticipantController {
         return new ResponseEntity<>(trainingSessionParticipantService.getAllParticipants(), HttpStatus.OK);
     }
 
-    @GetMapping("{userId}/{trainingId}")
+    @GetMapping("{trainingId}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> getParticipantById(@PathVariable int userId, @PathVariable  int trainingId) {
-        return new ResponseEntity<>(trainingSessionParticipantService.getParticipantById(userId, trainingId),HttpStatus.OK);
+    public ResponseEntity<?> getParticipant(@PathVariable  int trainingId) {
+        return new ResponseEntity<>(trainingSessionParticipantService.getParticipantById(trainingId),HttpStatus.OK);
+    }
+
+    @GetMapping("all/{trainingId}")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> getAllParticipant(@PathVariable  int trainingId) {
+        return new ResponseEntity<>(trainingSessionParticipantService.getAllParticipant(trainingId),HttpStatus.OK);
     }
 
     @PostMapping("join/{id}")
@@ -36,10 +42,11 @@ public class TrainingSessionParticipantController {
         return new ResponseEntity<>(trainingSessionParticipantService.joinTraining(id),HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("delete/{trainingId}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> deleteParticipant(@PathVariable TrainingSessionParticipantId id) {
-        return new ResponseEntity<>(trainingSessionParticipantService.deleteParticipant(id),HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public void leaveTraining(@PathVariable int trainingId) {
+        trainingSessionParticipantService.leaveTraining(trainingId);
     }
 }
