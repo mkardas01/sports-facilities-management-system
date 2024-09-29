@@ -2,11 +2,11 @@
   width: 200px;
   background-color: #333;
   padding: 20px;
-  height: 100vh; /* Sprawia, że nawigacja zajmuje całą wysokość strony */
-  position: fixed; /* Dodano, aby nawigacja była zawsze widoczna po lewej stronie */
+  height: 100vh; 
+  position: fixed;
   top: 0;
   left: 0;
-  box-sizing: border-box; /* Upewnij się, że padding jest wliczany w szerokość */
+  box-sizing: border-box;
 }
 
 .vertical-nav ul {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getAllSportFacilities } from '../services/sportFacilityService';
 import {Link} from "react-router-dom";
 import '../styles/SportFacilities.css';
-import defaulticon from '../assets/icon.png'; // Upewnij się, że ścieżka jest poprawna
+import defaulticon from '../assets/icon.png';
 
 
 

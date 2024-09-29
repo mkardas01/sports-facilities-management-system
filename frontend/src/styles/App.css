@@ -1,3 +1,14 @@
+/* Ustawienia dla całego ciała aplikacji, ciemne tło */
+body {
+  background-color: #121212; /* Ciemne tło */
+  color: #f8f9fa; /* Jasny kolor tekstu */
+  font-family: Arial, sans-serif; /* Ustawienie domyślnej czcionki */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Główne ustawienia root */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,6 +16,7 @@
   text-align: center;
 }
 
+/* Ustawienia dla logo */
 .logo-icon {
   top: 5px;
   position: absolute;
@@ -13,19 +25,22 @@
   height: auto;
 }
 
+/* Stylowanie nagłówków */
 h1 {
   text-align: center;
   font-size: 3rem;
-  color: #f8f9fa;
+  color: #f8f9fa; /* Jasny kolor tekstu */
   margin-top: 200px;
 }
 
+/* Stylowanie paragrafów */
 p {
   text-align: center;
-  color: #adb5bd;
+  color: #adb5bd; /* Stonowany jasny kolor */
   font-size: 1.2rem;
 }
 
+/* Kontener na stronę główną */
 .home-container {
   display: flex;
   flex-direction: column;
@@ -33,15 +48,74 @@ p {
   align-items: center;
   height: 100vh;
   text-align: center;
+  background-color: #121212; /* Ciemne tło dla strony głównej */
 }
 
+/* Główny kontener aplikacji */
 .app-container {
   display: flex;
   min-height: 100vh;
+  background-color: #121212; /* Ciemne tło */
 }
 
+/* Kontener na treść */
 .content-container {
   flex: 1;
   padding: 20px;
+  background-color: #121212; /* Ciemne tło dla treści */
+  color: #f8f9fa; /* Jasny kolor tekstu */
 }
 
+/* Stylowanie linków */
+a {
+  color: #1e90ff; /* Kolor linków */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Nawigacja pionowa */
+.vertical-nav {
+  width: 200px;
+  background-color: #333; /* Ciemne tło nawigacji */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.vertical-nav ul li {
+  margin-bottom: 10px;
+}
+
+.vertical-nav ul li a {
+  color: #f8f9fa; /* Jasny kolor linków */
+  padding: 10px;
+  display: block;
+  text-decoration: none;
+}
+
+.vertical-nav ul li a:hover {
+  background-color: #555; /* Podświetlenie linków na hover */
+}
+
+/* Stylowanie przycisków */
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

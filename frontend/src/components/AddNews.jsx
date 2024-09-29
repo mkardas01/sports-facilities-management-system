@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/AddNews.css';
+import { useNavigate } from 'react-router-dom';
 
 const AddNews = () => {
   const [news, setNews] = useState({
@@ -11,6 +12,7 @@ const AddNews = () => {
   });
 
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // Dodajemy nawigację
 
   const handleChange = (e) => {
     setNews({
@@ -25,6 +27,7 @@ const AddNews = () => {
       const response = await axios.post('http://localhost:8080/api/SportFacilityNews/create', news);
       if (response.status === 201) {
         setMessage('News added successfully');
+        navigate('/'); // Przekierowanie na stronę główną po dodaniu newsa
       }
     } catch (error) {
       setMessage('Error adding news: ' + error.response?.data?.message || 'Unexpected error');

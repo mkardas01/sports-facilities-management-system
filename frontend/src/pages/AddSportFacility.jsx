@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import '../styles/AddSportFacility.css';
 
 const AddSportFacility = () => {
@@ -13,6 +14,7 @@ const AddSportFacility = () => {
   });
 
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // Hook for navigation
 
   const handleChange = (e) => {
     setFacility({
@@ -27,9 +29,12 @@ const AddSportFacility = () => {
       const response = await axios.post('http://localhost:8080/api/SportFacility/create', facility);
       if (response.status === 200) {
         setMessage('Sport facility added successfully');
+        setTimeout(() => {
+          navigate('/sport-facilities'); // Redirect after 1 second
+        }, 1000); // Optional delay for user to see the success message
       }
     } catch (error) {
-      setMessage('Error adding sport facility: ' + error.response.data.message);
+      setMessage('Error adding sport facility: ' + (error.response?.data?.message || 'Unknown error'));
     }
   };
 

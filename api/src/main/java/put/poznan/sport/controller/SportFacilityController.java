@@ -9,6 +9,7 @@ import put.poznan.sport.service.sportFacility.SportFacilityService;
 
 @RestController
 @RequestMapping("api/SportFacility/")
+@CrossOrigin(origins = "http://localhost:5173")
 public class SportFacilityController {
 
     @Autowired
