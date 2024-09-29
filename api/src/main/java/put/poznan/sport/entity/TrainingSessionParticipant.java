@@ -7,6 +7,9 @@ import lombok.*;
 @IdClass(TrainingSessionParticipantId.class)
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TrainingSessionParticipant {
     @Id
     private Integer userId;

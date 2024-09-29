@@ -18,7 +18,7 @@ public interface UserService {
 
     public User updateUser(UserDTO user);
 
-    public boolean deleteUser();
+    public void deleteUser();
     public String getCurrentUsername();
 
     public void checkIfUserIsManagerOrAdmin(SportFacility sportFacility);

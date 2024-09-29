@@ -13,6 +13,6 @@ public interface SportFacilityParticipantRepository extends JpaRepository<SportF
     Optional <SportFacilityParticipant> findByUserAndSportFacilityAndIsActive(User user, SportFacility sportFacility, Integer isActive );
     Optional<List<SportFacilityParticipant>> findAllByUser(User user);
     Optional<List<SportFacilityParticipant>> findAllBySportFacilitiesId(Integer facilityId);
-    Boolean existsSportFacilityParticipantByUserIdAndSportFacilitiesId(Integer userId, Integer SportFacilityId);
+    Boolean existsSportFacilityParticipantByUserIdAndSportFacilitiesIdAndIsActive(Integer userId, Integer SportFacilityId, int active);
 
 }
