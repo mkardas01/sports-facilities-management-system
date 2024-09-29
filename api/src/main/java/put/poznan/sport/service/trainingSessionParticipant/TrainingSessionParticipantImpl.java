@@ -3,14 +3,12 @@ package put.poznan.sport.service.trainingSessionParticipant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import put.poznan.sport.entity.TrainingSession;
-import put.poznan.sport.entity.TrainingSessionParticipant;
-import put.poznan.sport.entity.TrainingSessionParticipantId;
-import put.poznan.sport.entity.User;
+import put.poznan.sport.entity.*;
 import put.poznan.sport.exception.exceptionClasses.TrainingSessionNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.TrainingSessionParticipantNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.UserIsAlreadyParticipantException;
 import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
+import put.poznan.sport.repository.SportFacilityParticipantRepository;
 import put.poznan.sport.repository.TrainingSessionParticipantRepository;
 import put.poznan.sport.repository.TrainingSessionRepository;
 import put.poznan.sport.repository.UserRepository;
@@ -33,6 +31,9 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
     @Autowired
     private TrainingSessionRepository trainingSessionRepository;
 
+    @Autowired
+    private SportFacilityParticipantRepository sportFacilityParticipantRepository;
+
     @Override
     public List<TrainingSessionParticipant> getAllParticipants() {
         return trainingSessionParticipantRepository.findAll();
@@ -53,6 +54,10 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
         String currentUserEmail = userService.getCurrentUsername();
         User currentUser = userRepository.findByEmail(currentUserEmail)
                 .orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika"));
+
+        if (isMemberShipRequired(trainingSession.getSportFacility())) {
+
+        }
 
         if (isUserParticipant(currentUser.getId(), id)) {
             throw new UserIsAlreadyParticipantException("Użytkownik jest juz uczestnikiem");
@@ -79,4 +84,11 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
         return trainingSessionParticipantRepository.existsByUserIdAndTrainingSessionId(userId, trainingSessionId);
     }
 
+    boolean isMemberShipRequired(SportFacility facility) {
+        return facility.isMembershipRequired();
+    }
+
+    void checkUserMemberShip (SportFacility facility) {
+
+    }
 }

@@ -119,7 +119,8 @@ public class SportFacilityParticipantImpl implements SportFacilityParticipantSer
     }
 
     private boolean userIsParticipant(int userId, int sportFacilityId) {
-        return sportFacilityParticipantRepository.existsSportFacilityParticipantByUserIdAndSportFacilitiesId(userId, sportFacilityId);
+        return sportFacilityParticipantRepository
+                .existsSportFacilityParticipantByUserIdAndSportFacilitiesIdAndIsActive(userId, sportFacilityId, 1);
     }
 
 }

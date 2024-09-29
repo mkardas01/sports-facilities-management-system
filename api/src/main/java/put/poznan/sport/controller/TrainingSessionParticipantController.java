@@ -32,7 +32,7 @@ public class TrainingSessionParticipantController {
     @PostMapping("join/{id}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> createParticipant(@PathVariable int id) {
+    public ResponseEntity<?> joinSession(@PathVariable int id) {
         return new ResponseEntity<>(trainingSessionParticipantService.joinTraining(id),HttpStatus.OK);
     }
 
