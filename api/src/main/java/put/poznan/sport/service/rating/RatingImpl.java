@@ -275,7 +275,6 @@ public class RatingImpl implements RatingService {
             sportFacilityParticipantRepository.findByUserAndSportFacilityAndIsActive(user, sportFacility,1)
                     .orElseThrow(() -> new UserIsNotMember("Użytkownik nie posiada wykupionego karnetu w obiekcie"));
         }
-
     }
 
 }

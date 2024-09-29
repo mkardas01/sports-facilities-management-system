@@ -2,10 +2,19 @@ package put.poznan.sport.service.trainingSessionParticipant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import put.poznan.sport.entity.TrainingSession;
 import put.poznan.sport.entity.TrainingSessionParticipant;
 import put.poznan.sport.entity.TrainingSessionParticipantId;
+import put.poznan.sport.entity.User;
+import put.poznan.sport.exception.exceptionClasses.TrainingSessionNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.TrainingSessionParticipantNotFoundException;
+import put.poznan.sport.exception.exceptionClasses.UserIsAlreadyParticipantException;
+import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
 import put.poznan.sport.repository.TrainingSessionParticipantRepository;
+import put.poznan.sport.repository.TrainingSessionRepository;
+import put.poznan.sport.repository.UserRepository;
+import put.poznan.sport.service.user.UserService;
 
 import java.util.List;
 
@@ -14,6 +23,15 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
 
     @Autowired
     private TrainingSessionParticipantRepository trainingSessionParticipantRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TrainingSessionRepository trainingSessionRepository;
 
     @Override
     public List<TrainingSessionParticipant> getAllParticipants() {
@@ -27,19 +45,25 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
     }
 
     @Override
-    public TrainingSessionParticipant createParticipant(TrainingSessionParticipant participant) {
-        return trainingSessionParticipantRepository.save(participant);
-    }
+    @Transactional
+    public TrainingSessionParticipant joinTraining(int id) {
+        TrainingSession trainingSession  = trainingSessionRepository.findById(id)
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
 
-    @Override
-    public TrainingSessionParticipant updateParticipant(TrainingSessionParticipant participant) {
+        String currentUserEmail = userService.getCurrentUsername();
+        User currentUser = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika"));
 
-        TrainingSessionParticipantId user = new TrainingSessionParticipantId(participant.getUserId(), participant.getTrainingSessionId());
+        if (isUserParticipant(currentUser.getId(), id)) {
+            throw new UserIsAlreadyParticipantException("Użytkownik jest juz uczestnikiem");
+        }
 
-        trainingSessionParticipantRepository.findById(user)
-                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("TrainingSessionParticipant with id " + user.getUserId() + " not found"));
+        TrainingSessionParticipant newParticipant = TrainingSessionParticipant.builder()
+                .trainingSessionId(id)
+                .userId(currentUser.getId())
+                .build();
 
-        return trainingSessionParticipantRepository.save(participant);
+        return trainingSessionParticipantRepository.save(newParticipant);
     }
 
     @Override
@@ -50,4 +74,9 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
         trainingSessionParticipantRepository.deleteById(id);
         return true;
     }
+
+    boolean isUserParticipant(int userId, int trainingSessionId) {
+        return trainingSessionParticipantRepository.existsByUserIdAndTrainingSessionId(userId, trainingSessionId);
+    }
+
 }

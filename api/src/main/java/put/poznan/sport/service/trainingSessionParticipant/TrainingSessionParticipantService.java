@@ -16,10 +16,7 @@ public interface TrainingSessionParticipantService {
 
     public TrainingSessionParticipant getParticipantById(TrainingSessionParticipantId id) ;
 
-    public TrainingSessionParticipant createParticipant(TrainingSessionParticipant participant) ;
-
-    public TrainingSessionParticipant updateParticipant(TrainingSessionParticipant participant) ;
-
+    public TrainingSessionParticipant joinTraining(int id) ;
     public boolean deleteParticipant(TrainingSessionParticipantId id);
 
 }

@@ -9,7 +9,7 @@ import put.poznan.sport.entity.TrainingSessionParticipantId;
 import put.poznan.sport.service.trainingSessionParticipant.TrainingSessionParticipantService;
 
 @RestController
-@RequestMapping("api/TrainingSessionParticipant/")
+@RequestMapping("api/training/participant/")
 public class TrainingSessionParticipantController {
 
     @Autowired
@@ -29,11 +29,11 @@ public class TrainingSessionParticipantController {
         return new ResponseEntity<>(trainingSessionParticipantService.getParticipantById(id),HttpStatus.OK);
     }
 
-    @PostMapping("create")
+    @PostMapping("join/{id}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> createParticipant(@RequestBody TrainingSessionParticipant participant) {
-        return new ResponseEntity<>(trainingSessionParticipantService.createParticipant(participant),HttpStatus.OK);
+    public ResponseEntity<?> createParticipant(@PathVariable int id) {
+        return new ResponseEntity<>(trainingSessionParticipantService.joinTraining(id),HttpStatus.OK);
     }
 
     @PutMapping("update")

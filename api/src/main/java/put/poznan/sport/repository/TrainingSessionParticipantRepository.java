@@ -7,4 +7,5 @@ import put.poznan.sport.entity.TrainingSessionParticipantId;
 import java.util.Optional;
 
 public interface TrainingSessionParticipantRepository extends JpaRepository<TrainingSessionParticipant, TrainingSessionParticipantId> {
+    boolean existsByUserIdAndTrainingSessionId(int userId, int trainingSessionId);
 }
