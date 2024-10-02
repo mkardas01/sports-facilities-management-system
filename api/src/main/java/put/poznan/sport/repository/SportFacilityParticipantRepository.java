@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface SportFacilityParticipantRepository extends JpaRepository<SportFacilityParticipant, SportFacilityParticipantId> {
     Optional <SportFacilityParticipant> findByUserAndSportFacilityAndIsActive(User user, SportFacility sportFacility, Integer isActive );
-    Optional<List<SportFacilityParticipant>> findAllByUser(User user);
+    Optional<List<SportFacilityParticipant>> findAllByUserId(int id);
     Optional<List<SportFacilityParticipant>> findAllBySportFacilitiesId(Integer facilityId);
     Boolean existsSportFacilityParticipantByUserIdAndSportFacilitiesIdAndIsActive(Integer userId, Integer SportFacilityId, int active);
 
