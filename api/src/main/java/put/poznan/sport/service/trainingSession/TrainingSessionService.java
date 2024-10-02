@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface TrainingSessionService {
 
-    public Optional<List<TrainingSession>> getAllSessions() ;
+    public Optional<List<TrainingSession>> getAllSessions();
 
-    public List<TrainingSession> getTrainingsByFacility(int id) ;
+    public List<TrainingSession> getTrainingsByFacility(int id);
 
     public TrainingSession getSessionById(int id);
 

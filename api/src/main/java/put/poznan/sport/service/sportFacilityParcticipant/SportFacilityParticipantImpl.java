@@ -55,7 +55,7 @@ public class SportFacilityParticipantImpl implements SportFacilityParticipantSer
     @Override
     public List<SportFacility> getSportFacilitiesByCurrentUser () {
         User user = userService.getUser();
-        return sportFacilityParticipantRepository.findAllByUser(user)
+        return sportFacilityParticipantRepository.findAllByUserId(user.getId())
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektów dla podanego użytkownika"))
                 .stream()
                 .map(SportFacilityParticipant::getSportFacility)
