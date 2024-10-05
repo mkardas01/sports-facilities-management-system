@@ -6,6 +6,7 @@ import put.poznan.sport.dto.Rating.Rating;
 import put.poznan.sport.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RatingService {
 

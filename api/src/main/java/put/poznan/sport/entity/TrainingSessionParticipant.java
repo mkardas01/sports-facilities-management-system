@@ -1,11 +1,15 @@
 package put.poznan.sport.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @IdClass(TrainingSessionParticipantId.class)
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TrainingSessionParticipant {
     @Id
     private Integer userId;
@@ -20,6 +24,4 @@ public class TrainingSessionParticipant {
     @ManyToOne
     @JoinColumn(name = "trainingSessionId", insertable = false, updatable = false)
     private TrainingSession trainingSession;
-
-    // Getters and Setters
 }

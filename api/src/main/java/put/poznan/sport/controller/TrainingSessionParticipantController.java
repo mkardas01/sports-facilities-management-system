@@ -4,49 +4,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import put.poznan.sport.entity.TrainingSessionParticipant;
-import put.poznan.sport.entity.TrainingSessionParticipantId;
 import put.poznan.sport.service.trainingSessionParticipant.TrainingSessionParticipantService;
 
 @RestController
-@RequestMapping("api/TrainingSessionParticipant/")
+@RequestMapping("api/training/participant/")
 public class TrainingSessionParticipantController {
 
     @Autowired
     private TrainingSessionParticipantService trainingSessionParticipantService;
 
-    @GetMapping("all")
+    @GetMapping("/user/training")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> getAllParticipants() {
-        return new ResponseEntity<>(trainingSessionParticipantService.getAllParticipants(), HttpStatus.OK);
+    public ResponseEntity<?> getUsersCurrentTrainings() {
+        return new ResponseEntity<>(trainingSessionParticipantService.getCurrentUserTrainings(), HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("all/{trainingId}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> getParticipantById(@PathVariable("id") TrainingSessionParticipantId id) {
-        return new ResponseEntity<>(trainingSessionParticipantService.getParticipantById(id),HttpStatus.OK);
+    public ResponseEntity<?> getAllParticipant(@PathVariable  int trainingId) {
+        return new ResponseEntity<>(trainingSessionParticipantService.getAllParticipant(trainingId),HttpStatus.OK);
     }
 
-    @PostMapping("create")
+    @PostMapping("join/{trainingId}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> createParticipant(@RequestBody TrainingSessionParticipant participant) {
-        return new ResponseEntity<>(trainingSessionParticipantService.createParticipant(participant),HttpStatus.OK);
+    public ResponseEntity<?> joinSession(@PathVariable int trainingId) {
+        return new ResponseEntity<>(trainingSessionParticipantService.joinTraining(trainingId),HttpStatus.OK);
     }
 
-    @PutMapping("update")
+    @DeleteMapping("delete/{trainingId}")
     @CrossOrigin
     @ResponseBody
-    public ResponseEntity<?> updateParticipant(@RequestBody TrainingSessionParticipant participant) {
-        return new ResponseEntity<>(trainingSessionParticipantService.updateParticipant(participant),HttpStatus.OK);
-    }
-
-    @DeleteMapping("delete/{id}")
-    @CrossOrigin
-    @ResponseBody
-    public ResponseEntity<?> deleteParticipant(@PathVariable TrainingSessionParticipantId id) {
-        return new ResponseEntity<>(trainingSessionParticipantService.deleteParticipant(id),HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public void leaveTraining(@PathVariable int trainingId) {
+        trainingSessionParticipantService.leaveTraining(trainingId);
     }
 }
