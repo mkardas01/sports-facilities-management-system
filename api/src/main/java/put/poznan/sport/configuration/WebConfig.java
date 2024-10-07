@@ -1,6 +1,8 @@
 package put.poznan.sport.configuration;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,21 +19,20 @@ import put.poznan.sport.entity.Authority;
 
 @Configuration
 @EnableWebSecurity
-public class WebConfig implements WebMvcConfigurer {
-
-    private final AuthenticationProvider authenticationProvider;
-    private final JwtFilter jwtFilter;
+@RequiredArgsConstructor
+public class WebConfig {
 
     @Autowired
-    public WebConfig(AuthenticationProvider authenticationProvider, JwtFilter jwtFilter) {
-        this.authenticationProvider = authenticationProvider;
-        this.jwtFilter = jwtFilter;
-    }
+    private final AuthenticationProvider authenticationProvider;
+
+    @Autowired
+    private final JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(
@@ -63,15 +64,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("*")
-                .allowCredentials(true);
     }
 
 }

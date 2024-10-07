@@ -19,7 +19,6 @@ public class TrainingSessionController {
     private TrainingSessionService trainingSessionService;
 
     @GetMapping("all")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllSessions() {
         List<TrainingSession> allTrainingSession = trainingSessionService.getAllSessions()
@@ -28,35 +27,30 @@ public class TrainingSessionController {
     }
 
     @GetMapping("facility/{id}")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getFacilityTrainings(@PathVariable  int id) {
         return new ResponseEntity<>(trainingSessionService.getTrainingsByFacility(id), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getSessionById(@PathVariable("id") int id) {
         return new ResponseEntity<>(trainingSessionService.getSessionById(id), HttpStatus.OK);
     }
 
     @PostMapping("create")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createSession(@RequestBody TrainingSessionDTO trainingSession) {
         return new ResponseEntity<>(trainingSessionService.createSession(trainingSession), HttpStatus.OK);
     }
 
     @PutMapping("update")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateSession(@RequestBody TrainingSessionDTO trainingSession) {
         return new ResponseEntity<>(trainingSessionService.updateSession(trainingSession), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
-    @CrossOrigin
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public void deleteSession(@PathVariable int id) {

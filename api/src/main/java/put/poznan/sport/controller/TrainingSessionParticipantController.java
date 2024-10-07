@@ -14,28 +14,24 @@ public class TrainingSessionParticipantController {
     private TrainingSessionParticipantService trainingSessionParticipantService;
 
     @GetMapping("/user/training")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getUsersCurrentTrainings() {
         return new ResponseEntity<>(trainingSessionParticipantService.getCurrentUserTrainings(), HttpStatus.OK);
     }
 
     @GetMapping("all/{trainingId}")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllParticipant(@PathVariable  int trainingId) {
         return new ResponseEntity<>(trainingSessionParticipantService.getAllParticipant(trainingId),HttpStatus.OK);
     }
 
     @PostMapping("join/{trainingId}")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> joinSession(@PathVariable int trainingId) {
         return new ResponseEntity<>(trainingSessionParticipantService.joinTraining(trainingId),HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{trainingId}")
-    @CrossOrigin
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public void leaveTraining(@PathVariable int trainingId) {

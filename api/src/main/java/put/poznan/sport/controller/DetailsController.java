@@ -20,7 +20,6 @@ public class DetailsController {
     private SportFacilityDetailsService sportFacilityDetailsService;
 
     @GetMapping("/{id}")
-    @CrossOrigin
     public ResponseEntity<SportFacilityDetailsResponse> getSportFacilityDetails(@PathVariable Integer id) {
         SportFacility sportFacility = sportFacilityRepository.findById(id)
                 .orElseThrow(() -> new SportFacilityNotFoundException("Obiekt sportowy nie znaleziony"));
