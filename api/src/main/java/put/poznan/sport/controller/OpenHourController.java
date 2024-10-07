@@ -35,7 +35,6 @@ public class OpenHourController {
     private SportFacilityRepository sportFacilityRepository;
 
     @GetMapping("{id}")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getOpenHourById(@PathVariable("id") int id){
 
@@ -45,7 +44,6 @@ public class OpenHourController {
     }
 
     @PostMapping("create")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createOpenHour(@RequestBody @Valid CreateOpenHour openHour){
 
@@ -71,7 +69,6 @@ public class OpenHourController {
     }
 
     @PutMapping("update")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateOpenHour(@RequestBody @Valid CreateOpenHour openHour){
 
@@ -98,7 +95,6 @@ public class OpenHourController {
     }
 
     @DeleteMapping("delete/{id}")
-    @CrossOrigin
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public void deleteOpenHour(@PathVariable("id") int id){

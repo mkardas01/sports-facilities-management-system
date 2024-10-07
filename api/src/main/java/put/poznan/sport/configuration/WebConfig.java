@@ -1,6 +1,8 @@
 package put.poznan.sport.configuration;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,25 +13,26 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import put.poznan.sport.entity.Authority;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebConfig {
 
+    @Autowired
     private final AuthenticationProvider authenticationProvider;
-    private final JwtFilter jwtFilter;
 
     @Autowired
-    public WebConfig(AuthenticationProvider authenticationProvider, JwtFilter jwtFilter) {
-        this.authenticationProvider = authenticationProvider;
-        this.jwtFilter = jwtFilter;
-    }
+    private final JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(
@@ -62,6 +65,5 @@ public class WebConfig {
 
         return http.build();
     }
-
 
 }

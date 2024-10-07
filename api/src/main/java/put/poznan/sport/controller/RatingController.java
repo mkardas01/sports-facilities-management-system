@@ -33,7 +33,6 @@ public class RatingController {
     private UserRepository userRepository;
 
     @GetMapping("all")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllRatings(@RequestParam String objectType, @RequestParam Integer id) {
 
@@ -48,7 +47,6 @@ public class RatingController {
     }
 
     @PostMapping("add")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createRating(@RequestBody @Valid RatingRequest rating) {
 
@@ -69,7 +67,6 @@ public class RatingController {
     }
 
     @PutMapping("update")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateRating(@RequestBody @Valid RatingRequest rating) {
 
@@ -90,7 +87,6 @@ public class RatingController {
     }
 
     @DeleteMapping("delete/{id}")
-    @CrossOrigin
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public void deleteRating(@RequestParam String type, @PathVariable int id) {
