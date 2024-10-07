@@ -11,11 +11,13 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import put.poznan.sport.entity.Authority;
 
 @Configuration
 @EnableWebSecurity
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
 
     private final AuthenticationProvider authenticationProvider;
     private final JwtFilter jwtFilter;
@@ -63,5 +65,13 @@ public class WebConfig {
         return http.build();
     }
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
 
 }
