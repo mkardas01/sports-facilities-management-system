@@ -10,6 +10,4 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SportFacilityRepository extends JpaRepository<SportFacility, Integer> {
-
-
 }

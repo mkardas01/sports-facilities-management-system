@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SportFacilityService {
 
-    public List<SportFacility> getAllFacilities(); ;
+    public List<SportFacility> getAllFacilities();
 
     public SportFacility getSportFacilityById(int id) ;
 

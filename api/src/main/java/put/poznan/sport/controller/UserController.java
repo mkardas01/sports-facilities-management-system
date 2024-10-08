@@ -16,20 +16,17 @@ public class UserController {
     private UserService userService;
 
    @GetMapping
-   @CrossOrigin
    @ResponseBody
    public ResponseEntity<?> getUser() {
         return new ResponseEntity<>(userService.getUser(), HttpStatus.OK);
    }
 
    @PutMapping("update")
-   @CrossOrigin
    @ResponseBody
     public ResponseEntity<?> updateUser(@RequestBody UserDTO user) {
         return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
    }
     @DeleteMapping("delete")
-    @CrossOrigin
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public void deleteUser() {
