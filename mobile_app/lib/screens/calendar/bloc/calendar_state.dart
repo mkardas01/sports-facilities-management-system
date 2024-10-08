@@ -1,17 +1,39 @@
 part of 'calendar_bloc.dart';
 
-class CalendarState extends Equatable {
-  final bool isLoaded;
-  final Map<DateTime, List<TrainingSession>> trainings;
-  const CalendarState({this.isLoaded = false, this.trainings = const {}});
+enum CalendarLoadingStatus { loading, loaded, error }
 
-  CalendarState copyWith(
-      {bool? isLoaded, Map<DateTime, List<TrainingSession>>? trainings}) {
+enum CalendarDeletingStatus { deleting, deleted, error, idle }
+
+class CalendarState extends Equatable {
+  final CalendarLoadingStatus status;
+  final CalendarDeletingStatus deletingStatus;
+  final Map<DateTime, List<CalendarTraining>> trainings;
+  final List<TrainingSession> userTrainings;
+  const CalendarState({
+    this.status = CalendarLoadingStatus.loading,
+    this.deletingStatus = CalendarDeletingStatus.idle,
+    this.trainings = const {},
+    this.userTrainings = const [],
+  });
+
+  CalendarState copyWith({
+    CalendarLoadingStatus? status,
+    CalendarDeletingStatus? deletingStatus,
+    Map<DateTime, List<CalendarTraining>>? trainings,
+    List<TrainingSession>? userTrainings,
+  }) {
     return CalendarState(
-        isLoaded: isLoaded ?? this.isLoaded,
-        trainings: trainings ?? this.trainings);
+        status: status ?? this.status,
+        deletingStatus: deletingStatus ?? this.deletingStatus,
+        trainings: trainings ?? this.trainings,
+        userTrainings: userTrainings ?? this.userTrainings);
   }
 
   @override
-  List<Object?> get props => [isLoaded, trainings];
+  List<Object?> get props => [
+        status,
+        deletingStatus,
+        trainings,
+        userTrainings,
+      ];
 }

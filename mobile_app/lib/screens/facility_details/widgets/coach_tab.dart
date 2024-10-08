@@ -79,7 +79,7 @@ class CoachTab extends StatelessWidget {
                                   context, TrainingsScreen.route,
                                   arguments: facility.trainings
                                       .where((element) =>
-                                          element.coachId == coach.id)
+                                          element.coach?.id == coach.id)
                                       .toList()),
                               child: const Text(AppStrings.checkTrainings)),
                         ],

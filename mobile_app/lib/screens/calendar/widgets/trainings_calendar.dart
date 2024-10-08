@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_typography.dart';
-import 'package:sport_plus/models/training_session/training_session.dart';
+import 'package:sport_plus/screens/trainings/models/calendar_training.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TrainingsCalendar extends StatelessWidget {
-  final Map<DateTime, List<TrainingSession>> trainings;
+  final Map<DateTime, List<CalendarTraining>> trainings;
   final DateTime selectedDay;
   final DateTime focusedDay;
   final void Function(DateTime) onChanged;

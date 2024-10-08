@@ -65,4 +65,5 @@ class AppStrings {
   static const String otherType = "Inne";
   static const String yourTrainings = "Twoje zajęcia";
   static const String giveup = "Zrezygnuj";
+  static const String coach = "trener:";
 }

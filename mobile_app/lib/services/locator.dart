@@ -5,6 +5,7 @@ import 'package:sport_plus/repository/facility_details_repository.dart';
 import 'package:sport_plus/repository/news_repository.dart';
 import 'package:sport_plus/repository/rating_repository.dart';
 import 'package:sport_plus/repository/sport_facility_repository.dart';
+import 'package:sport_plus/repository/training_session_participant_repository.dart';
 import 'package:sport_plus/repository/user_repository.dart';
 import 'package:sport_plus/screens/calendar/bloc/calendar_bloc.dart';
 import 'package:sport_plus/screens/facilities/bloc/all_facilities_bloc.dart';
@@ -28,8 +29,7 @@ void setUp() {
   locator.registerLazySingleton<Logger>(() => Logger());
   locator.registerLazySingleton<HttpClient>(() => HttpClient());
   locator.registerLazySingleton<TrainingService>(() => TrainingService());
-  locator.registerLazySingleton<DetailsExtractor>(
-      () => DetailsExtractor(trainingService: locator.get<TrainingService>()));
+  locator.registerLazySingleton<DetailsExtractor>(() => DetailsExtractor());
   locator.registerLazySingleton<ImageService>(() => ImageService());
   locator.registerLazySingleton<LocationService>(() => LocationService());
 
@@ -42,6 +42,8 @@ void setUp() {
   locator.registerLazySingleton<SportFacilityRepository>(
       () => SportFacilityRepository());
   locator.registerLazySingleton<NewsRepository>(() => NewsRepository());
+  locator.registerLazySingleton<TrainingSessionParticipantRepository>(
+      () => TrainingSessionParticipantRepository());
 
   //BLOCS
   locator.registerLazySingleton<HomeBloc>(() => HomeBloc(
@@ -55,7 +57,10 @@ void setUp() {
       facilityDetailsRepository: locator.get<FacilityDetailsRepository>(),
       detailsExtractor: locator.get<DetailsExtractor>(),
       sportFacilityRepository: locator.get<SportFacilityRepository>()));
-  locator.registerLazySingleton<TrainingsBloc>(() => TrainingsBloc());
+  locator.registerLazySingleton<TrainingsBloc>(() => TrainingsBloc(
+      trainingSessionParticipantRepository:
+          locator.get<TrainingSessionParticipantRepository>(),
+      trainingService: locator.get<TrainingService>()));
   locator.registerLazySingleton<ProfileBloc>(() => ProfileBloc(
       imageService: locator.get<ImageService>(),
       userRepository: locator.get<UserRepository>()));
@@ -65,7 +70,10 @@ void setUp() {
   locator.registerLazySingleton<MapBloc>(() => MapBloc(
       locationService: locator.get<LocationService>(),
       sportFacilityRepository: locator.get<SportFacilityRepository>()));
-  locator.registerLazySingleton<CalendarBloc>(() => CalendarBloc());
+  locator.registerLazySingleton<CalendarBloc>(() => CalendarBloc(
+      trainingSessionParticipantRepository:
+          locator.get<TrainingSessionParticipantRepository>(),
+      trainingService: locator.get<TrainingService>()));
   locator.registerLazySingleton<AllFacilitiesBloc>(() => AllFacilitiesBloc(
       sportFacilityRepository: locator.get<SportFacilityRepository>()));
 }

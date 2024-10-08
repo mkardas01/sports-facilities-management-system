@@ -7,12 +7,8 @@ import 'package:sport_plus/models/open_hours/opening_time.dart';
 import 'package:sport_plus/models/sport_facility.dart';
 import 'package:sport_plus/screens/facility_details/models/coach_with_rating.dart';
 import 'package:sport_plus/screens/facility_details/models/facility_data.dart';
-import 'package:sport_plus/services/training_service.dart';
 
 class DetailsExtractor {
-  final TrainingService trainingService;
-  DetailsExtractor({required this.trainingService});
-
   FacilityData getData(
       SportFacilityDetails details, List<SportFacility> userFacility) {
     return FacilityData(
@@ -27,8 +23,7 @@ class DetailsExtractor {
         coaches: _getCoachesData(details.coaches, details.coachRatings),
         equipment: details.equipment ?? [],
         rating: details.averageRating,
-        trainings:
-            trainingService.extractTrainings(details.trainingSessions ?? []),
+        trainings: details.trainingSessions ?? [],
         news: details.news ?? [],
         canRate: userFacility
                     .where((facility) => facility.id == details.id)

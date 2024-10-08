@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
-import 'package:sport_plus/models/training_session/training_session.dart';
 import 'package:sport_plus/screens/calendar/bloc/calendar_bloc.dart';
+import 'package:sport_plus/screens/trainings/models/calendar_training.dart';
 
 class TrainingsList extends StatelessWidget {
-  final List<TrainingSession> trainings;
+  final List<CalendarTraining> trainings;
   const TrainingsList({super.key, required this.trainings});
 
   @override
@@ -24,20 +24,20 @@ class TrainingsList extends StatelessWidget {
               tileColor: AppColors.backgroundColor,
               isThreeLine: true,
               title: Text(
-                "Cardio",
+                training.name,
                 style: AppTypography.bigTextStyle,
               ),
-              subtitle: const Column(
+              subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("16:00 - 17:00, Main Gym"),
-                  Text("trener: Anna Michalak"),
+                  Text("${training.time}, ${training.place}"),
+                  Text("${AppStrings.coach}: ${training.coachName}"),
                 ],
               ),
               trailing: TextButton(
                 onPressed: () => context
                     .read<CalendarBloc>()
-                    .add(GiveupTrainingEvent(training.id ?? -1)),
+                    .add(GiveupTrainingEvent(training.trainingId)),
                 child: const Text(AppStrings.giveup),
               ),
             ),
