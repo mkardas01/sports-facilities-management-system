@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -8,12 +10,14 @@ import 'package:sport_plus/repository/auth_repository.dart';
 import 'package:sport_plus/screens/home/home_screen.dart';
 import 'package:sport_plus/screens/splash/bloc/sign_in_bloc.dart';
 import 'package:sport_plus/screens/splash/splash_screen.dart';
+import 'package:sport_plus/services/http/cert_overrides.dart';
 import 'package:sport_plus/services/locator.dart';
 
 void main() async {
   setUp();
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('pl_PL');
+  HttpOverrides.global = CertOverrides();
   runApp(const MyApp());
 }
 

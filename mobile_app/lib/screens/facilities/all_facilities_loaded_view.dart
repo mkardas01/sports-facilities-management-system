@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/app_typography.dart';
 import 'package:sport_plus/screens/facilities/bloc/all_facilities_bloc.dart';
 import 'package:sport_plus/screens/facility_details/facility_details_screen.dart';
@@ -36,7 +37,7 @@ class AllFacilitiesLoadedView extends StatelessWidget {
                                     topLeft: Radius.circular(15),
                                     topRight: Radius.circular(15)),
                                 child: Image.network(
-                                  element.imageUrl,
+                                  "${AppConsts.imageContainerUrl}${element.imageUrl}",
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) =>
                                       const SizedBox(),

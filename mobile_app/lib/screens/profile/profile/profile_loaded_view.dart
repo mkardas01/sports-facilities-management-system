@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:sport_plus/config/app_colors.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
 import 'package:sport_plus/models/user/user_dto.dart';
@@ -12,9 +11,9 @@ import 'package:sport_plus/widgets/generic_button.dart';
 
 class ProfileLoadedView extends StatelessWidget {
   final UserDto user;
-  final File? avatarFile;
+  final String? imageUrl;
   const ProfileLoadedView(
-      {super.key, required this.user, required this.avatarFile});
+      {super.key, required this.user, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +28,12 @@ class ProfileLoadedView extends StatelessWidget {
               minRadius: 50,
               maxRadius: 80,
               backgroundColor: AppColors.backgroundColor,
-              backgroundImage:
-                  avatarFile != null ? FileImage(avatarFile!) : null,
-              child: user.imageUrl == null
+              backgroundImage: imageUrl != null
+                  ? NetworkImage(
+                      "${AppConsts.imageContainerUrl}$imageUrl",
+                    )
+                  : null,
+              child: imageUrl == null
                   ? Text(
                       user.getInitials,
                       style: AppTypography.bigBoldTextStyle(),

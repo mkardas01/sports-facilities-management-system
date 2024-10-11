@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges_package;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_plus/config/app_colors.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/app_typography.dart';
 import 'package:sport_plus/screens/profile/bloc/profile_bloc.dart';
 import 'package:sport_plus/screens/profile/edit_profile/models/image_picker_source.dart';
@@ -56,10 +58,12 @@ class _EditAvatarState extends State<EditAvatar> {
                 minRadius: 50,
                 maxRadius: 80,
                 backgroundColor: AppColors.backgroundColor,
-                backgroundImage: state.avatarFile != null
-                    ? FileImage(state.avatarFile!)
+                backgroundImage: state.avatarUrl != null
+                    ? NetworkImage(
+                        "${AppConsts.imageContainerUrl}${state.avatarUrl}",
+                      )
                     : null,
-                child: state.avatarFile == null
+                child: state.avatarUrl == null
                     ? Text(
                         state.user?.getInitials ?? "",
                         style: AppTypography.bigBoldTextStyle(),

@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
             } else {
               return ProfileLoadedView(
                 user: user,
-                avatarFile: state.avatarFile,
+                imageUrl: state.avatarUrl,
               );
             }
         }

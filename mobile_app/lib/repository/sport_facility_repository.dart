@@ -24,7 +24,7 @@ class SportFacilityRepository {
   }
 
   Future<List<SportFacility>?> getUserFacilities() async {
-    const String url = "/api/sportFacility/all";
+    const String url = "/api/participant/facilities";
     try {
       Response response = await _client.dio.get(url);
       List<SportFacility> facilities = [];

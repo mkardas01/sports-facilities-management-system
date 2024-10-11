@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/app_typography.dart';
 import 'package:sport_plus/screens/home/models/news.dart';
 
@@ -43,7 +44,7 @@ class NewsSlider extends StatelessWidget {
                         fit: StackFit.expand,
                         children: [
                           Image.network(
-                            element.imageUrl,
+                            "${AppConsts.imageContainerUrl}${element.imageUrl}",
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
                                 const SizedBox(),

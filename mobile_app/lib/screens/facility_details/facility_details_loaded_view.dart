@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sport_plus/config/app_colors.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/models/rating/object_type.dart';
 import 'package:sport_plus/screens/facility_details/models/facility_data.dart';
@@ -24,7 +25,8 @@ class FacilityDetailsLoadedView extends StatelessWidget {
           Stack(
             alignment: Alignment.bottomRight,
             children: [
-              Image.network(facility.imageUrl,
+              Image.network(
+                  "${AppConsts.imageContainerUrl}${facility.imageUrl}",
                   errorBuilder: (context, error, stackTrace) =>
                       const SizedBox()),
               RatingRow(

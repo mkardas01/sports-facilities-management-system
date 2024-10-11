@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
 import 'package:sport_plus/models/rating/object_type.dart';
@@ -30,7 +31,7 @@ class CoachTab extends StatelessWidget {
                         topLeft: Radius.circular(15),
                         bottomLeft: Radius.circular(15)),
                     child: Image.network(
-                      coach.imageUrl,
+                      "${AppConsts.imageContainerUrl}${coach.imageUrl}",
                       width: MediaQuery.of(context).size.width * 0.35,
                       errorBuilder: (context, error, stackTrace) => SizedBox(
                         width: MediaQuery.of(context).size.width * 0.35,

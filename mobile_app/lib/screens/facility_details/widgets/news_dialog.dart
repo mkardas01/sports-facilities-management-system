@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/app_strings.dart';
 import 'package:sport_plus/config/app_typography.dart';
 import 'package:sport_plus/models/sport_facility_news.dart';
@@ -50,7 +51,7 @@ class NewsDialog extends StatelessWidget {
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15)),
                           child: Image.network(
-                            element.imageUrl,
+                            "${AppConsts.imageContainerUrl}${element.imageUrl}",
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
                                 const SizedBox(),

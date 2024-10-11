@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sport_plus/config/app_consts.dart';
 import 'package:sport_plus/config/app_typography.dart';
 import 'package:sport_plus/models/details/sport_equipment.dart';
 
@@ -25,7 +26,7 @@ class EquipmentTab extends StatelessWidget {
                         topLeft: Radius.circular(15),
                         bottomLeft: Radius.circular(15)),
                     child: Image.network(
-                      eq.imageUrl ?? "",
+                      "${AppConsts.imageContainerUrl}${eq.imageUrl}",
                       width: MediaQuery.of(context).size.width * 0.35,
                       errorBuilder: (context, error, stackTrace) => SizedBox(
                         width: MediaQuery.of(context).size.width * 0.35,
