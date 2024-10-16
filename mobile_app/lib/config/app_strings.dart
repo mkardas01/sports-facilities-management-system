@@ -59,10 +59,6 @@ class AppStrings {
   static const String facilitiesMap = "Znajdź w pobliżu";
   static const String goToDetails = "Przejdź do szczegółów";
   static const String legend = "LEGENDA";
-  static const String icerink = "Lodowisko";
-  static const String gym = "Siłownia";
-  static const String field = "Boisko";
-  static const String otherType = "Inne";
   static const String yourTrainings = "Twoje zajęcia";
   static const String giveup = "Zrezygnuj";
   static const String coach = "trener:";

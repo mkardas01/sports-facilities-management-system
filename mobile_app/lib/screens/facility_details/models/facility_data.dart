@@ -1,5 +1,6 @@
 import 'package:sport_plus/models/details/sport_equipment.dart';
 import 'package:sport_plus/models/sport_facility_news.dart';
+import 'package:sport_plus/models/sport_facility_type.dart';
 import 'package:sport_plus/models/training_session/training_session.dart';
 import 'package:sport_plus/screens/facility_details/models/coach_with_rating.dart';
 
@@ -8,7 +9,7 @@ class FacilityData {
   String name;
   String description;
   String address;
-  String type;
+  SportFacilityType type;
   bool membershipRequired;
   String imageUrl;
   double? rating;

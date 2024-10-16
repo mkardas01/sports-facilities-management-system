@@ -4,8 +4,14 @@ class AppColors {
   static const Color mainColor = Color(0xffff6600);
   static const Color backgroundColor = Color.fromARGB(255, 247, 172, 123);
 
-  static const Color icerink = Color.fromARGB(255, 121, 212, 245);
   static const Color gym = Color.fromARGB(255, 252, 82, 82);
-  static const Color field = Color.fromARGB(255, 123, 247, 140);
+  static const Color fitness = Color.fromARGB(255, 252, 82, 204);
+  static const Color basen = Color.fromARGB(255, 63, 207, 207);
+  static const Color boisko = Color.fromARGB(255, 47, 165, 67);
+  static const Color hala = Color.fromARGB(255, 70, 70, 70);
+  static const Color stadion = Color.fromARGB(255, 105, 82, 252);
+  static const Color tenis = Color(0xffff6600);
+  static const Color sauna = Color.fromARGB(255, 122, 61, 8);
+  static const Color squash = Color.fromARGB(255, 241, 252, 82);
   static const Color otherType = Color.fromARGB(255, 0, 0, 0);
 }

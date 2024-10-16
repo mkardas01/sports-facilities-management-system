@@ -16,7 +16,7 @@ class DetailsExtractor {
         name: details.name ?? "",
         description: details.description ?? "",
         address: details.address ?? "",
-        type: details.type ?? "",
+        type: details.type,
         membershipRequired: details.membershipRequired,
         imageUrl: details.imageUrl ?? "",
         openHours: _getOpenHours(details.openHours),
