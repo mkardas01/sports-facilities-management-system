@@ -62,10 +62,9 @@ public class SportFacilityDetailsService {
         List<SportEquipment> equipment = sportFacility.getSportEquipments();
 
         List<SportFacilityNews> news = sportFacilityNewsService.getFacilityNewsBySportFacilityId(sportFacility.getId());
-
         List<TrainingSession> trainingSessions = trainingSessionService.getTrainingSessionsBySportFacilityId(sportFacility.getId());
+        Double averageRating = ratingService.getCoachAverageRating(sportFacility.getId());
 
-        Double averageRating = ratingService.getSportFacilityAverageRating(sportFacility.getId());
 
         return SportFacilityDetailsResponse.builder()
                 .id(sportFacility.getId())

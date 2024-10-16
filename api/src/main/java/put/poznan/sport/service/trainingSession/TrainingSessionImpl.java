@@ -96,7 +96,7 @@ public class TrainingSessionImpl implements TrainingSessionService {
     @Override
     public List<TrainingSession> getTrainingSessionsBySportFacilityId(int sportFacilityId) {
         return trainingSessionRepository.findBySportFacilityId(sportFacilityId)
-                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
+                .orElseThrow(null);
     }
 
     @Override

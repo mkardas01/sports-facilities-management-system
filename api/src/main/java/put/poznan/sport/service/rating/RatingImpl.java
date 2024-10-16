@@ -109,7 +109,7 @@ public class RatingImpl implements RatingService {
         SportFacility facility = sportFacilityRepository.findById(sportFacilityId)
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
         return sportFacilityRatingRepository.findSportFacilityAverage(facility)
-                .orElseThrow(() -> new RatingNotFoundException("Nie zaleziono opini"));
+                .orElseThrow(null);
     }
 
 
