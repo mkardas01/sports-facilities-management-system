@@ -5,19 +5,13 @@ import org.springframework.stereotype.Service;
 import put.poznan.sport.dto.Coach.CoachCreateResponse;
 import put.poznan.sport.entity.Coach;
 import put.poznan.sport.entity.SportEquipment;
-import put.poznan.sport.entity.SportFacility;
-import put.poznan.sport.entity.SportFacilityNews;
+import put.poznan.sport.entity.sportFacility.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacilityNews;
 import put.poznan.sport.entity.TrainingSession;
 import put.poznan.sport.entity.openHour.OpenHour;
-import put.poznan.sport.exception.exceptionClasses.RatingNotFoundException;
-import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
-import put.poznan.sport.exception.exceptionClasses.TrainingSessionNotFoundException;
 import put.poznan.sport.response.CoachAverageRating;
 import put.poznan.sport.response.SportFacilityDetailsResponse;
-import put.poznan.sport.service.coach.CoachService;
-import put.poznan.sport.service.openHour.OpenHourService;
 import put.poznan.sport.service.rating.RatingService;
-import put.poznan.sport.service.sportEquipment.SportEquipmentService;
 import put.poznan.sport.service.sportFacilityNews.SportFacilityNewsService;
 import put.poznan.sport.service.trainingSession.TrainingSessionService;
 
@@ -71,7 +65,7 @@ public class SportFacilityDetailsService {
                 .name(sportFacility.getName())
                 .description(sportFacility.getDescription())
                 .address(sportFacility.getAddress())
-                .type(sportFacility.getType())
+                .type(String.valueOf(sportFacility.getType()))
                 .membershipRequired(sportFacility.isMembershipRequired())
                 .imageUrl(sportFacility.getImageUrl())
                 .openHours(openHour)

@@ -3,6 +3,7 @@ package put.poznan.sport.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 
 import java.util.Date;
 import java.util.List;

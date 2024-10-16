@@ -3,15 +3,15 @@ package put.poznan.sport.service.sportFacility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.dto.SportFacility.SportFacilityDTO;
-import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.entity.User;
+import put.poznan.sport.entity.sportFacility.SportFacilityType;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.UserNotFoundException;
 import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.repository.UserRepository;
 import put.poznan.sport.service.user.UserService;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class SportFacilityImpl implements SportFacilityService {
                 .name(facilityDTO.getName())
                 .description(facilityDTO.getDescription())
                 .address(facilityDTO.getAddress())
-                .type(facilityDTO.getType())
+                .type(SportFacilityType.valueOf(facilityDTO.getType()).getName())
                 .membershipRequired(facilityDTO.isMembershipRequired())
                 .imageUrl(facilityDTO.getImageUrl())
                 .managers(Collections.singletonList(currentUser))
@@ -69,7 +69,7 @@ public class SportFacilityImpl implements SportFacilityService {
             sportFacility.setAddress(facilityDTO.getAddress());
         }
         if (facilityDTO.getType() != null) {
-            sportFacility.setType(facilityDTO.getType());
+            sportFacility.setType(SportFacilityType.valueOf(facilityDTO.getType()).getName());
         }
 
         sportFacility.setMembershipRequired(facilityDTO.isMembershipRequired());

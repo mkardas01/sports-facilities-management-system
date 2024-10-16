@@ -1,7 +1,7 @@
 package put.poznan.sport.service.user;
 
 import put.poznan.sport.dto.User.UserDTO;
-import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.entity.User;
 
 import java.util.List;

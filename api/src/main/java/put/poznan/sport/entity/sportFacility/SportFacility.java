@@ -1,10 +1,15 @@
-package put.poznan.sport.entity;
+package put.poznan.sport.entity.sportFacility;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import put.poznan.sport.entity.Coach;
+import put.poznan.sport.entity.SportEquipment;
+import put.poznan.sport.entity.TrainingSession;
+import put.poznan.sport.entity.User;
 import put.poznan.sport.entity.openHour.OpenHour;
+import put.poznan.sport.entity.sportFacility.SportFacilityNews;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package put.poznan.sport.entity;
+package put.poznan.sport.entity.sportFacility;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.dto.SportFacilityNews.SportFacilityNewsDTO;
-import put.poznan.sport.entity.SportFacilityNews;
 import put.poznan.sport.service.sportFacilityNews.SportFacilityNewsService;
 
 @RestController

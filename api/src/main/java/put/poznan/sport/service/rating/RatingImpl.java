@@ -9,6 +9,7 @@ import put.poznan.sport.entity.*;
 import put.poznan.sport.entity.rating.CoachRating;
 import put.poznan.sport.entity.rating.SportFacilityRating;
 import put.poznan.sport.entity.rating.TrainingSessionRating;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.*;
 import put.poznan.sport.repository.CoachRepository;
 import put.poznan.sport.repository.SportFacilityParticipantRepository;
@@ -17,9 +18,6 @@ import put.poznan.sport.repository.TrainingSessionRepository;
 import put.poznan.sport.repository.rating.CoachRatingRepository;
 import put.poznan.sport.repository.rating.SportFacilityRatingRepository;
 import put.poznan.sport.repository.rating.TrainingSessionRatingRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RatingImpl implements RatingService {

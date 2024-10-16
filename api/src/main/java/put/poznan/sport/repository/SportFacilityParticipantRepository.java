@@ -1,9 +1,9 @@
 package put.poznan.sport.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import put.poznan.sport.entity.SportFacility;
-import put.poznan.sport.entity.SportFacilityParticipant;
-import put.poznan.sport.entity.SportFacilityParticipantId;
+import put.poznan.sport.entity.sportFacility.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacilityParticipant;
+import put.poznan.sport.entity.sportFacility.SportFacilityParticipantId;
 import put.poznan.sport.entity.User;
 
 import java.util.List;
