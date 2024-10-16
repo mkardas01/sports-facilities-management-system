@@ -54,10 +54,12 @@ class FacilityDetailsBloc
         objectId: event.objectId));
     if (!result) {
       emitter(state.copyWith(ratingStatus: RatingLoadingStatus.error));
+      emitter(state.copyWith(ratingStatus: RatingLoadingStatus.idle));
       return;
     }
 
     emitter(state.copyWith(ratingStatus: RatingLoadingStatus.success));
+    emitter(state.copyWith(ratingStatus: RatingLoadingStatus.idle));
     add(LoadingFacilityDetailsEvent(event.objectId));
   }
 }

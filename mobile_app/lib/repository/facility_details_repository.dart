@@ -8,7 +8,7 @@ class FacilityDetailsRepository {
   final Logger _logger = locator.get<Logger>();
 
   Future<SportFacilityDetails?> getDetails(int id) async {
-    String url = "/api/details//${id.toString()}";
+    String url = "/api/details/${id.toString()}";
     try {
       var response = await _client.dio.get(url);
       return SportFacilityDetails.fromJson(response.data);
