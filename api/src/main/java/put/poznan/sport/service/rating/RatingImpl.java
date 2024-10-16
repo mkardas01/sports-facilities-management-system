@@ -98,8 +98,12 @@ public class RatingImpl implements RatingService {
 
     @Override
     public Double getCoachAverageRating(Integer coachId) {
-        Coach coach = coachRepository.findById(coachId).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
-        return coachRatingRepository.findCoachAverage(coach).orElse(null);
+        if (coachId != null){
+            Coach coach = coachRepository.findById(coachId).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
+            return coachRatingRepository.findCoachAverage(coach).orElseThrow(null);
+        }
+
+        return null;
     }
 
     @Override
@@ -107,7 +111,7 @@ public class RatingImpl implements RatingService {
         SportFacility facility = sportFacilityRepository.findById(sportFacilityId)
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
         return sportFacilityRatingRepository.findSportFacilityAverage(facility)
-                .orElseThrow(null);
+                .orElse(null);
     }
 
 
