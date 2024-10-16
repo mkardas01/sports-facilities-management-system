@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -46,7 +45,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       password: event.password,
     ));
     if (result != null) {
-      log(result);
       storageService.addToken(result);
       emitter(state.copyWith(
           status: SignInLoadingStatus.idle,

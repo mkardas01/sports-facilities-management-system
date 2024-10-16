@@ -32,7 +32,6 @@ class StorageService {
     var token = await getToken();
     if (token == null) return null;
     Map<String, dynamic> tokenData = _parseToken(token);
-    log(token);
     return tokenData[key];
   }
 
