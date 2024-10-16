@@ -99,7 +99,7 @@ public class RatingImpl implements RatingService {
     @Override
     public Double getCoachAverageRating(Integer coachId) {
         Coach coach = coachRepository.findById(coachId).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
-        return coachRatingRepository.findCoachAverage(coach).orElse(null);
+        return coachRatingRepository.findCoachAverage(coach).orElseThrow(null);
     }
 
     @Override
