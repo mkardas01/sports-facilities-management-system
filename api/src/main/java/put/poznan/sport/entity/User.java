@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import put.poznan.sport.entity.sportFacility.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacilityParticipant;
 
 import java.util.Collection;
 import java.util.Date;

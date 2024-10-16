@@ -2,10 +2,9 @@ package put.poznan.sport.service.sportFacilityNews;
 
 
 import put.poznan.sport.dto.SportFacilityNews.SportFacilityNewsDTO;
-import put.poznan.sport.entity.SportFacilityNews;
+import put.poznan.sport.entity.sportFacility.SportFacilityNews;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface SportFacilityNewsService {
 

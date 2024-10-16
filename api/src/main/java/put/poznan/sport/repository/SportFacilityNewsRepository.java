@@ -1,7 +1,7 @@
 package put.poznan.sport.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import put.poznan.sport.entity.SportFacilityNews;
+import put.poznan.sport.entity.sportFacility.SportFacilityNews;
 
 import java.util.List;
 import java.util.Optional;

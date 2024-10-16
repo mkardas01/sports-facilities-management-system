@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import put.poznan.sport.dto.SportEquipment.CreateSportEquipment;
 import put.poznan.sport.dto.SportEquipment.UpdateSportEquipment;
 import put.poznan.sport.entity.SportEquipment;
-import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.SportEquipmentNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.repository.SportEquipmentRepository;

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import put.poznan.sport.entity.*;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.*;
 import put.poznan.sport.repository.SportFacilityParticipantRepository;
 import put.poznan.sport.repository.TrainingSessionParticipantRepository;

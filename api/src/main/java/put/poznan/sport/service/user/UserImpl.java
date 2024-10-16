@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.dto.User.UserDTO;
 import put.poznan.sport.entity.Authority;
-import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.entity.User;
 import put.poznan.sport.exception.exceptionClasses.*;
 import put.poznan.sport.repository.SportFacilityRepository;

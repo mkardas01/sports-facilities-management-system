@@ -3,8 +3,8 @@ package put.poznan.sport.service.sportFacilityNews;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.dto.SportFacilityNews.SportFacilityNewsDTO;
-import put.poznan.sport.entity.SportFacility;
-import put.poznan.sport.entity.SportFacilityNews;
+import put.poznan.sport.entity.sportFacility.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacilityNews;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNewsNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
 import put.poznan.sport.repository.SportFacilityNewsRepository;
@@ -12,7 +12,6 @@ import put.poznan.sport.repository.SportFacilityRepository;
 import put.poznan.sport.service.user.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SportFacilityNewsImpl implements SportFacilityNewsService {
@@ -35,7 +34,7 @@ public class SportFacilityNewsImpl implements SportFacilityNewsService {
     @Override
     public List<SportFacilityNews> getFacilityNewsBySportFacilityId(int sportFacilityId) {
         return sportFacilityNewsRepository.findBySportFacilityId(sportFacilityId)
-                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
+                .orElseThrow(null);
     }
 
     @Override

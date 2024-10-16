@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.dto.Coach.CoachUpdate;
 import put.poznan.sport.dto.Coach.CreateCoach;
 import put.poznan.sport.entity.Coach;
-import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.CoachNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportEquipmentNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
