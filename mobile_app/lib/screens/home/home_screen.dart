@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sport_plus/widgets/app_scaffold.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sport_plus/screens/home/bloc/home_bloc.dart';
+import 'package:sport_plus/screens/home/home_loaded_view.dart';
+import 'package:sport_plus/widgets/error_view.dart';
+import 'package:sport_plus/widgets/loading_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,8 +11,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppScaffold(
-      child: Text("Home"),
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        switch (state.status) {
+          case HomeLoadingStatus.loading:
+            return const LoadingView();
+          case HomeLoadingStatus.loaded:
+            return const HomeLoadedView();
+          case HomeLoadingStatus.error:
+            return const ErrorView();
+        }
+      },
     );
   }
 }

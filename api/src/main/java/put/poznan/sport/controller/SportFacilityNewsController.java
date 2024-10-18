@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.dto.SportFacilityNews.SportFacilityNewsDTO;
-import put.poznan.sport.entity.SportFacilityNews;
 import put.poznan.sport.service.sportFacilityNews.SportFacilityNewsService;
 
 @RestController
@@ -16,28 +15,24 @@ public class SportFacilityNewsController {
     private SportFacilityNewsService sportFacilityNewsService;
 
     @GetMapping
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getAllSportFacilityNews() {
         return new ResponseEntity<>(sportFacilityNewsService.getAllFacilityNews(), HttpStatus.OK);
     }
 
     @PostMapping("create")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createSportFacilityNews(@RequestBody SportFacilityNewsDTO news) {
         return new ResponseEntity<>(sportFacilityNewsService.createFacilityNews(news), HttpStatus.CREATED);
     }
 
     @PutMapping("update")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateSportFacilityNews(@RequestBody SportFacilityNewsDTO news) {
         return new ResponseEntity<>(sportFacilityNewsService.updateFacilityNews(news), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
-    @CrossOrigin
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public void deleteSportFacilityNews(@PathVariable("id") Integer id) {

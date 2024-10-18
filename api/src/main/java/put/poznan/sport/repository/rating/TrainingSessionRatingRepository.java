@@ -2,10 +2,8 @@ package put.poznan.sport.repository.rating;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import put.poznan.sport.entity.SportFacility;
 import put.poznan.sport.entity.TrainingSession;
 import put.poznan.sport.entity.User;
-import put.poznan.sport.entity.rating.SportFacilityRating;
 import put.poznan.sport.entity.rating.TrainingSessionRating;
 
 import java.util.Optional;

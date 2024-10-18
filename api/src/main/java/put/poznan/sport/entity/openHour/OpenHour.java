@@ -3,7 +3,7 @@ package put.poznan.sport.entity.openHour;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 
 @Entity
 @Getter

@@ -9,6 +9,7 @@ import put.poznan.sport.entity.*;
 import put.poznan.sport.entity.rating.CoachRating;
 import put.poznan.sport.entity.rating.SportFacilityRating;
 import put.poznan.sport.entity.rating.TrainingSessionRating;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.*;
 import put.poznan.sport.repository.CoachRepository;
 import put.poznan.sport.repository.SportFacilityParticipantRepository;
@@ -17,9 +18,6 @@ import put.poznan.sport.repository.TrainingSessionRepository;
 import put.poznan.sport.repository.rating.CoachRatingRepository;
 import put.poznan.sport.repository.rating.SportFacilityRatingRepository;
 import put.poznan.sport.repository.rating.TrainingSessionRatingRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RatingImpl implements RatingService {
@@ -100,8 +98,12 @@ public class RatingImpl implements RatingService {
 
     @Override
     public Double getCoachAverageRating(Integer coachId) {
-        Coach coach = coachRepository.findById(coachId).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
-        return coachRatingRepository.findCoachAverage(coach).orElseThrow(() -> new RatingNotFoundException("Nie znaleziono opini"));
+        if (coachId != null){
+            Coach coach = coachRepository.findById(coachId).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
+            return coachRatingRepository.findCoachAverage(coach).orElseThrow(null);
+        }
+
+        return null;
     }
 
     @Override
@@ -109,7 +111,7 @@ public class RatingImpl implements RatingService {
         SportFacility facility = sportFacilityRepository.findById(sportFacilityId)
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu sportowego"));
         return sportFacilityRatingRepository.findSportFacilityAverage(facility)
-                .orElseThrow(() -> new RatingNotFoundException("Nie zaleziono opini"));
+                .orElse(null);
     }
 
 

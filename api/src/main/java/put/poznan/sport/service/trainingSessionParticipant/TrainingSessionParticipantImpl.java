@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import put.poznan.sport.entity.*;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.*;
 import put.poznan.sport.repository.SportFacilityParticipantRepository;
 import put.poznan.sport.repository.TrainingSessionParticipantRepository;
@@ -32,29 +33,20 @@ public class TrainingSessionParticipantImpl implements TrainingSessionParticipan
     private SportFacilityParticipantRepository sportFacilityParticipantRepository;
 
     @Override
-    public List<TrainingSessionParticipant> getAllParticipants() {
-        return trainingSessionParticipantRepository.findAll();
+    public List<TrainingSessionParticipant> getAllParticipant(int trainingId) {
+        return trainingSessionParticipantRepository.findAllByTrainingSessionId(trainingId)
+                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("Nie znaleziono uczestnika"));
     }
 
     @Override
-    public TrainingSessionParticipant getParticipantById(int trainingId) {
+    public List<TrainingSessionParticipant> getCurrentUserTrainings() {
         String currentUserEmail = userService.getCurrentUsername();
         User currentUser = userRepository.findByEmail(currentUserEmail)
                 .orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika"));
 
-        TrainingSessionParticipantId user = TrainingSessionParticipantId.builder()
-                .userId(currentUser.getId())
-                .trainingSessionId(trainingId)
-                .build();
+        return trainingSessionParticipantRepository.findAllByUserId(currentUser.getId())
+                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono trenignów"));
 
-        return trainingSessionParticipantRepository.findById(user)
-                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("Nie znaleziono uczestnika"));
-    }
-
-    @Override
-    public List<TrainingSessionParticipant> getAllParticipant(int trainingId) {
-        return trainingSessionParticipantRepository.findAllByTrainingSessionId(trainingId)
-                .orElseThrow(() -> new TrainingSessionParticipantNotFoundException("Nie znaleziono uczestnika"));
     }
 
     @Override

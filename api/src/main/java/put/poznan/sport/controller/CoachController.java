@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import put.poznan.sport.dto.Coach.CoachUpdate;
 import put.poznan.sport.dto.Coach.CreateCoach;
 import put.poznan.sport.entity.Coach;
-import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.exception.exceptionClasses.CoachNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportEquipmentNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
@@ -37,7 +37,6 @@ public class CoachController {
     private UserImpl userService;
 
     @GetMapping("all")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getSportFacilityCoaches(@RequestParam Integer sportFacilityID) {
 
@@ -57,14 +56,12 @@ public class CoachController {
     }
 
     @GetMapping("{id}")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> getCoachById(@PathVariable int id) {
         return new ResponseEntity<>(coachService.getCoachById(id), HttpStatus.OK);
     }
 
     @PostMapping("create")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> createCoach(@RequestBody @Valid CreateCoach coachDTO) {
 
@@ -84,7 +81,6 @@ public class CoachController {
     }
 
     @PutMapping("update")
-    @CrossOrigin
     @ResponseBody
     public ResponseEntity<?> updateCoach(@RequestBody @Valid CoachUpdate coachDTO) {
 
@@ -104,7 +100,6 @@ public class CoachController {
     }
 
     @DeleteMapping("delete/{id}")
-    @CrossOrigin
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public void deleteCoach(@PathVariable int id) {

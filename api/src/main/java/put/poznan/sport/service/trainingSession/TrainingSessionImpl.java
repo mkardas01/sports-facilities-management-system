@@ -3,8 +3,7 @@ package put.poznan.sport.service.trainingSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import put.poznan.sport.dto.TraningSession.TrainingSessionDTO;
-import put.poznan.sport.entity.Coach;
-import put.poznan.sport.entity.SportFacility;
+import put.poznan.sport.entity.sportFacility.SportFacility;
 import put.poznan.sport.entity.TrainingSession;
 import put.poznan.sport.exception.exceptionClasses.CoachNotFoundException;
 import put.poznan.sport.exception.exceptionClasses.SportFacilityNotFoundException;
@@ -96,7 +95,7 @@ public class TrainingSessionImpl implements TrainingSessionService {
     @Override
     public List<TrainingSession> getTrainingSessionsBySportFacilityId(int sportFacilityId) {
         return trainingSessionRepository.findBySportFacilityId(sportFacilityId)
-                .orElseThrow(() -> new TrainingSessionNotFoundException("Nie znaleziono treningu"));
+                .orElseThrow(null);
     }
 
     @Override

@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface TrainingSessionParticipantRepository extends JpaRepository<TrainingSessionParticipant, TrainingSessionParticipantId> {
     boolean existsByUserIdAndTrainingSessionId(int userId, int trainingSessionId);
-
+    Optional<List<TrainingSessionParticipant>> findAllByUserId(int id);
     Optional<List<TrainingSessionParticipant>> findAllByTrainingSessionId(int id);
 }

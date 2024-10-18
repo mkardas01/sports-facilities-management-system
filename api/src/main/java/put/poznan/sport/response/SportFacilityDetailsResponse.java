@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import put.poznan.sport.dto.Coach.CoachCreateResponse;
 import put.poznan.sport.entity.SportEquipment;
-import put.poznan.sport.entity.SportFacilityNews;
+import put.poznan.sport.entity.sportFacility.SportFacilityNews;
 import put.poznan.sport.entity.TrainingSession;
 import put.poznan.sport.entity.openHour.OpenHour;
 
