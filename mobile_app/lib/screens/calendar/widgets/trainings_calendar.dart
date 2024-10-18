@@ -9,18 +9,25 @@ class TrainingsCalendar extends StatelessWidget {
   final DateTime selectedDay;
   final DateTime focusedDay;
   final void Function(DateTime) onChanged;
+  final void Function(DateTime) onMonthChanged;
   const TrainingsCalendar(
       {super.key,
       required this.trainings,
       required this.focusedDay,
       required this.selectedDay,
-      required this.onChanged});
+      required this.onChanged,
+      required this.onMonthChanged});
 
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
       eventLoader: (day) {
-        return trainings[day] ?? [];
+        for (var element in trainings.entries) {
+          if (isSameDay(element.key, day)) {
+            return element.value;
+          }
+        }
+        return [];
       },
       headerStyle:
           const HeaderStyle(titleCentered: true, formatButtonVisible: false),
@@ -44,6 +51,7 @@ class TrainingsCalendar extends StatelessWidget {
       selectedDayPredicate: (day) => isSameDay(selectedDay, day),
       onDaySelected: (newSelectedDay, newFocusedDay) =>
           onChanged(newSelectedDay),
+      onPageChanged: (focusedDay) => onMonthChanged(focusedDay),
       calendarBuilders: CalendarBuilders(
         markerBuilder: (context, day, events) {
           if (events.isNotEmpty) {

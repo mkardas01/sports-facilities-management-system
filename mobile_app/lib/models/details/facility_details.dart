@@ -64,6 +64,11 @@ class SportFacilityDetails {
               .map((i) => CoachAverageRating.fromJson(i))
               .toList()
           : null,
+      trainingSessions: json['trainingSessions'] != null
+          ? (json['trainingSessions'] as List)
+              .map((i) => TrainingSession.fromDetailsJson(i))
+              .toList()
+          : null,
     );
   }
 
