@@ -30,8 +30,8 @@ class TrainingsBloc extends Bloc<TrainingsEvent, TrainingsState> {
   Future<void> _initData(
       InitUserTrainingDataEvent event, Emitter<TrainingsState> emitter) async {
     emitter(state.copyWith(status: TrainingsLoadingStatus.loading));
-    if (event.trainings! is List<TrainingSession>) {
-      emitter(state.copyWith(status: TrainingsLoadingStatus.error));
+    if (event.trainings is! List) {
+      emitter(state.copyWith(status: TrainingsLoadingStatus.loadingError));
       return;
     }
     var trainings =

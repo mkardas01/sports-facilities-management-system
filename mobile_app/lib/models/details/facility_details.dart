@@ -3,6 +3,7 @@ import 'package:sport_plus/models/coach/coach_avarege_rating.dart';
 import 'package:sport_plus/models/open_hours/open_time.dart';
 import 'package:sport_plus/models/details/sport_equipment.dart';
 import 'package:sport_plus/models/sport_facility_news.dart';
+import 'package:sport_plus/models/sport_facility_type.dart';
 import 'package:sport_plus/models/training_session/training_session.dart';
 
 class SportFacilityDetails {
@@ -10,7 +11,7 @@ class SportFacilityDetails {
   String? name;
   String? description;
   String? address;
-  String? type;
+  SportFacilityType type;
   bool membershipRequired;
   String? imageUrl;
   OpenHour? openHours;
@@ -26,7 +27,7 @@ class SportFacilityDetails {
       this.name,
       this.description,
       this.address,
-      this.type,
+      this.type = SportFacilityType.other,
       this.membershipRequired = false,
       this.imageUrl,
       this.openHours,
@@ -43,7 +44,7 @@ class SportFacilityDetails {
       name: json['name'],
       description: json['description'],
       address: json['address'],
-      type: json['type'],
+      type: SportFacilityType.fromString(json['type'] ?? ""),
       membershipRequired: json['membershipRequired'] ?? false,
       imageUrl: json['imageUrl'],
       openHours: json['openHours'] != null
@@ -63,6 +64,11 @@ class SportFacilityDetails {
               .map((i) => CoachAverageRating.fromJson(i))
               .toList()
           : null,
+      trainingSessions: json['trainingSessions'] != null
+          ? (json['trainingSessions'] as List)
+              .map((i) => TrainingSession.fromDetailsJson(i))
+              .toList()
+          : null,
     );
   }
 
@@ -72,7 +78,7 @@ class SportFacilityDetails {
       'name': name,
       'description': description,
       'address': address,
-      'type': type,
+      'type': type.toString(),
       'membershipRequired': membershipRequired,
       'imageUrl': imageUrl,
       'openHours': openHours?.toJson(),

@@ -18,10 +18,10 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       : super(const CalendarState()) {
     on<InitTrainingDataEvent>(_initData);
     on<GiveupTrainingEvent>(_deleteTraining);
-    on<MonthchangedEvent>(_monthChanged);
+    on<MonthChangedEvent>(_monthChanged);
   }
   Future<void> _monthChanged(
-      MonthchangedEvent event, Emitter<CalendarState> emitter) async {
+      MonthChangedEvent event, Emitter<CalendarState> emitter) async {
     var monthTrainings = trainingService.extractMonthTrainings(
         state.userTrainings, event.newFocusDate);
 

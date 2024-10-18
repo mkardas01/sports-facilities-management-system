@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:sport_plus/config/app_colors.dart';
 import 'package:sport_plus/screens/map/models/coordinates.dart';
 
 class FacilityCoords {
@@ -15,10 +14,4 @@ class FacilityCoords {
       required this.name,
       required this.address,
       required this.pinColor});
-}
-
-//TODO resolve all types
-Color resolvePinColor(String type) {
-  if (type == "Gym") return AppColors.gym;
-  return AppColors.icerink;
 }

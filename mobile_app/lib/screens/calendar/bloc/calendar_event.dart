@@ -9,7 +9,7 @@ class GiveupTrainingEvent extends CalendarEvent {
   GiveupTrainingEvent(this.trainingId);
 }
 
-class MonthchangedEvent extends CalendarEvent {
+class MonthChangedEvent extends CalendarEvent {
   final DateTime newFocusDate;
-  MonthchangedEvent(this.newFocusDate);
+  MonthChangedEvent(this.newFocusDate);
 }

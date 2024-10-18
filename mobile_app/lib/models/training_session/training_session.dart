@@ -31,22 +31,48 @@ class TrainingSession {
   });
 
   factory TrainingSession.fromJson(Map<String, dynamic> json) {
+    var trainingJson = json["trainingSession"];
     return TrainingSession(
-      id: json['id'] as int?,
-      coachesId: json['coachesId'] as int?,
-      sportFacilitiesId: json['sportFacilitiesId'] as int?,
-      name: json['name'] as String?,
-      startHour: json['startHour'] as String?,
-      duration: json['duration'] as int?,
-      isWeekly: json['isWeekly'] as int?,
-      trainingDate: json['trainingDate'] != null
-          ? DateTime.parse(json['trainingDate'])
+      id: trainingJson['id'] as int?,
+      coachesId: trainingJson['coachId'] as int?,
+      sportFacilitiesId: trainingJson['sportFacilitiesId'] as int?,
+      name: trainingJson['name'] as String?,
+      startHour: trainingJson['startHour'] as String?,
+      duration: trainingJson['duration'] as int?,
+      isWeekly: trainingJson['isWeekly'] as int?,
+      trainingDate: trainingJson['trainingDate'] != null
+          ? DateTime.parse(trainingJson['trainingDate'])
           : null,
-      capacity: json['capacity'] as int?,
-      freeBooked: json['freeBooked'] as int?,
-      coach: json['coach'] != null ? Coach.fromJson(json['coach']) : null,
+      capacity: trainingJson['capacity'] as int?,
+      freeBooked: trainingJson['freeBooked'] as int?,
+      coach: trainingJson['coach'] != null
+          ? Coach.fromJson(trainingJson['coach'])
+          : null,
       trainingSessionParticipants:
-          (json['trainingSessionParticipants'] as List<dynamic>?)
+          (trainingJson['trainingSessionParticipants'] as List<dynamic>?)
+              ?.map((e) => TrainingSessionParticipant.fromJson(e))
+              .toList(),
+    );
+  }
+  factory TrainingSession.fromDetailsJson(Map<String, dynamic> trainingJson) {
+    return TrainingSession(
+      id: trainingJson['id'] as int?,
+      coachesId: trainingJson['coachId'] as int?,
+      sportFacilitiesId: trainingJson['sportFacilitiesId'] as int?,
+      name: trainingJson['name'] as String?,
+      startHour: trainingJson['startHour'] as String?,
+      duration: trainingJson['duration'] as int?,
+      isWeekly: trainingJson['isWeekly'] as int?,
+      trainingDate: trainingJson['trainingDate'] != null
+          ? DateTime.parse(trainingJson['trainingDate'])
+          : null,
+      capacity: trainingJson['capacity'] as int?,
+      freeBooked: trainingJson['freeBooked'] as int?,
+      coach: trainingJson['coach'] != null
+          ? Coach.fromJson(trainingJson['coach'])
+          : null,
+      trainingSessionParticipants:
+          (trainingJson['trainingSessionParticipants'] as List<dynamic>?)
               ?.map((e) => TrainingSessionParticipant.fromJson(e))
               .toList(),
     );
