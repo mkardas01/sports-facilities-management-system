@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/OpenHour';
+const API_URL = 'http://localhost:8080/api/openhour';
 
 export const getAllOpenHours = async () => {
   const response = await axios.get(`${API_URL}/all`);

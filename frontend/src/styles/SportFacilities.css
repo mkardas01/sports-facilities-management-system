@@ -1,0 +1,39 @@
+.sport-facilities {
+    padding: 20px;
+}
+
+.facility-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Tworzy responsywną siatkę */
+    gap: 20px; /* Odstęp między kartami */
+}
+
+.facility-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.facility-card:hover {
+    transform: translateY(-5px); /* Efekt podniesienia karty przy najechaniu */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Efekt cienia */
+}
+
+.facility-card h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.facility-card p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.facility-card strong {
+    color: #333;
+}

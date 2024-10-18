@@ -1,0 +1,52 @@
+/* Stylizacja dla głównego kontenera */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    height: 100vh;
+}
+
+/* Stylizacja dla formularza */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Stylizacja dla wierszy formularza (input + label) */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Stylizacja etykiety */
+.form-group label {
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+/* Stylizacja pola input */
+.form-group input {
+    width: 300px;
+    padding: 8px;
+}
+
+/* Stylizacja komunikatu błędu */
+.error-message {
+    color: red;
+}
+
+/* Stylizacja przycisku Login */
+.login-button {
+    margin-top: 20px;
+}
+
+/* Stylizacja linku do rejestracji */
+.register-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}

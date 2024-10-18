@@ -1,83 +1,71 @@
+// pages/AddCoach.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import { createCoach } from '../services/coachService';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/AddCoach.css';
 
 const AddCoach = () => {
+  const { id } = useParams(); // Pobiera ID obiektu sportowego z URL
+  const navigate = useNavigate();
+
   const [coach, setCoach] = useState({
     name: '',
     surname: '',
-    sportFacilitiesId: '',
-    imageUrl: ''
+    image_url: '',
+    sportFacilitiesId: id, // Ustawia ID obiektu sportowego dla nowego trenera
   });
 
-  const [message, setMessage] = useState('');
-
-  const handleChange = (e) => {
-    setCoach({
-      ...coach,
-      [e.target.name]: e.target.value,
-    });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCoach({ ...coach, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/coach/create', coach);
-      if (response.status === 200) {
-        setMessage('Coach added successfully');
-      }
+      await createCoach(coach); // Dodaje nowego trenera
+      navigate(`/sport-facilities/${id}/coaches`); // Przekierowuje do listy trenerów po sukcesie
     } catch (error) {
-      setMessage('Error adding coach: ' + error.response.data.message);
+      console.error('Error adding coach', error);
     }
   };
 
   return (
-    <div className="add-coach-form">
-      <h2>Add Coach</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={coach.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Surname:</label>
-          <input
-            type="text"
-            name="surname"
-            value={coach.surname}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Sports Facility Name:</label>
-          <input
-            type="text"
-            name="sportFacilitiesId"
-            value={coach.sportFacilitiesId}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Image URL:</label>
-          <input
-            type="text"
-            name="imageUrl"
-            value={coach.imageUrl}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Add Coach</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+      <div className="form-container">
+        <h1>Add New Coach</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Name</label>
+            <input
+                type="text"
+                name="name"
+                value={coach.name}
+                onChange={handleInputChange}
+                required
+            />
+          </div>
+          <div className="form-group">
+            <label>Surname</label>
+            <input
+                type="text"
+                name="surname"
+                value={coach.surname}
+                onChange={handleInputChange}
+                required
+            />
+          </div>
+          <div className="form-group">
+            <label>Image URL</label>
+            <input
+                type="text"
+                name="imageUrl"
+                value={coach.imageUrl}
+                onChange={handleInputChange}
+            />
+          </div>
+          <button type="submit">Add Coach</button>
+        </form>
+      </div>
   );
 };
 

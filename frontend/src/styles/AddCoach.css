@@ -1,63 +1,45 @@
-.add-coach-form {
-  max-width: 400px;
-  margin: 50px auto; /* Dodano margin-top 50px dla odsunięcia formularza od góry */
+.form-container {
+  max-width: 500px;
+  margin: 50px auto;
   padding: 20px;
-  background-color: #f0f0f0; /* Jasne tło formularza */
-  border-radius: 25px; /* Zwiększone zaokrąglenie */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }
 
-.add-coach-form h2 {
+.form-container h1 {
   text-align: center;
   margin-bottom: 20px;
-  color: #333; /* Kolor nagłówka */
 }
 
-.add-coach-form div {
+.form-group {
   margin-bottom: 15px;
+  color: #1a1a1a;
 }
 
-.add-coach-form label {
+.form-group label {
+  color: #1a1a1a;
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #333; /* Kolor tekstu etykiet */
 }
 
-.add-coach-form input {
-  width: calc(100% - 20px); /* Zmniejsza szerokość, aby uwzględnić padding i uniknąć wystawania */
-  padding: 10px;
+.form-group input {
+  width: 100%;
+  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 25px; /* Zaokrąglone rogi pól tekstowych */
-  background-color: #fff; /* Białe tło pola tekstowego */
-  color: #333; /* Kolor tekstu w polach */
-  box-sizing: border-box; /* Upewnia się, że padding nie zwiększa szerokości pola */
-  margin: 0 auto; /* Wyśrodkowanie pól tekstowych */
-  display: block; /* Upewnia się, że input zajmuje całą szerokość dostępnego miejsca */
+  border-radius: 4px;
 }
 
-.add-coach-form input::placeholder {
-  color: #999; /* Kolor tekstu zastępczego */
-}
-
-.add-coach-form button {
-  width: calc(100% - 20px); /* Zmniejsza szerokość, aby uwzględnić padding i uniknąć wystawania */
+button[type="submit"] {
+  width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 25px; /* Zaokrąglone rogi przycisku */
   cursor: pointer;
-  font-weight: bold;
-  margin: 0 auto; /* Wyśrodkowanie przycisku */
-  display: block; /* Upewnia się, że button zajmuje całą szerokość dostępnego miejsca */
 }
 
-.add-coach-form button:hover {
-  background-color: #0056b3;
-}
-
-.add-coach-form p {
-  text-align: center;
-  color: red;
+button[type="submit"]:hover {
+  background-color: #45a049;
 }

@@ -36,3 +36,9 @@ p {
   text-align: center;
 }
 
+.logo-icon {
+  width: 75px; /* Szerokość obrazu */
+  height: auto; /* Automatyczna wysokość, aby zachować proporcje */
+  margin: 5px; /* Opcjonalnie: dodanie marginesu wokół ikony */
+}
+
