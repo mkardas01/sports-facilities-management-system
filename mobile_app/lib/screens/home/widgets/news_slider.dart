@@ -54,6 +54,7 @@ class NewsSlider extends StatelessWidget {
                             child: Text(
                               element.facilityName,
                               style: AppTypography.titleStyle,
+                              textAlign: TextAlign.center,
                             ),
                           )
                         ],
