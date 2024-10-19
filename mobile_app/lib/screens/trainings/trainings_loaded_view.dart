@@ -83,6 +83,7 @@ class _TrainingsLoadedViewState extends State<TrainingsLoadedView>
           Expanded(
             child: DayView(
               style: const DayViewStyle(
+                  hourRowHeight: 100,
                   backgroundColor: Colors.white,
                   headerSize: 0,
                   currentTimeRuleColor: AppColors.mainColor),

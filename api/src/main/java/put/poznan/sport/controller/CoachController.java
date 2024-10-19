@@ -36,7 +36,7 @@ public class CoachController {
     @Autowired
     private UserImpl userService;
 
-    @GetMapping("all")
+    @GetMapping("allBySportFacility")
     @ResponseBody
     public ResponseEntity<?> getSportFacilityCoaches(@RequestParam Integer sportFacilityID) {
 
@@ -53,6 +53,12 @@ public class CoachController {
         }
 
         return new ResponseEntity<>(coaches, HttpStatus.OK);
+    }
+
+    @GetMapping("all")
+    @ResponseBody
+    public ResponseEntity<?> getAllCoaches() {
+        return new ResponseEntity<>(coachService.getAllCoaches(), HttpStatus.OK);
     }
 
     @GetMapping("{id}")

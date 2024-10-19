@@ -96,8 +96,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   obscureText: true,
-                  validator: (value) =>
-                      FormValidators.notEmpty(_passwordController.text),
+                  validator: (value) => FormValidators.passwordValidator(
+                      _passwordController.text),
                   controller: _passwordController,
                   decoration: InputDecoration(
                     label: Text(

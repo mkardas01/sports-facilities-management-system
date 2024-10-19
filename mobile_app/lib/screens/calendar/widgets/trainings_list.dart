@@ -31,7 +31,7 @@ class TrainingsList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("${training.time}, ${training.place}"),
-                  Text("${AppStrings.coach}: ${training.coachName}"),
+                  Text("${AppStrings.coach} ${training.coachName}"),
                 ],
               ),
               trailing: TextButton(
