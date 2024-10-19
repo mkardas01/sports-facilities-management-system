@@ -1,3 +1,5 @@
+import 'package:sport_plus/models/coach/coach.dart';
+import 'package:sport_plus/models/sport_facility.dart';
 import 'package:sport_plus/models/training_session/training_session.dart';
 import 'package:sport_plus/screens/facility_details/models/day_training.dart';
 import 'package:sport_plus/screens/trainings/models/calendar_training.dart';
@@ -48,10 +50,20 @@ class TrainingService {
   }
 
   Map<DateTime, List<CalendarTraining>>? extractMonthTrainings(
-      List<TrainingSession> data, DateTime focusDate) {
+      List<TrainingSession> data,
+      List<Coach> coaches,
+      List<SportFacility> facilities,
+      DateTime focusDate) {
     Map<DateTime, List<CalendarTraining>> trainings = {};
 
     for (var training in data) {
+      SportFacility? facility;
+      training.coach =
+          coaches.where((coach) => coach.id == training.coachesId).firstOrNull;
+      facility = facilities
+          .where((facility) => facility.id == training.sportFacilitiesId)
+          .firstOrNull;
+
       var date = training.trainingDate;
       if (date == null) continue;
 
@@ -74,7 +86,7 @@ class TrainingService {
             trainingId: training.id ?? -1,
             coachName: "$coachName $coachSurname",
             name: training.name ?? "",
-            place: training.sportFacilitiesId.toString(), //TODO
+            place: facility?.name ?? "",
             time: _getTrainingTime(training),
           ));
         }
@@ -90,7 +102,7 @@ class TrainingService {
           trainingId: training.id ?? -1,
           coachName: "$coachName $coachSurname",
           name: training.name ?? "",
-          place: training.sportFacilitiesId.toString(), //TODO
+          place: facility?.name ?? "",
           time: _getTrainingTime(training),
         ));
       }
@@ -100,7 +112,7 @@ class TrainingService {
 
   DateTime? _getEndTime(TrainingSession training, {DateTime? trainingDate}) {
     var date = trainingDate ?? training.trainingDate;
-    var startTime = training.startHour?.split(":") ?? []; //TODO check
+    var startTime = training.startHour?.split(":") ?? [];
     var startHour = int.tryParse(startTime[0]);
     var startMin = int.tryParse(startTime[1]) ?? 0;
     var duration = training.duration;
@@ -110,7 +122,7 @@ class TrainingService {
 
   DateTime? _getStartTime(TrainingSession training, {DateTime? trainingDate}) {
     var date = trainingDate ?? training.trainingDate;
-    var startTime = training.startHour?.split(":") ?? []; //TODO check
+    var startTime = training.startHour?.split(":") ?? [];
     var startHour = int.tryParse(startTime[0]);
     var startMin = int.tryParse(startTime[1]) ?? 0;
     var duration = training.duration;
@@ -120,14 +132,15 @@ class TrainingService {
 
   String _getTrainingTime(TrainingSession training) {
     var date = training.trainingDate;
-    var startTime = training.startHour?.split(":") ?? []; //TODO check
+    var startTime = training.startHour?.split(":") ?? [];
     var startHour = int.tryParse(startTime[0]);
     var startMin = int.tryParse(startTime[1]) ?? 0;
     var duration = training.duration;
     if (date == null || startHour == null || duration == null) return "";
     date.add(Duration(hours: startHour, minutes: startMin + duration));
-    var endTime = "${date.hour}:${date.minute}";
-    return "$startHour:$startMin - $endTime";
+    var endTime = "${date.hour}:${date.minute.toString().padLeft(2, '0')}";
+    var lastStartTime = "$startHour:${startMin.toString().padLeft(2, '0')}";
+    return "$lastStartTime - $endTime";
   }
 
   bool _isSameWeek(DateTime dateToCheck, DateTime focusDate) {

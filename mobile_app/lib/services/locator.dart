@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:sport_plus/repository/auth_repository.dart';
+import 'package:sport_plus/repository/coach_repository.dart';
 import 'package:sport_plus/repository/facility_details_repository.dart';
 import 'package:sport_plus/repository/file_repository.dart';
 import 'package:sport_plus/repository/news_repository.dart';
@@ -46,6 +47,7 @@ void setUp() {
   locator.registerLazySingleton<TrainingSessionParticipantRepository>(
       () => TrainingSessionParticipantRepository());
   locator.registerLazySingleton<FileRepository>(() => FileRepository());
+  locator.registerLazySingleton<CoachRepository>(() => CoachRepository());
 
   //BLOCS
   locator.registerLazySingleton<HomeBloc>(() => HomeBloc(
@@ -76,6 +78,8 @@ void setUp() {
   locator.registerLazySingleton<CalendarBloc>(() => CalendarBloc(
       trainingSessionParticipantRepository:
           locator.get<TrainingSessionParticipantRepository>(),
+      coachRepository: locator.get<CoachRepository>(),
+      sportFacilityRepository: locator.get<SportFacilityRepository>(),
       trainingService: locator.get<TrainingService>()));
   locator.registerLazySingleton<AllFacilitiesBloc>(() => AllFacilitiesBloc(
       sportFacilityRepository: locator.get<SportFacilityRepository>()));

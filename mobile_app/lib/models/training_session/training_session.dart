@@ -35,7 +35,7 @@ class TrainingSession {
     return TrainingSession(
       id: trainingJson['id'] as int?,
       coachesId: trainingJson['coachId'] as int?,
-      sportFacilitiesId: trainingJson['sportFacilitiesId'] as int?,
+      sportFacilitiesId: trainingJson['sportFacilityId'] as int?,
       name: trainingJson['name'] as String?,
       startHour: trainingJson['startHour'] as String?,
       duration: trainingJson['duration'] as int?,

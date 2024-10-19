@@ -9,11 +9,15 @@ class CalendarState extends Equatable {
   final CalendarDeletingStatus deletingStatus;
   final Map<DateTime, List<CalendarTraining>> trainings;
   final List<TrainingSession> userTrainings;
+  final List<SportFacility> facilities;
+  final List<Coach> coaches;
   const CalendarState({
     this.status = CalendarLoadingStatus.loading,
     this.deletingStatus = CalendarDeletingStatus.idle,
     this.trainings = const {},
     this.userTrainings = const [],
+    this.facilities = const [],
+    this.coaches = const [],
   });
 
   CalendarState copyWith({
@@ -21,12 +25,16 @@ class CalendarState extends Equatable {
     CalendarDeletingStatus? deletingStatus,
     Map<DateTime, List<CalendarTraining>>? trainings,
     List<TrainingSession>? userTrainings,
+    List<SportFacility>? facilities,
+    List<Coach>? coaches,
   }) {
     return CalendarState(
         status: status ?? this.status,
         deletingStatus: deletingStatus ?? this.deletingStatus,
         trainings: trainings ?? this.trainings,
-        userTrainings: userTrainings ?? this.userTrainings);
+        userTrainings: userTrainings ?? this.userTrainings,
+        facilities: facilities ?? this.facilities,
+        coaches: coaches ?? this.coaches);
   }
 
   @override
@@ -35,5 +43,7 @@ class CalendarState extends Equatable {
         deletingStatus,
         trainings,
         userTrainings,
+        facilities,
+        coaches,
       ];
 }
