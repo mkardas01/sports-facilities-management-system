@@ -105,7 +105,7 @@ class InfoTab extends StatelessWidget {
                       context: context,
                       builder: (context) => NewsDialog(news: facility.news),
                     ),
-                    child: const Text(AppStrings.whatsnew),
+                    child: const Text(AppStrings.whatsNew),
                   ),
                 ),
               ],

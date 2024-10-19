@@ -20,7 +20,6 @@ class AppStrings {
   static const String saturday = "Sobota";
   static const String sunday = "Niedziela";
   static const String checkTrainings = "Sprawdź zajęcia";
-  static const String whatsnew = "Co nowego?";
   static const String yes = "Tak";
   static const String no = "Nie";
   static const String agree = "Rozumiem";

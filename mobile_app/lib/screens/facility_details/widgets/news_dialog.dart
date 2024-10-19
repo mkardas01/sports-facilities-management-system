@@ -13,7 +13,7 @@ class NewsDialog extends StatelessWidget {
     return Dialog(
       insetPadding: const EdgeInsets.all(20),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(15.0),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
