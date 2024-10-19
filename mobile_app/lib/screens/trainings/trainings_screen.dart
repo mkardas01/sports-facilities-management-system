@@ -18,11 +18,12 @@ class TrainingsScreen extends StatefulWidget {
 
 class _TrainingsScreenState extends State<TrainingsScreen> {
   @override
-  void didChangeDependencies() {
-    var args = ModalRoute.of(context)?.settings.arguments;
-    context.read<TrainingsBloc>().add(InitUserTrainingDataEvent(args));
-
-    super.didChangeDependencies();
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var args = ModalRoute.of(context)?.settings.arguments;
+      context.read<TrainingsBloc>().add(InitUserTrainingDataEvent(args));
+    });
+    super.initState();
   }
 
   @override

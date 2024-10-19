@@ -6,7 +6,11 @@ import 'package:sport_plus/screens/trainings/models/calendar_training.dart';
 
 class TrainingService {
   List<DayTrainings> extractWeekTrainings(
-      List<TrainingSession> data, DateTime focusDate) {
+      List<TrainingSession> data, List<Coach> coaches, DateTime focusDate) {
+    for (var training in data) {
+      training.coach =
+          coaches.where((coach) => coach.id == training.coachesId).firstOrNull;
+    }
     List<DayTrainings> trainings = [];
     for (var training in data) {
       var date = training.trainingDate;

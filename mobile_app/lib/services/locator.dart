@@ -64,6 +64,7 @@ void setUp() {
   locator.registerLazySingleton<TrainingsBloc>(() => TrainingsBloc(
       trainingSessionParticipantRepository:
           locator.get<TrainingSessionParticipantRepository>(),
+      coachRepository: locator.get<CoachRepository>(),
       trainingService: locator.get<TrainingService>()));
   locator.registerLazySingleton<ProfileBloc>(() => ProfileBloc(
       imageService: locator.get<ImageService>(),

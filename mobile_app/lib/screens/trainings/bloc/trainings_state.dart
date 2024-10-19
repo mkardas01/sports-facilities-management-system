@@ -15,23 +15,29 @@ class TrainingsState extends Equatable {
   final List<TrainingSession> userTrainings;
   final List<DayTrainings> extractedTrainings;
   final List<TrainingSession> trainingsList;
-  const TrainingsState(
-      {this.status = TrainingsLoadingStatus.loading,
-      this.userTrainings = const [],
-      this.extractedTrainings = const [],
-      this.trainingsList = const []});
+  final List<Coach> coaches;
+  const TrainingsState({
+    this.status = TrainingsLoadingStatus.loading,
+    this.userTrainings = const [],
+    this.extractedTrainings = const [],
+    this.trainingsList = const [],
+    this.coaches = const [],
+  });
 
   TrainingsState copyWith({
     TrainingsLoadingStatus? status,
     List<TrainingSession>? userTrainings,
     List<DayTrainings>? extractedTrainings,
     List<TrainingSession>? trainingsList,
+    List<Coach>? coaches,
   }) {
     return TrainingsState(
-        status: status ?? this.status,
-        userTrainings: userTrainings ?? this.userTrainings,
-        extractedTrainings: extractedTrainings ?? this.extractedTrainings,
-        trainingsList: trainingsList ?? this.trainingsList);
+      status: status ?? this.status,
+      userTrainings: userTrainings ?? this.userTrainings,
+      extractedTrainings: extractedTrainings ?? this.extractedTrainings,
+      trainingsList: trainingsList ?? this.trainingsList,
+      coaches: coaches ?? this.coaches,
+    );
   }
 
   @override
@@ -40,5 +46,6 @@ class TrainingsState extends Equatable {
         userTrainings,
         extractedTrainings,
         trainingsList,
+        coaches,
       ];
 }
