@@ -1,5 +1,7 @@
 package put.poznan.sport.service.sportFacility;
 
+import jakarta.transaction.Transactional;
+import put.poznan.sport.dto.Manager.ManagerDTO;
 import put.poznan.sport.dto.SportFacility.SportFacilityDTO;
 import put.poznan.sport.entity.sportFacility.SportFacility;
 
@@ -17,4 +19,10 @@ public interface SportFacilityService {
     public SportFacility updateSportFacility(SportFacilityDTO sportFacility);
 
     public void deleteSportFacility(int id);
+
+    @Transactional
+    SportFacility addManager(ManagerDTO managerDTO);
+
+    @Transactional
+    SportFacility deleteManager(ManagerDTO managerDTO);
 }

@@ -55,7 +55,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Collection<Authority> authorities;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "manager_sport_facilities",
             joinColumns = @JoinColumn(name = "user_id"),
