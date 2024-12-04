@@ -129,27 +129,35 @@ public class SportFacilityImpl implements SportFacilityService {
         SportFacility facility = sportFacilityRepository.findById(managerDTO.getSportFacilityId())
                 .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu o id " + managerDTO.getSportFacilityId()));
 
-        User newManager = userRepository.findById(managerDTO.getUserId())
+        User managerToDelete = userRepository.findById(managerDTO.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika o id: " + managerDTO.getUserId()));
 
         Collection<Authority> updatedAuthorities = new HashSet<>();
-        for (GrantedAuthority authority : newManager.getAuthorities()) {
+        for (GrantedAuthority authority : managerToDelete.getAuthorities()) {
             if (authority instanceof Authority) {
                 updatedAuthorities.add((Authority) authority);
             }
         }
 
-        facility.getManagers().remove(newManager);
-        newManager.getManagedFacilities().remove(facility);
+        facility.getManagers().remove(managerToDelete);
+        managerToDelete.getManagedFacilities().remove(facility);
 
-        if (newManager.getManagedFacilities().isEmpty()) {
-            facility.getManagers().add(newManager);
-            newManager.getManagedFacilities().add(facility);
+        if (managerToDelete.getManagedFacilities().isEmpty()) {
+            updatedAuthorities.remove(Authority.MANAGER);
+            managerToDelete.setAuthorities(updatedAuthorities);
             sportFacilityRepository.save(facility);
-            userRepository.save(newManager);
+            userRepository.save(managerToDelete);
         }
 
         return sportFacilityRepository.save(facility);
+    }
+
+    @Override
+    public List<User> getManagerByFacility(int id) {
+        SportFacility facilities = sportFacilityRepository.findById(id)
+                .orElseThrow(() -> new SportFacilityNotFoundException("Nie znaleziono obiektu o takim id: " + id));
+
+        return facilities.getManagers();
     }
 
 }

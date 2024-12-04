@@ -19,9 +19,14 @@ public class ManagerController {
         return new ResponseEntity<>(sportFacilityService.addManager(managerDTO), HttpStatus.OK);
     }
 
-    @PostMapping("/delete/{id}")
-    public void deleteManager(@PathVariable int id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getManagerBySportFacility(@PathVariable int id) {
+        return new ResponseEntity<>(sportFacilityService.getManagerByFacility(id), HttpStatus.OK);
+    }
 
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteManager(@RequestBody ManagerDTO managerDTO) {
+        return new ResponseEntity<>(sportFacilityService.deleteManager(managerDTO), HttpStatus.OK);
     }
 
 }
