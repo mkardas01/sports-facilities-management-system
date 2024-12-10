@@ -100,7 +100,7 @@ public class RatingImpl implements RatingService {
     public Double getCoachAverageRating(Integer coachId) {
         if (coachId != null){
             Coach coach = coachRepository.findById(coachId).orElseThrow(() -> new CoachNotFoundException("Nie znaleziono trenera"));
-            return coachRatingRepository.findCoachAverage(coach).orElseThrow(null);
+            return coachRatingRepository.findCoachAverage(coach).orElse(null);
         }
 
         return null;
