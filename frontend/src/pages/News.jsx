@@ -1,22 +1,39 @@
-// pages/FacilityNews.js
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getSportFacilityDetails } from '../services/newsService';
-import { deleteNews} from "../services/newssService.js";
-import "../styles/FacilityNews.css"; // CSS file for custom styles
+import { deleteNews } from "../services/newssService.js";
+import { getPicture } from "../services/fileService.js"; // Funkcja do pobierania obrazów
+import "/src/index.css"; // Ensure this path is correct for Tailwind CSS
 
 const FacilityNews = () => {
-    const { id } = useParams(); // Pobierz ID obiektu z URL
+    const id = localStorage.getItem('selectedFacilityId');
     const [news, setNews] = useState([]);
     const [facilityName, setFacilityName] = useState('');
+    const [newsImages, setNewsImages] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchFacilityDetails = async () => {
             try {
-                const data = await getSportFacilityDetails(id);
-                setNews(data.news || []); // Zakładam, że w odpowiedzi znajduje się tablica 'news'
-                setFacilityName(data.name); // Nazwa obiektu do wyświetlenia
+                const data = await getSportFacilityDetails(parseInt(id));
+                setNews(data.news || []); // Assumes the response contains an array of 'news'
+                setFacilityName(data.name); // Facility name to display
+
+                // Fetch image URLs for news items
+                const imagePromises = data.news.map(async (item) => {
+                    if (item.imageUrl) {
+                        const url = await getPicture(item.imageUrl);
+                        return { id: item.id, url };
+                    }
+                    return { id: item.id, url: null };
+                });
+
+                const images = await Promise.all(imagePromises);
+                const imageMap = images.reduce((acc, { id, url }) => {
+                    acc[id] = url;
+                    return acc;
+                }, {});
+                setNewsImages(imageMap);
             } catch (error) {
                 console.error('Error fetching facility news', error);
             }
@@ -25,49 +42,63 @@ const FacilityNews = () => {
         fetchFacilityDetails();
     }, [id]);
 
-    // Funkcja usuwająca news
+    // Function to delete news
     const handleDelete = async (newsId) => {
         try {
             await deleteNews(newsId);
-            setNews(news.filter(item => item.id !== newsId)); // Aktualizuj listę newsów
+            setNews(news.filter(item => item.id !== newsId)); // Update the news list
         } catch (error) {
             console.error('Error deleting news', error);
         }
     };
 
     return (
-        <div className="news-container">
-            <h1>News for {facilityName}</h1>
+        <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+            <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">News for {facilityName}</h1>
 
-            <button className="add-news-button" onClick={() => navigate(`/add-news/${id}`)}>
-                Add New News
-            </button>
+            <div className="mb-6 text-center">
+                <button
+                    className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+                    onClick={() => navigate(`/add-news`)}
+                >
+                    Add New News
+                </button>
+            </div>
 
-            <ul className="news-list">
+            <ul className="space-y-6">
                 {news.map((item) => (
-                    <li key={item.id} className="news-item">
-                        <h2>{item.title}</h2>
-                        {item.imageUrl && (
-                            <img
-                                src={item.imageUrl}
-                                alt={item.title}
-                                className="news-image"
-                            />
-                        )}
-                        <p>{item.description}</p>
+                    <li key={item.id} className="bg-white shadow-md rounded-lg p-4">
+                        <h2 className="text-xl font-semibold text-gray-800 mb-2">{item.title}</h2>
 
-                        <button
-                            className="edit-button"
-                            onClick={() => navigate(`/edit-news/${item.id}/${id}`)}
-                        >
-                            Edit
-                        </button>
-                        <button
-                            className="delete-button"
-                            onClick={() => handleDelete(item.id)}
-                        >
-                            Delete
-                        </button>
+                        {/* Displaying image or placeholder */}
+                        {item.imageUrl && newsImages[item.id] ? (
+                            <img
+                                src={newsImages[item.id]}
+                                alt={item.title}
+                                className="w-full h-48 object-cover mb-4 rounded-lg"
+                            />
+                        ) : (
+                            <div className="w-full h-48 bg-gray-300 mb-4 flex items-center justify-center rounded-lg">
+                                <span className="text-white">No Image</span>
+                            </div>
+                        )}
+
+                        <p className="text-gray-700 mb-4">{item.description}</p>
+
+                        <div className="flex justify-between">
+                            <button
+                                className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-500"
+
+                            >
+                                Modify
+                            </button>
+                            <button
+                                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+                                onClick={() => handleDelete(item.id)}
+                            >
+                                Delete
+                            </button>
+                        </div>
                     </li>
                 ))}
             </ul>

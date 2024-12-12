@@ -1,67 +1,109 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom'; // Dodano Link do nawigacji
+import { useParams, Link } from 'react-router-dom';
 import { getSportFacilityById } from '../services/sportFacilityService';
-import '../styles/SportFacilitiesDetails.css'
+import "/src/index.css";
+import { getPicture } from "../services/fileService.js";
 
 const SportFacilityDetails = () => {
-    const { id } = useParams(); // Odczytaj ID z URL
+    const id = localStorage.getItem('selectedFacilityId'); // Odczytaj ID obiektu sportowego
     const [facility, setFacility] = useState(null);
+    const [imageUrl, setImageUrl] = useState(''); // Stan dla URL zdjęcia
 
     useEffect(() => {
         const fetchFacility = async () => {
             try {
-                const data = await getSportFacilityById(id);
+                const data = await getSportFacilityById(id); // Pobierz dane obiektu
                 setFacility(data);
+
+                // Jeśli obiekt ma przypisane zdjęcie, pobierz URL
+                if (data.imageUrl) {
+                    const url = await getPicture(data.imageUrl); // Pobierz pełny URL zdjęcia
+                    setImageUrl(url); // Ustaw URL w stanie
+                }
             } catch (error) {
                 console.error('Error fetching facility details', error);
             }
         };
+
         fetchFacility();
     }, [id]);
 
     if (!facility) {
-        return <div>Loading...</div>;
+        return <div className="flex justify-center items-center h-screen text-lg">Loading...</div>;
     }
 
     return (
-        <div>
-            <h1>{facility.name}</h1>
-            <img src={facility.imageUrl} alt={facility.name} style={{ maxWidth: '100%', height: 'auto' }} />
-            <p>{facility.description}</p>
-            <p>Address: {facility.address}</p>
-            <p>Type: {facility.type}</p>
-            <p>Membership Required: {facility.membershipRequired ? 'Yes' : 'No'}</p>
+        <div className="container mx-auto p-10 rounded-lg shadow-md">
+            {/* Header z nazwą, obrazkiem i przyciskiem Managers */}
+            <div className="flex flex-col items-center mb-6">
+                <h1 className="text-3xl font-bold text-white mb-4">{facility.name}</h1>
+
+                {/* Renderowanie zdjęcia obiektu */}
+                {imageUrl ? (
+                    <img
+                        src={imageUrl}
+                        alt={facility.name}
+                        className="w-48 h-48 rounded-full object-cover mb-4"
+                    />
+                ) : (
+                    <div className="w-48 h-48 rounded-full bg-gray-300 mb-4 flex items-center justify-center">
+                        <span className="text-white">No Image</span>
+                    </div>
+                )}
+
+                <Link
+                    to={`/sport-facilities/managers`}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition-colors"
+                >
+                    Managers
+                </Link>
+            </div>
+
+            {/* Szczegóły obiektu */}
+            <div className="container mx-auto flex flex-col items-center text-center">
+                <p className="text-white mb-2">{facility.description}</p>
+                <p className="text-white mb-2"><strong>Address:</strong> {facility.address}</p>
+                <p className="text-white mb-2"><strong>Type:</strong> {facility.type}</p>
+                <p className="text-white mb-4"><strong>Membership
+                    Required:</strong> {facility.membershipRequired ? 'Yes' : 'No'}</p>
+            </div>
 
             {/* Karty do różnych sekcji */}
-            <div className="section-cards">
-                <Link to={`/sport-facilities/${id}/coaches`} className="card">
-                    <h3>Trenerzy</h3>
-                    <p>Zarządzaj trenerami.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <Link to={`/sport-facilities/coaches`}
+                      className="bg-white p-4 rounded-lg flex flex-col items-center text-center shadow hover:shadow-lg transition-shadow">
+                    <h3 className="text-xl font-semibold text-gray-800">Coaches</h3>
+                    <p className="text-gray-600">Manage Coaches.</p>
                 </Link>
 
-                <Link to={`/sport-facilities/${id}/open-hours`} className="card">
-                    <h3>Godziny otwarcia</h3>
-                    <p>Ustaw godziny otwarcia obiektu.</p>
+                <Link to={`/sport-facilities/open-hours`}
+                      className="bg-white p-4 rounded-lg flex flex-col items-center text-center shadow hover:shadow-lg transition-shadow">
+                    <h3 className="text-xl font-semibold text-gray-800">Open Hours</h3>
+                    <p className="text-gray-600">Change Open Hours.</p>
                 </Link>
 
-                <Link to={`/sport-facilities/${id}/reviews`} className="card">
-                    <h3>Oceny</h3>
-                    <p>Przeczytaj oceny użytkowników.</p>
+                <Link to={`/sport-facilities/reviews`}
+                      className="bg-white p-4 rounded-lg flex flex-col items-center text-center shadow hover:shadow-lg transition-shadow">
+                    <h3 className="text-xl font-semibold text-gray-800">Ratings</h3>
+                    <p className="text-gray-600">Check Rating.</p>
                 </Link>
 
-                <Link to={`/sport-facilities/${id}/equipment`} className="card">
-                    <h3>Wyposażenie</h3>
-                    <p>Zarządzaj dostępnym wyposażeniem.</p>
+                <Link to={`/sport-facilities/equipment`}
+                      className="bg-white p-4 rounded-lg flex flex-col items-center text-center shadow hover:shadow-lg transition-shadow">
+                    <h3 className="text-xl font-semibold text-gray-800">Equipment</h3>
+                    <p className="text-gray-600">Manage Equipment.</p>
                 </Link>
 
-                <Link to={`/sport-facilities/${id}/news`} className="card">
-                    <h3>Newsy</h3>
-                    <p>Dodaj newsy.</p>
+                <Link to={`/sport-facilities/news`}
+                      className="bg-white p-4 rounded-lg flex flex-col items-center text-center shadow hover:shadow-lg transition-shadow">
+                    <h3 className="text-xl font-semibold text-gray-800">News</h3>
+                    <p className="text-gray-600">Add News.</p>
                 </Link>
 
-                <Link to={`/sport-facilities/${id}/training-sessions`} className="card">
-                    <h3>Sesje Treningowe</h3>
-                    <p>Zarządzaj sesjami treningowymi.</p>
+                <Link to={`/sport-facilities/training-sessions`}
+                      className="bg-white p-4 rounded-lg flex flex-col items-center text-center shadow hover:shadow-lg transition-shadow">
+                    <h3 className="text-xl font-semibold text-gray-800">Training Sessions</h3>
+                    <p className="text-gray-600">Manage Training Sessions.</p>
                 </Link>
             </div>
         </div>

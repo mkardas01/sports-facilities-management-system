@@ -1,69 +1,94 @@
-// pages/TrainingSessionsCalendar.js
+// pages/TrainingSessions.js
 import React, { useEffect, useState } from 'react';
-import { getSportFacilityDetails } from "../services/newsService.js";
-import '../styles/TrainingSessionsCalendar.css';
+import { useNavigate } from 'react-router-dom';
+import {deleteTrainingSession, getTrainingSessionById} from '../services/trainingSessionService';
+import {deleteEquipment} from "../services/equipmentService.js";
 
-const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-// eslint-disable-next-line react/prop-types
-const TrainingSessionsCalendar = ({ facilityId }) => {
+const TrainingSessions = () => {
     const [sessions, setSessions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const id = localStorage.getItem('selectedFacilityId');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchSessions = async () => {
+        const fetchTrainingSessions = async () => {
             try {
-                const data = await getSportFacilityDetails(facilityId);
-                setSessions(data.trainingSessions || []);
+                const data = await getTrainingSessionById(id);
+                setSessions(data);
             } catch (error) {
-                console.error('Error fetching training sessions', error);
+                console.error('Error fetching training sessions:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchSessions();
-    }, [facilityId]);
+        fetchTrainingSessions();
+    }, [id]);
 
-    const groupSessionsByDay = () => {
-        // Funkcja grupująca sesje według dni tygodnia
-        const grouped = daysOfWeek.reduce((acc, day) => {
-            acc[day] = [];
-            return acc;
-        }, {});
-
-        sessions.forEach(session => {
-            const sessionDate = new Date(session.trainingDate);
-            const day = daysOfWeek[sessionDate.getDay() - 1]; // getDay() zwraca dzień tygodnia (0 - niedziela)
-            grouped[day].push(session);
-        });
-
-        return grouped;
+    const handleCreateSession = () => {
+        navigate('/create-training-session');
+    };
+    const handleDelete = async (sessionID) => {
+        try {
+            await deleteTrainingSession(sessionID);
+            setSessions(sessions.filter(item => item.id !== sessionID)); // Remove equipment from the list after deletion
+        } catch (error) {
+            console.error('Error deleting equipment', error);
+        }
     };
 
-    const groupedSessions = groupSessionsByDay();
-
     return (
-        <div className="calendar-container">
-            <h1>Weekly Training Sessions</h1>
-            <div className="calendar-grid">
-                {daysOfWeek.map(day => (
-                    <div key={day} className="day-column">
-                        <h2>{day}</h2>
-                        {groupedSessions[day].length === 0 ? (
-                            <p>No sessions</p>
-                        ) : (
-                            groupedSessions[day].map(session => (
-                                <div key={session.id} className="session-card">
-                                    <h3>{session.name}</h3>
-                                    <p>Start: {session.startHour}</p>
-                                    <p>Duration: {session.duration} min</p>
-                                    <p>Free Spots: {session.freeBooked} / {session.capacity}</p>
+        <div className="container mx-auto p-6 text-center"> {/* Kontener i wyrównanie do środka */}
+            <h1 className="text-3xl font-bold mb-4 text-white">Training Sessions</h1>
+
+            {/* Add Training Session Button */}
+            <button
+                onClick={handleCreateSession}
+                className="mb-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
+            >
+                Add Training Session
+            </button>
+
+            {loading ? (
+                <p className="text-gray-500">Loading training sessions...</p>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center"> {/* Wyśrodkowanie elementów w siatce */}
+                    {sessions.length > 0 ? (
+                        sessions.map((session) => (
+                            <div
+                                key={session.id}
+                                className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-200 w-80"
+                            >
+                                <h2 className="text-xl font-semibold text-gray-700">{session.name}</h2>
+                                <p className="text-gray-600 mt-2">Date: {new Date(session.trainingDate).toLocaleDateString()}</p>
+                                <p className="text-gray-600">Time: {session.startHour}</p>
+                                <p className="text-gray-600">Duration: {session.duration} mins</p>
+                                <p className="text-gray-600">Capacity: {session.capacity}</p>
+                                <p className="text-gray-600">Free Slots: {session.freeBooked}</p>
+                                <div className="flex justify-between">
+                                    <button
+                                        className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-500"
+
+                                    >
+                                        Modify
+                                    </button>
+                                    <button
+                                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+                                        onClick={() => handleDelete(session.id)}>
+
+                                        Delete
+                                    </button>
                                 </div>
-                            ))
-                        )}
-                    </div>
-                ))}
-            </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-gray-500">No training sessions available.</p>
+                    )}
+
+                </div>
+            )}
         </div>
     );
 };
 
-export default TrainingSessionsCalendar;
+export default TrainingSessions;

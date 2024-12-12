@@ -1,7 +1,8 @@
 // services/sportFacilityService.js
 import axios from 'axios';
+import config from '../config';
 
-const API_URL = 'http://localhost:8080/api/SportFacilityNews/';
+const API_URL = `${config.proxy}/api/SportFacilityNews`;
 
 export const deleteNews = async (id) => {
     const response = await axios.delete(`${API_URL}/delete/${id}`);
@@ -10,11 +11,6 @@ export const deleteNews = async (id) => {
 
 export const createNews= async (News) => {
     const response = await axios.post(`${API_URL}/create`, News);
-    return response.data;
-};
-
-export const getNewsById = async (id) => {
-    const response = await axios.get(`${API_URL}/${id}`);
     return response.data;
 };
 

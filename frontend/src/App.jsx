@@ -25,40 +25,42 @@ import FacilityNews from "./pages/News.jsx";
 import AddNews from "./pages/AddNews.jsx";
 import EditNews from "./pages/UpdateNews.jsx";
 
-import TrainingSessionsCalendar from "./pages/TrainingSessions.jsx";
+import TrainingSessions from "./pages/TrainingSessions.jsx"
+import CreateTrainingSession from './pages/CreateTrainingSession';
+
+import ManagerManagement  from "./pages/ManagersPage.jsx";
 
 
-import Navbar from './components/Navbar';
 import icon from './assets/icon.png';
 
 import './styles/App.css';
 
-
 function App() {
   return (
     <Router>
-      <img src={icon} alt="logo" className="logo-icon" />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/sport-facilities" element={<SportFacilities />} />
         <Route path="/sport-facilities/add" element={<AddSportFacility />} />
-          <Route path="/sport-facilities/:id" element={<SportFacilityDetails />} />
-          <Route path="/sport-facilities/:id/coaches" element={<Coaches />} />
-          <Route path="/sport-facilities/:id/open-hours" element={<ManageOpenHours />} />
-        <Route path="/add-coach/:id" element={<AddCoach />} />
+          <Route path="/sport-facilities/details" element={<SportFacilityDetails />} />
+          <Route path="/sport-facilities/coaches" element={<Coaches />} />
+          <Route path="/sport-facilities/open-hours" element={<ManageOpenHours />} />
+        <Route path="/add-coach" element={<AddCoach />} />
         <Route path="/update-coach/:id/:sportFacilityID" element={<UpdateCoach />} />
-        <Route path="//sport-facilities/:id/reviews" element={<SportFacilityRatings />} />
-        <Route path="//sport-facilities/:id/equipment" element={<SportFacilityEquipment />} />
-        <Route path="/add-equipment/:id" element={<AddEquipment />} />
+        <Route path="/sport-facilities/reviews" element={<SportFacilityRatings />} />
+        <Route path="/sport-facilities/equipment" element={<SportFacilityEquipment />} />
+        <Route path="/add-equipment" element={<AddEquipment />} />
         <Route path="/update-equipment/:id/:sportFacilityID" element={<UpdateEquipment />} />
-        <Route path="/sport-facilities/:id/news" element={<FacilityNews />} />
-        <Route path="/add-news/:id" element={<AddNews />} />
-        <Route path="/edit-news/:newsId/:sportFacilityId" element={<EditNews />} />
-        <Route path="/sport-facilities/:id/training-sessions" element={<TrainingSessionsCalendar />} />
+        <Route path="/sport-facilities/news" element={<FacilityNews />} />
+        <Route path="/add-news" element={<AddNews />} />
+        <Route path="/edit-news" element={<EditNews />} />
         <Route path="/add-sport-facility" element={<AddSportFacility />} />
         <Route path="/manage-open-hours" element={<ManageOpenHours />} />
+        <Route path="/sport-facilities/training-sessions" element={< TrainingSessions/>} />
+        <Route path="/create-training-session" element={<CreateTrainingSession />} />
+        <Route path="/sport-facilities/managers" element={<ManagerManagement />} />
       </Routes>
     </Router>
   );

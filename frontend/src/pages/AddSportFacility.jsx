@@ -1,107 +1,165 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import '../styles/AddSportFacility.css';
+import { createSportFacility } from '../services/sportFacilityService';
+import { createOpenHour } from '../services/openHourService'; // Dodaj import dla funkcji tworzenia godzin otwarcia
+import { uploadPicture } from '../services/fileService';
+import { useNavigate } from 'react-router-dom';
+import "/src/index.css";
 
 const AddSportFacility = () => {
+  const navigate = useNavigate();
+
   const [facility, setFacility] = useState({
     name: '',
     description: '',
     address: '',
     type: '',
-    membershipRequired: 'no', // Domyślna wartość ustawiona na 'no'
-    imageUrl: ''
+    membershipRequired: false, // Domyślna wartość ustawiona na false
+    imageUrl: '',
   });
 
-  const [message, setMessage] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null); // Przechowuje wybrane zdjęcie
+  const [fileName, setFileName] = useState(''); // Przechowuje nazwę wybranego pliku
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
     setFacility({
       ...facility,
-      [e.target.name]: e.target.value,
+      [name]: name === "membershipRequired" ? value === "true" : value, // Konwertujemy "true"/"false" na boolean
     });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    setFileName(file.name);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post('http://localhost:8080/api/sport-facility/create', facility);
-      if (response.status === 200) {
-        setMessage('Sport facility added successfully');
+      if (selectedFile) {
+        const uploadedImageUrl = await uploadPicture(selectedFile);
+        facility.imageUrl = uploadedImageUrl; // Aktualizujemy obiekt facility bez zmiany stanu
       }
+
+      if (!facility.imageUrl) {
+        alert('Please upload an image.');
+        return;
+      }
+
+      const createdFacility = await createSportFacility(facility);
+
+      // Tworzenie domyślnych godzin otwarcia
+      const defaultOpenHours = {
+        sportFacilityId: createdFacility.id,
+        mondayStart: "00:00",
+        mondayEnd: "00:00",
+        tuesdayStart: "00:00",
+        tuesdayEnd: "00:00",
+        wednesdayStart: "00:00",
+        wednesdayEnd: "00:00",
+        thursdayStart: "00:00",
+        thursdayEnd: "00:00",
+        fridayStart: "00:00",
+        fridayEnd: "00:00",
+        saturdayStart: "00:00",
+        saturdayEnd: "00:00",
+        sundayStart: "00:00",
+        sundayEnd: "00:00"
+      };
+
+      await createOpenHour(defaultOpenHours);
+
+      navigate('/sport-facilities');
     } catch (error) {
-      setMessage('Error adding sport facility: ' + error.response.data.message);
+      console.error('Error adding sport facility:', error);
     }
   };
 
   return (
-    <div className="add-facility-form">
-      <h2>Add Sport Facility</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={facility.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Description:</label>
-          <input
-            type="text"
-            name="description"
-            value={facility.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Address:</label>
-          <input
-            type="text"
-            name="address"
-            value={facility.address}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Type:</label>
-          <input
-            type="text"
-            name="type"
-            value={facility.type}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Membership Required (yes/no):</label>
-          <select
-            name="membershipRequired"
-            value={facility.membershipRequired}
-            onChange={handleChange}
-            required
+      <div className="max-w-md mx-auto mt-12 p-6 border border-gray-300 rounded-lg bg-white shadow-lg">
+        <h1 className="text-2xl text-center text-gray-800 mb-6">Add New Sport Facility</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">Name</label>
+            <input
+                type="text"
+                name="name"
+                value={facility.name}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-green-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">Description</label>
+            <textarea
+                name="description"
+                value={facility.description}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-green-500"
+            ></textarea>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">Address</label>
+            <input
+                type="text"
+                name="address"
+                value={facility.address}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-green-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">Type</label>
+            <input
+                type="text"
+                name="type"
+                value={facility.type}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-green-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">Membership Required</label>
+            <select
+                name="membershipRequired"
+                value={facility.membershipRequired ? "true" : "false"} // Konwertujemy boolean na string
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-green-500"
+            >
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">Upload Image</label>
+            <input
+                type="file"
+                accept="image/jpeg, image/png"
+                onChange={handleFileChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded"
+            />
+          </div>
+
+          {fileName && (
+              <div className="mb-4 text-gray-700">
+                <p>Selected file: <strong>{fileName}</strong></p>
+              </div>
+          )}
+
+          <button
+              type="submit"
+              className="w-full py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 transition duration-200"
           >
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div>
-        <div>
-          <label>Image URL:</label>
-          <input
-            type="text"
-            name="imageUrl"
-            value={facility.imageUrl}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Add Sport Facility</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+            Add Sport Facility
+          </button>
+        </form>
+      </div>
   );
 };
 

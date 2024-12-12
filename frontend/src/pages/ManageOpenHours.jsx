@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
-import { getOpenHourById, updateOpenHour } from "../services/OpenHourService.js";
-import "../styles/OpenHours.css";
+import { useParams } from 'react-router-dom';
+import { getOpenHourById, updateOpenHour } from '../services/OpenHourService';
+import '/src/index.css'; // Upewnij się, że ta ścieżka jest poprawna dla Tailwind CSS
 
 const ManageOpenHours = () => {
-  const { id } = useParams(); // Odczytaj ID obiektu z URL
+  const facilityId = localStorage.getItem('selectedFacilityId');
   const [openingHours, setOpeningHours] = useState({});
-  const [isEditing, setIsEditing] = useState(false); // Czy użytkownik edytuje godziny?
-  const [editedHours, setEditedHours] = useState({}); // Zmodyfikowane godziny
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedHours, setEditedHours] = useState({});
 
   useEffect(() => {
     const fetchOpeningHours = async () => {
       try {
-        const data = await getOpenHourById(id);
+        const data = await getOpenHourById(facilityId);
         setOpeningHours(data);
         setEditedHours(data); // Inicjalizujemy formularz danymi z serwera
       } catch (error) {
@@ -20,16 +20,14 @@ const ManageOpenHours = () => {
       }
     };
     fetchOpeningHours();
-  }, [id]);
+  }, [facilityId]);
 
   if (!openingHours) {
     return <div>Loading...</div>;
   }
 
-  // Dni tygodnia
   const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
-  // Funkcja do obsługi zmiany w formularzu
   const handleInputChange = (e, day, timeType) => {
     const { value } = e.target;
     setEditedHours({
@@ -40,54 +38,61 @@ const ManageOpenHours = () => {
       },
     });
   };
-  editedHours.sport_facilityid = id;
-  // Funkcja do zapisania zmienionych godzin otwarcia
+
   const handleSave = async () => {
     try {
-      const updatedHours = {
-        ...editedHours,
-        sportFacilityId: id, // Przekazujemy ID obiektu sportowego
-      };
-      await updateOpenHour(updatedHours); // Aktualizacja godzin otwarcia na serwerze
-      setOpeningHours(updatedHours); // Aktualizacja stanu lokalnego
-      setIsEditing(false); // Zakończenie edycji
+      const updatedHours = {};
+      daysOfWeek.forEach((day) => {
+        updatedHours[`${day}Start`] = editedHours[day]?.start || '00:00:00';  // Ustawiamy domyślną godzinę, jeśli brak
+        updatedHours[`${day}End`] = editedHours[day]?.end || '00:00:00';      // Ustawiamy domyślną godzinę, jeśli brak
+      });
+
+      updatedHours.sportFacilityId = parseInt(facilityId); // Przekazujemy ID obiektu sportowego
+
+      await updateOpenHour(updatedHours);
+
+      const data = await getOpenHourById(facilityId);
+      setOpeningHours(data); // Zaktualizowanie stanu po zapisaniu
+      setIsEditing(false); // Zakończenie trybu edycji
     } catch (error) {
       console.error('Error updating opening hours', error);
     }
   };
 
   return (
-      <div>
-        <h1>Godziny Otwarcia</h1>
-        <table>
+      <div className="container mx-auto p-4 bg-gray-100"> {}
+        <h1 className="text-2xl font-bold mb-4 text-black">Godziny Otwarcia</h1>
+        <table className="min-w-full bg-white border border-gray-200">
           <thead>
           <tr>
-            <th>Dzień</th>
-            <th>Godzina Otwarcia</th>
-            <th>Godzina Zamknięcia</th>
+            <th className="py-2 border-b text-left text-gray-600">Dzień</th>
+            <th className="py-2 border-b text-left text-gray-600">Godzina Otwarcia</th>
+            <th className="py-2 border-b text-left text-gray-600">Godzina Zamknięcia</th>
           </tr>
           </thead>
           <tbody>
           {daysOfWeek.map((day) => (
-              <tr key={day}>
-                <td>{day.charAt(0).toUpperCase() + day.slice(1)}</td>
-                <td>
+              <tr key={day} className="hover:bg-gray-100">
+                <td className="py-2 border-b text-black">{day.charAt(0).toUpperCase() + day.slice(1)}</td>
+                <td className="py-2 border-b text-black">
                   {isEditing ? (
                       <input
                           type="time"
                           value={editedHours[day]?.start || ''}
                           onChange={(e) => handleInputChange(e, day, 'start')}
+                          className="border border-gray-300 p-1 rounded text-white bg-gray-800"
                       />
                   ) : (
                       openingHours[day]?.start || 'Zamknięte'
                   )}
                 </td>
-                <td>
+                <td className="py-2 border-b text-black">
                   {isEditing ? (
                       <input
                           type="time"
                           value={editedHours[day]?.end || ''}
                           onChange={(e) => handleInputChange(e, day, 'end')}
+                          className="border border-gray-300 p-1 rounded text-white bg-gray-800"
                       />
                   ) : (
                       openingHours[day]?.end || 'Zamknięte'
@@ -99,12 +104,18 @@ const ManageOpenHours = () => {
         </table>
 
         {isEditing ? (
-            <div>
-              <button onClick={handleSave}>Zapisz</button>
-              <button onClick={() => setIsEditing(false)}>Anuluj</button>
+            <div className="mt-4">
+              <button onClick={handleSave} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Zapisz
+              </button>
+              <button onClick={() => setIsEditing(false)} className="ml-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                Anuluj
+              </button>
             </div>
         ) : (
-            <button onClick={() => setIsEditing(true)}>Edytuj Godziny Otwarcia</button>
+            <button onClick={() => setIsEditing(true)} className="mt-4 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+              Edytuj Godziny Otwarcia
+            </button>
         )}
       </div>
   );

@@ -1,69 +1,106 @@
-// pages/AddCoach.js
 import React, { useState } from 'react';
 import { createCoach } from '../services/coachService';
-import { useNavigate, useParams } from 'react-router-dom';
-import '../styles/AddCoach.css';
+import { useNavigate } from 'react-router-dom';
+import { uploadPicture } from '../services/fileService'; // Funkcja do przesyłania plików
+import "/src/index.css";
 
 const AddCoach = () => {
-  const { id } = useParams(); // Pobiera ID obiektu sportowego z URL
+  const id = localStorage.getItem('selectedFacilityId');
   const navigate = useNavigate();
 
   const [coach, setCoach] = useState({
     name: '',
     surname: '',
-    image_url: '',
-    sportFacilitiesId: id, // Ustawia ID obiektu sportowego dla nowego trenera
+    imageUrl: '',
+    sportFacilitiesId: id,
   });
+
+  const [selectedFile, setSelectedFile] = useState(null); // Przechowuje wybrane zdjęcie
+  const [fileName, setFileName] = useState(''); // Przechowuje nazwę wybranego pliku
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCoach({ ...coach, [name]: value });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file); // Przechowujemy plik
+    setFileName(file.name); // Przechowujemy nazwę pliku
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await createCoach(coach); // Dodaje nowego trenera
-      navigate(`/sport-facilities/${id}/coaches`); // Przekierowuje do listy trenerów po sukcesie
+      // Jeśli użytkownik wybrał plik, wysyłamy go na serwer
+      if (selectedFile) {
+        const uploadedImageUrl = await uploadPicture(selectedFile); // Wysyłamy zdjęcie
+        setCoach({ ...coach, imageUrl: uploadedImageUrl }); // Ustawiamy URL zdjęcia w obiekcie coach
+      }
+
+      // Sprawdzamy, czy zdjęcie zostało załadowane przed utworzeniem trenera
+      if (!coach.imageUrl) {
+        alert('Please upload an image.');
+        return;
+      }
+
+      // Tworzymy trenera
+      await createCoach(coach);
+      navigate(`/sport-facilities/coaches`); // Przekierowanie po sukcesie
     } catch (error) {
       console.error('Error adding coach', error);
     }
   };
 
   return (
-      <div className="form-container">
-        <h1>Add New Coach</h1>
+      <div className="max-w-md mx-auto mt-12 p-6 border border-gray-300 rounded-lg bg-white shadow-lg">
+        <h1 className="text-2xl text-center text-gray-800 mb-6">Add New Coach</h1>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Name</label>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">Name</label>
             <input
                 type="text"
                 name="name"
                 value={coach.name}
                 onChange={handleInputChange}
                 required
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-green-500"
             />
           </div>
-          <div className="form-group">
-            <label>Surname</label>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">Surname</label>
             <input
                 type="text"
                 name="surname"
                 value={coach.surname}
                 onChange={handleInputChange}
                 required
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-green-500"
             />
           </div>
-          <div className="form-group">
-            <label>Image URL</label>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">Upload Image</label>
             <input
-                type="text"
-                name="imageUrl"
-                value={coach.imageUrl}
-                onChange={handleInputChange}
+                type="file"
+                accept="image/jpeg, image/png"
+                onChange={handleFileChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded"
             />
           </div>
-          <button type="submit">Add Coach</button>
+
+          {fileName && (
+              <div className="mb-4 text-gray-700">
+                <p>Selected file: <strong>{fileName}</strong></p>
+              </div>
+          )}
+
+          <button
+              type="submit"
+              className="w-full py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 transition duration-200"
+          >
+            Add Coach
+          </button>
         </form>
       </div>
   );

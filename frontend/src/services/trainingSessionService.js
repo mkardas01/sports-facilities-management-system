@@ -1,6 +1,7 @@
 import axios from 'axios';
+import config from '../config';
 
-const API_URL = 'http://localhost:8080/api/TrainingSession';
+const API_URL = `${config.proxy}/api/training`;
 
 export const getAllTrainingSessions = async () => {
   const response = await axios.get(`${API_URL}/all`);
@@ -8,7 +9,7 @@ export const getAllTrainingSessions = async () => {
 };
 
 export const getTrainingSessionById = async (id) => {
-  const response = await axios.get(`${API_URL}/${id}`);
+  const response = await axios.get(`${API_URL}/facility/${id}`);
   return response.data;
 };
 

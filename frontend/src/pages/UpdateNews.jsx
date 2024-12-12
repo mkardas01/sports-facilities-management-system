@@ -1,32 +1,20 @@
 // pages/EditNews.js
-import React, { useState, useEffect } from 'react';
-import {updateNews, getNewsById} from "../services/newssService.js";
-import { useParams, useNavigate } from 'react-router-dom';
-import '../styles/AddNews.css';
+import React, { useState } from 'react';
+import { updateNews } from "../services/newssService.js";
+import { useNavigate } from 'react-router-dom';
 
 const EditNews = () => {
-    const { newsId, sportFacilityId } = useParams(); // ID newsa i obiektu sportowego
+    const newsId = localStorage.getItem('NewsId');
+    const sportFacilityId = localStorage.getItem('selectedFacilityId');
     const navigate = useNavigate();
 
     const [news, setNews] = useState({
+        sportFacilityNewsID: parseInt(newsId),
         title: '',
         description: '',
         imageUrl: '',
         sportFacilityId: parseInt(sportFacilityId),
     });
-
-    useEffect(() => {
-        const fetchNews = async () => {
-            try {
-                const newsData = await getNewsById(newsId);
-                setNews(newsData);
-            } catch (error) {
-                console.error('Error fetching news data', error);
-            }
-        };
-
-        fetchNews();
-    }, [newsId]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -37,45 +25,59 @@ const EditNews = () => {
         e.preventDefault();
         try {
             await updateNews(news);
-            navigate(`/sport-facilities/${sportFacilityId}/news`); // Przekierowanie do listy newsów
+            navigate(`/sport-facilities/news`); // Przekierowanie do listy newsów
         } catch (error) {
             console.error('Error updating news', error);
         }
     };
 
     return (
-        <div className="form-container">
-            <h1>Edit News</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+            <h1 className="text-2xl font-semibold text-gray-800 mb-6">Edit News</h1>
+            <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="form-group">
-                    <label>Title</label>
+                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
                     <input
+                        id="title"
                         type="text"
                         name="title"
                         value={news.title}
                         onChange={handleInputChange}
                         required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Description</label>
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
                     <textarea
+                        id="description"
                         name="description"
                         value={news.description}
                         onChange={handleInputChange}
                         required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Image URL</label>
+                    <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">Image URL</label>
                     <input
+                        id="imageUrl"
                         type="text"
                         name="imageUrl"
                         value={news.imageUrl}
                         onChange={handleInputChange}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
-                <button type="submit">Update News</button>
+
+                <button
+                    type="submit"
+                    className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                >
+                    Update News
+                </button>
             </form>
         </div>
     );

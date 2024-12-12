@@ -1,7 +1,7 @@
-// services/sportFacilityService.js
 import axios from 'axios';
+import config from '../config';
 
-const API_URL = 'http://localhost:8080/api/details';
+const API_URL = `${config.proxy}/api/details`;
 
 export const getSportFacilityDetails = async (id) => {
     const response = await axios.get(`${API_URL}/${id}`);

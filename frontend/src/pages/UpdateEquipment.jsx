@@ -1,7 +1,7 @@
+// pages/UpdateEquipment.js
 import React, { useState, useEffect } from 'react';
 import { getEqById, updateEq } from '../services/equipmentService';
 import { useParams, useNavigate } from 'react-router-dom';
-import '../styles/AddEquipment.css';
 
 const UpdateEquipment = () => {
     const { id, sportFacilityID } = useParams(); // Pobiera ID sprzętu oraz ID obiektu sportowego z URL
@@ -45,68 +45,91 @@ const UpdateEquipment = () => {
     };
 
     return (
-        <div className="form-container">
-            <h1>Update Equipment</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+            <h1 className="text-2xl font-semibold text-gray-800 mb-6">Update Equipment</h1>
+            <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="form-group">
-                    <label>Type</label>
+                    <label htmlFor="type" className="block text-sm font-medium text-gray-700">Type</label>
                     <input
+                        id="type"
                         type="text"
                         name="type"
                         value={equipment.type}
                         onChange={handleInputChange}
                         required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Brand</label>
+                    <label htmlFor="brand" className="block text-sm font-medium text-gray-700">Brand</label>
                     <input
+                        id="brand"
                         type="text"
                         name="brand"
                         value={equipment.brand}
                         onChange={handleInputChange}
                         required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Model</label>
+                    <label htmlFor="model" className="block text-sm font-medium text-gray-700">Model</label>
                     <input
+                        id="model"
                         type="text"
                         name="model"
                         value={equipment.model}
                         onChange={handleInputChange}
                         required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Description</label>
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
                     <input
+                        id="description"
                         type="text"
                         name="description"
                         value={equipment.description}
                         onChange={handleInputChange}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Amount</label>
+                    <label htmlFor="amount" className="block text-sm font-medium text-gray-700">Amount</label>
                     <input
+                        id="amount"
                         type="number"
                         name="amount"
                         value={equipment.amount}
                         onChange={handleInputChange}
                         required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Image URL</label>
+                    <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">Image URL</label>
                     <input
+                        id="imageUrl"
                         type="text"
                         name="imageUrl"
                         value={equipment.imageUrl}
                         onChange={handleInputChange}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
-                <button type="submit">Update Equipment</button>
+
+                <button
+                    type="submit"
+                    className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                >
+                    Update Equipment
+                </button>
             </form>
         </div>
     );
