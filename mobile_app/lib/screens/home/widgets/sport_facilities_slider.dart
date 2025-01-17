@@ -25,8 +25,8 @@ class SportFacilitiesSlider extends StatelessWidget {
           ),
         ),
         CarouselSlider(
-          options:
-              CarouselOptions(enableInfiniteScroll: false, disableCenter: true),
+          options: CarouselOptions(
+              enableInfiniteScroll: false, disableCenter: true, height: 230),
           items: facilities.map((element) {
             return GestureDetector(
               onTap: () => Navigator.pushNamed(

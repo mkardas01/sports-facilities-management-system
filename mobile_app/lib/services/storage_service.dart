@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StorageService {
-  final storage = const FlutterSecureStorage();
+  var storage = const FlutterSecureStorage();
 
   Future<String?> getToken() async {
     var result = await storage.read(key: "token");

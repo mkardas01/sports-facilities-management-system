@@ -1,3 +1,4 @@
+import "package:collection/collection.dart";
 import 'package:sport_plus/models/sport_facility_news.dart';
 import 'package:sport_plus/models/sport_facility.dart';
 
@@ -19,6 +20,9 @@ class News {
         title: input.title,
         description: input.description,
         imageUrl: input.imageUrl,
-        facilityName: facilities.where((e) => e.id == input.id).first.name);
+        facilityName: facilities
+                .firstWhereOrNull((e) => e.id == input.sportFacilitiesId)
+                ?.name ??
+            "");
   }
 }

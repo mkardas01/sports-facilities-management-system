@@ -19,7 +19,7 @@ class RegisterUserDto {
       'password': password,
       'name': name,
       'surname': surname,
-      'imageUrl': imageUrl,
+      'imageUrl': imageUrl ?? ""
     };
   }
 

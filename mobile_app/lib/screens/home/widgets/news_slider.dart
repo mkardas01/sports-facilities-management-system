@@ -23,15 +23,14 @@ class NewsSlider extends StatelessWidget {
           ),
         ),
         CarouselSlider(
-          options:
-              CarouselOptions(enableInfiniteScroll: false, disableCenter: true),
+          options: CarouselOptions(
+              enableInfiniteScroll: false, disableCenter: true, height: 300),
           items: news.map((element) {
             return Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
@@ -74,7 +73,7 @@ class NewsSlider extends StatelessWidget {
                           element.description,
                           style: AppTypography.defaultTextStyle,
                           textAlign: TextAlign.center,
-                        )
+                        ),
                       ],
                     ),
                   )

@@ -26,6 +26,9 @@ class FacilityDetailsLoadedView extends StatelessWidget {
             alignment: Alignment.bottomRight,
             children: [
               Image.network(
+                  fit: BoxFit.cover,
+                  height: 120,
+                  width: MediaQuery.of(context).size.width,
                   "${AppConsts.imageContainerUrl}${facility.imageUrl}",
                   errorBuilder: (context, error, stackTrace) =>
                       const SizedBox()),

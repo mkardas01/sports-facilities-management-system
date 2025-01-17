@@ -57,9 +57,10 @@ class LocationService {
 
   Future<List<SportFacility>> getTheClosestFacilities(
       List<SportFacility> facilities) async {
+    var range = facilities.length < 5 ? facilities.length : 5;
     if (!await checkIsLocationEnabled()) {
       _logger.e("Can't check location, enable location in phone settings");
-      return facilities.getRange(0, 5).toList();
+      return facilities.getRange(0, range).toList();
     }
 
     var position = await Geolocator.getCurrentPosition();
@@ -79,7 +80,7 @@ class LocationService {
     Map<SportFacility, double> sortedMap = {
       for (var entry in sortedEntries) entry.key: entry.value
     };
-    List<SportFacility> closestFacilities = sortedMap.keys.take(5).toList();
+    List<SportFacility> closestFacilities = sortedMap.keys.take(range).toList();
     return closestFacilities;
   }
 }

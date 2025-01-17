@@ -16,7 +16,7 @@ class SportFacilityNews {
   factory SportFacilityNews.fromJson(Map<String, dynamic> json) {
     return SportFacilityNews(
       id: json['id'] ?? -1,
-      sportFacilitiesId: json['sportFacilitiesId'] ?? -1,
+      sportFacilitiesId: json['sportFacilityId'] ?? -1,
       title: json['title'] ?? "",
       description: json['description'] ?? "",
       imageUrl: json['imageUrl'] ?? "",
