@@ -24,7 +24,7 @@ class NewsSlider extends StatelessWidget {
         ),
         CarouselSlider(
           options: CarouselOptions(
-              enableInfiniteScroll: false, disableCenter: true, height: 275),
+              enableInfiniteScroll: false, disableCenter: true, height: 300),
           items: news.map((element) {
             return Card(
               shape: RoundedRectangleBorder(
