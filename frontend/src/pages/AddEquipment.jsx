@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createEquipment } from '../services/equipmentService';
-import { uploadPicture } from '../services/fileService'; // Import function to upload files
+import { uploadPicture } from '../services/fileService';
 import { useNavigate } from 'react-router-dom';
 import "/src/index.css";
 
@@ -13,14 +13,14 @@ const AddEquipment = () => {
         brand: '',
         model: '',
         description: '',
-        imageUrl: '', // URL of the uploaded image will be set here
+        imageUrl: '',
         amount: 1,
         sportFacilityId: id,
     });
 
-    const [selectedFile, setSelectedFile] = useState(null); // Stores the selected file
-    const [fileName, setFileName] = useState(''); // Stores the name of the selected file
-    const [uploading, setUploading] = useState(false); // Tracks upload state
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [fileName, setFileName] = useState('');
+    const [uploading, setUploading] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -29,8 +29,8 @@ const AddEquipment = () => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setSelectedFile(file); // Store the selected file
-        setFileName(file.name); // Store the file name
+        setSelectedFile(file);
+        setFileName(file.name);
     };
 
     const handleSubmit = async (e) => {
@@ -38,22 +38,20 @@ const AddEquipment = () => {
         try {
             setUploading(true);
 
-            // Upload file if selected
+
             if (selectedFile) {
                 const uploadedImageUrl = await uploadPicture(selectedFile);
                 setEquipment((prevState) => ({ ...prevState, imageUrl: uploadedImageUrl }));
             }
 
-            // Ensure imageUrl is set before creating the equipment
             if (!equipment.imageUrl) {
                 alert('Please upload an image.');
                 return;
             }
 
-            // Create the equipment record
+
             await createEquipment(equipment);
 
-            // Redirect to equipment list page
             navigate(`/sport-facilities/equipment`);
         } catch (error) {
             console.error('Error adding equipment', error);

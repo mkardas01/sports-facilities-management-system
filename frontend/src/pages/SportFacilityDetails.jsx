@@ -3,22 +3,22 @@ import { useParams, Link } from 'react-router-dom';
 import { getSportFacilityById } from '../services/sportFacilityService';
 import "/src/index.css";
 import { getPicture } from "../services/fileService.js";
+import Homebutton from "../components/BackButton.jsx";
 
 const SportFacilityDetails = () => {
-    const id = localStorage.getItem('selectedFacilityId'); // Odczytaj ID obiektu sportowego
+    const id = localStorage.getItem('selectedFacilityId');
     const [facility, setFacility] = useState(null);
-    const [imageUrl, setImageUrl] = useState(''); // Stan dla URL zdjęcia
+    const [imageUrl, setImageUrl] = useState('');
 
     useEffect(() => {
         const fetchFacility = async () => {
             try {
-                const data = await getSportFacilityById(id); // Pobierz dane obiektu
+                const data = await getSportFacilityById(id);
                 setFacility(data);
 
-                // Jeśli obiekt ma przypisane zdjęcie, pobierz URL
                 if (data.imageUrl) {
-                    const url = await getPicture(data.imageUrl); // Pobierz pełny URL zdjęcia
-                    setImageUrl(url); // Ustaw URL w stanie
+                    const url = await getPicture(data.imageUrl);
+                    setImageUrl(url);
                 }
             } catch (error) {
                 console.error('Error fetching facility details', error);
@@ -34,11 +34,12 @@ const SportFacilityDetails = () => {
 
     return (
         <div className="container mx-auto p-10 rounded-lg shadow-md">
-            {/* Header z nazwą, obrazkiem i przyciskiem Managers */}
+            <div className="absolute top-4 left-4 z-10">
+                <Homebutton/>
+            </div>
             <div className="flex flex-col items-center mb-6">
                 <h1 className="text-3xl font-bold text-white mb-4">{facility.name}</h1>
-
-                {/* Renderowanie zdjęcia obiektu */}
+                <Link to={'/update-sportfacility'}>
                 {imageUrl ? (
                     <img
                         src={imageUrl}
@@ -50,6 +51,7 @@ const SportFacilityDetails = () => {
                         <span className="text-white">No Image</span>
                     </div>
                 )}
+                    </Link>
 
                 <Link
                     to={`/sport-facilities/managers`}
@@ -59,7 +61,6 @@ const SportFacilityDetails = () => {
                 </Link>
             </div>
 
-            {/* Szczegóły obiektu */}
             <div className="container mx-auto flex flex-col items-center text-center">
                 <p className="text-white mb-2">{facility.description}</p>
                 <p className="text-white mb-2"><strong>Address:</strong> {facility.address}</p>
@@ -68,7 +69,6 @@ const SportFacilityDetails = () => {
                     Required:</strong> {facility.membershipRequired ? 'Yes' : 'No'}</p>
             </div>
 
-            {/* Karty do różnych sekcji */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <Link to={`/sport-facilities/coaches`}
                       className="bg-white p-4 rounded-lg flex flex-col items-center text-center shadow hover:shadow-lg transition-shadow">

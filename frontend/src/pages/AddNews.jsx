@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createNews } from "../services/newssService.js";
-import { uploadPicture } from '../services/fileService'; // Import the function to upload files
+import { uploadPicture } from '../services/fileService';
 import { useNavigate } from 'react-router-dom';
 import "/src/index.css";
 
@@ -11,13 +11,13 @@ const AddNews = () => {
     const [news, setNews] = useState({
         title: '',
         description: '',
-        imageUrl: '', // Image URL will be set after uploading
+        imageUrl: '',
         sportFacilityId: parseInt(id),
     });
 
-    const [selectedFile, setSelectedFile] = useState(null); // Store selected file
-    const [fileName, setFileName] = useState(''); // Store the name of the selected file
-    const [uploading, setUploading] = useState(false); // Track upload state
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [fileName, setFileName] = useState('');
+    const [uploading, setUploading] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -26,8 +26,8 @@ const AddNews = () => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setSelectedFile(file); // Store selected file
-        setFileName(file.name); // Store the file name
+        setSelectedFile(file);
+        setFileName(file.name);
     };
 
     const handleSubmit = async (e) => {
@@ -36,21 +36,20 @@ const AddNews = () => {
         try {
             setUploading(true);
 
-            // If a file is selected, upload it
+
             if (selectedFile) {
                 const uploadedImageUrl = await uploadPicture(selectedFile);
                 setNews((prevState) => ({ ...prevState, imageUrl: uploadedImageUrl }));
             }
 
-            // Ensure imageUrl is set before creating the news item
+
             if (!news.imageUrl) {
                 alert('Please upload an image.');
                 return;
             }
 
-            // Create the news item
             await createNews(news);
-            navigate(`/sport-facilities/news`); // Redirect to news list
+            navigate(`/sport-facilities/news`);
 
         } catch (error) {
             console.error('Error adding news', error);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createSportFacility } from '../services/sportFacilityService';
-import { createOpenHour } from '../services/openHourService'; // Dodaj import dla funkcji tworzenia godzin otwarcia
+import { createOpenHour } from '../services/openHourService';
 import { uploadPicture } from '../services/fileService';
 import { useNavigate } from 'react-router-dom';
 import "/src/index.css";
@@ -13,18 +13,18 @@ const AddSportFacility = () => {
     description: '',
     address: '',
     type: '',
-    membershipRequired: false, // Domyślna wartość ustawiona na false
+    membershipRequired: false,
     imageUrl: '',
   });
 
-  const [selectedFile, setSelectedFile] = useState(null); // Przechowuje wybrane zdjęcie
-  const [fileName, setFileName] = useState(''); // Przechowuje nazwę wybranego pliku
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [fileName, setFileName] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFacility({
       ...facility,
-      [name]: name === "membershipRequired" ? value === "true" : value, // Konwertujemy "true"/"false" na boolean
+      [name]: name === "membershipRequired" ? value === "true" : value,
     });
   };
 
@@ -40,7 +40,7 @@ const AddSportFacility = () => {
     try {
       if (selectedFile) {
         const uploadedImageUrl = await uploadPicture(selectedFile);
-        facility.imageUrl = uploadedImageUrl; // Aktualizujemy obiekt facility bez zmiany stanu
+        facility.imageUrl = uploadedImageUrl;
       }
 
       if (!facility.imageUrl) {
@@ -50,7 +50,7 @@ const AddSportFacility = () => {
 
       const createdFacility = await createSportFacility(facility);
 
-      // Tworzenie domyślnych godzin otwarcia
+
       const defaultOpenHours = {
         sportFacilityId: createdFacility.id,
         mondayStart: "00:00",
@@ -128,7 +128,7 @@ const AddSportFacility = () => {
             <label className="block text-gray-700 font-semibold mb-2">Membership Required</label>
             <select
                 name="membershipRequired"
-                value={facility.membershipRequired ? "true" : "false"} // Konwertujemy boolean na string
+                value={facility.membershipRequired ? "true" : "false"}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-green-500"
             >

@@ -13,10 +13,8 @@ export const uploadPicture = async (file) => {
                 'Content-Type': 'multipart/form-data',
             },
         });
-
         console.log('Upload response:', response.data);
-
-        return response.data; // Zakładamy, że backend zwraca ścieżkę/URL pliku po sukcesie.
+        return response.data;
     } catch (error) {
         console.error('Error while uploading picture: ', error);
 
@@ -27,13 +25,10 @@ export const uploadPicture = async (file) => {
 export const getPicture = async (imageUrl) => {
     try {
         const response = await axios.get(`${API_BASE_URL}${imageUrl}`, {
-            responseType: 'blob', // Ustawiamy, że spodziewamy się obrazu (danych binarnych)
+            responseType: 'blob',
         });
-
-        // Tworzymy URL do obrazu
         const imageObjectUrl = URL.createObjectURL(response.data);
-
-        return imageObjectUrl; // Zwracamy URL do obrazu
+        return imageObjectUrl;
     } catch (error) {
         console.error('Error fetching image:', error);
         return null;

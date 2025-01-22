@@ -77,16 +77,7 @@ const Register = () => {
                 className="w-72 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-200"
             />
           </div>
-          <div className="flex items-center mb-4">
-            <label className="w-32 text-right mr-2">Image URL:</label>
-            <input
-                type="text"
-                name="imageUrl"
-                value={userData.imageUrl}
-                onChange={handleChange}
-                className="w-72 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-200"
-            />
-          </div>
+
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <button
               type="submit"

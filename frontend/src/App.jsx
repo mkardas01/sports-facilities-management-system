@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -30,8 +29,8 @@ import CreateTrainingSession from './pages/CreateTrainingSession';
 
 import ManagerManagement  from "./pages/ManagersPage.jsx";
 
+import UpdateSportFacility from "./pages/UpdateSportFacility.jsx";
 
-import icon from './assets/icon.png';
 
 import './styles/App.css';
 
@@ -52,7 +51,7 @@ function App() {
         <Route path="/sport-facilities/reviews" element={<SportFacilityRatings />} />
         <Route path="/sport-facilities/equipment" element={<SportFacilityEquipment />} />
         <Route path="/add-equipment" element={<AddEquipment />} />
-        <Route path="/update-equipment/:id/:sportFacilityID" element={<UpdateEquipment />} />
+        <Route path="/update-equipment/:id" element={<UpdateEquipment />} />
         <Route path="/sport-facilities/news" element={<FacilityNews />} />
         <Route path="/add-news" element={<AddNews />} />
         <Route path="/edit-news" element={<EditNews />} />
@@ -61,6 +60,7 @@ function App() {
         <Route path="/sport-facilities/training-sessions" element={< TrainingSessions/>} />
         <Route path="/create-training-session" element={<CreateTrainingSession />} />
         <Route path="/sport-facilities/managers" element={<ManagerManagement />} />
+        <Route path="/update-sportfacility" element={<UpdateSportFacility />} />
       </Routes>
     </Router>
   );

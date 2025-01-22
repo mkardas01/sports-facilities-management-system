@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { getManagersByFacility, addManager, deleteManager } from '../services/managerService';
-import "/src/index.css"; // Upewnij się, że ta ścieżka jest poprawna dla Tailwind CSS
-
+import { getManagersByFacility, addManager, deleteManager, getUsers } from '../services/managerService';
+import "/src/index.css";
+import BackButton from "../components/homebutton.jsx";
 
 const ManagerManagement = () => {
-    const facilityId = localStorage.getItem('selectedFacilityId'); // ID obiektu sportowego
+    const facilityId = localStorage.getItem('selectedFacilityId');
     const [managers, setManagers] = useState([]);
-    const [newManagerId, setNewManagerId] = useState(''); // ID nowego menedżera
+    const [users, setUsers] = useState([]);
+    const [newManagerId, setNewManagerId] = useState('');
 
-    // Funkcja do pobierania menedżerów
     const fetchManagers = async () => {
         try {
             const data = await getManagersByFacility(facilityId);
@@ -18,27 +18,34 @@ const ManagerManagement = () => {
         }
     };
 
-    // Pobierz menedżerów po załadowaniu komponentu
+    const fetchUsers = async () => {
+        try {
+            const usersData = await getUsers();
+            setUsers(usersData);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
     useEffect(() => {
         fetchManagers();
+        fetchUsers();
     }, [facilityId]);
 
-    // Dodaj nowego menedżera
     const handleAddManager = async () => {
         try {
             const managerDTO = {
-                userId: parseInt(newManagerId, 10), // Konwertuj na liczbę
+                userId: parseInt(newManagerId, 10),
                 sportFacilityId: parseInt(facilityId, 10),
             };
-            await addManager(managerDTO); // Dodaj menedżera
-            setNewManagerId(''); // Reset pola
-            await fetchManagers(); // Odśwież listę menedżerów
+            await addManager(managerDTO);
+            setNewManagerId('');
+            await fetchManagers();
         } catch (error) {
             console.error('Error adding manager:', error);
         }
     };
 
-    // Usuń istniejącego menedżera
     const handleDeleteManager = async (managerId) => {
         try {
             await deleteManager({ userId: managerId, sportFacilityId: parseInt(facilityId, 10) });
@@ -50,20 +57,27 @@ const ManagerManagement = () => {
     };
 
     return (
-        <div className="container mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-md">
-            <h1 className="text-3xl font-bold mb-6">Manage Managers</h1>
+        <div className="container mx-auto mt-16 p-4 bg-gray-100 rounded">
+            <div className="absolute top-4 left-4 z-10">
+                <BackButton />
+            </div>
+            <h1 className="text-3xl font-bold text-black mt-5 mb-3">Manage Managers</h1>
 
-            {/* Formularz dodawania menedżera */}
             <div className="mb-6">
-                <h2 className="text-xl font-semibold mb-4">Add New Manager</h2>
+                <h2 className="text-xl text-black font-semibold mb-4">Add New Manager</h2>
                 <div className="flex flex-col md:flex-row gap-4">
-                    <input
-                        type="text"
-                        placeholder="Enter Manager User ID"
-                        className="border p-2 rounded-md w-full bg-gray-800 text-white"
+                    <select
                         value={newManagerId}
                         onChange={(e) => setNewManagerId(e.target.value)}
-                    />
+                        className="border p-2 rounded-md w-full bg-gray-800 text-white"
+                    >
+                        <option value="" disabled>Select User ID</option>
+                        {users.map((user) => (
+                            <option key={user.id} value={user.id}>
+                                {user.username} ({user.name} {user.surname})
+                            </option>
+                        ))}
+                    </select>
                     <button
                         onClick={handleAddManager}
                         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
@@ -72,9 +86,7 @@ const ManagerManagement = () => {
                     </button>
                 </div>
             </div>
-
-            {/* Lista istniejących menedżerów */}
-            <h2 className="text-xl font-semibold mb-4">Existing Managers</h2>
+            <h2 className="text-xl font-semibold text-black mb-4">Existing Managers</h2>
             {managers.length === 0 ? (
                 <p className="text-gray-400">No managers found for this facility.</p>
             ) : (
@@ -101,7 +113,6 @@ const ManagerManagement = () => {
                         </li>
                     ))}
                 </ul>
-
             )}
         </div>
     );

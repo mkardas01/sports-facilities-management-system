@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {deleteTrainingSession, getTrainingSessionById} from '../services/trainingSessionService';
 import {deleteEquipment} from "../services/equipmentService.js";
+import BackButton from "../components/homebutton.jsx";
 
 const TrainingSessions = () => {
     const [sessions, setSessions] = useState([]);
@@ -31,17 +32,19 @@ const TrainingSessions = () => {
     const handleDelete = async (sessionID) => {
         try {
             await deleteTrainingSession(sessionID);
-            setSessions(sessions.filter(item => item.id !== sessionID)); // Remove equipment from the list after deletion
+            setSessions(sessions.filter(item => item.id !== sessionID));
         } catch (error) {
             console.error('Error deleting equipment', error);
         }
     };
 
     return (
-        <div className="container mx-auto p-6 text-center"> {/* Kontener i wyrównanie do środka */}
+        <div className="container mx-auto p-6 text-center">
+            <div className="absolute top-4 left-4 z-10">
+                <BackButton/>
+            </div>
             <h1 className="text-3xl font-bold mb-4 text-white">Training Sessions</h1>
 
-            {/* Add Training Session Button */}
             <button
                 onClick={handleCreateSession}
                 className="mb-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
@@ -52,7 +55,8 @@ const TrainingSessions = () => {
             {loading ? (
                 <p className="text-gray-500">Loading training sessions...</p>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center"> {/* Wyśrodkowanie elementów w siatce */}
+                <div
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
                     {sessions.length > 0 ? (
                         sessions.map((session) => (
                             <div

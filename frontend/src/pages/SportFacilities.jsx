@@ -30,7 +30,7 @@ const SportFacilities = () => {
         if (window.confirm("Are you sure you want to delete this facility?")) {
             try {
                 await deleteSportFacility(id);
-                setFacilities(facilities.filter((facility) => facility.id !== id)); // Usunięcie obiektu z listy
+                setFacilities(facilities.filter((facility) => facility.id !== id));
             } catch (error) {
                 console.error('Error deleting facility', error);
                 setError('Error deleting facility. Please try again.');

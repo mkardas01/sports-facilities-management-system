@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getSportFacilityDetails } from '../services/newsService';
 import { deleteNews } from "../services/newssService.js";
-import { getPicture } from "../services/fileService.js"; // Funkcja do pobierania obrazów
-import "/src/index.css"; // Ensure this path is correct for Tailwind CSS
+import { getPicture } from "../services/fileService.js";
+import "/src/index.css";
+import BackButton from "../components/homebutton.jsx";
 
 const FacilityNews = () => {
     const id = localStorage.getItem('selectedFacilityId');
@@ -16,10 +17,8 @@ const FacilityNews = () => {
         const fetchFacilityDetails = async () => {
             try {
                 const data = await getSportFacilityDetails(parseInt(id));
-                setNews(data.news || []); // Assumes the response contains an array of 'news'
-                setFacilityName(data.name); // Facility name to display
-
-                // Fetch image URLs for news items
+                setNews(data.news || []);
+                setFacilityName(data.name);
                 const imagePromises = data.news.map(async (item) => {
                     if (item.imageUrl) {
                         const url = await getPicture(item.imageUrl);
@@ -42,11 +41,10 @@ const FacilityNews = () => {
         fetchFacilityDetails();
     }, [id]);
 
-    // Function to delete news
     const handleDelete = async (newsId) => {
         try {
             await deleteNews(newsId);
-            setNews(news.filter(item => item.id !== newsId)); // Update the news list
+            setNews(news.filter(item => item.id !== newsId));
         } catch (error) {
             console.error('Error deleting news', error);
         }
@@ -54,7 +52,10 @@ const FacilityNews = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-            <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">News for {facilityName}</h1>
+            <div className="absolute top-4 left-4 z-10">
+                <BackButton/>
+            </div>
+            <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">News</h1>
 
             <div className="mb-6 text-center">
                 <button
@@ -69,8 +70,6 @@ const FacilityNews = () => {
                 {news.map((item) => (
                     <li key={item.id} className="bg-white shadow-md rounded-lg p-4">
                         <h2 className="text-xl font-semibold text-gray-800 mb-2">{item.title}</h2>
-
-                        {/* Displaying image or placeholder */}
                         {item.imageUrl && newsImages[item.id] ? (
                             <img
                                 src={newsImages[item.id]}

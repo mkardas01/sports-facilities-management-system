@@ -19,16 +19,16 @@ const AddTrainingSession = () => {
         capacity: 1,
     });
 
-    const [coaches, setCoaches] = useState([]); // Lista trenerów
+    const [coaches, setCoaches] = useState([]);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        // Pobranie listy trenerów dla obiektu sportowego
+
         const fetchCoaches = async () => {
             try {
                 const response = await getCoachesBySportFacility(id);
                 console.log(response)
-                setCoaches(response); // Zakładamy, że `response` to lista trenerów
+                setCoaches(response);
             } catch (err) {
                 console.error('Error fetching coaches', err);
                 setError('Could not fetch coaches. Please try again later.');
@@ -53,7 +53,7 @@ const AddTrainingSession = () => {
             }
 
             await createTrainingSession(trainingSession);
-            navigate(`/sport-facilities/training-sessions`); // Redirect to training sessions page after success
+            navigate(`/sport-facilities/training-sessions`);
         } catch (err) {
             console.error('Error adding training session', err);
             setError('Error adding training session. Please try again.');

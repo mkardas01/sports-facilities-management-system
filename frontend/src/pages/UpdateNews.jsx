@@ -25,7 +25,7 @@ const EditNews = () => {
         e.preventDefault();
         try {
             await updateNews(news);
-            navigate(`/sport-facilities/news`); // Przekierowanie do listy newsów
+            navigate(`/sport-facilities/news`);
         } catch (error) {
             console.error('Error updating news', error);
         }

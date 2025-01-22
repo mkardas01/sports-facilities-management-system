@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createCoach } from '../services/coachService';
 import { useNavigate } from 'react-router-dom';
-import { uploadPicture } from '../services/fileService'; // Funkcja do przesyłania plików
+import { uploadPicture } from '../services/fileService';
 import "/src/index.css";
 
 const AddCoach = () => {
@@ -15,8 +15,8 @@ const AddCoach = () => {
     sportFacilitiesId: id,
   });
 
-  const [selectedFile, setSelectedFile] = useState(null); // Przechowuje wybrane zdjęcie
-  const [fileName, setFileName] = useState(''); // Przechowuje nazwę wybranego pliku
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [fileName, setFileName] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,27 +25,26 @@ const AddCoach = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setSelectedFile(file); // Przechowujemy plik
-    setFileName(file.name); // Przechowujemy nazwę pliku
+    setSelectedFile(file);
+    setFileName(file.name);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Jeśli użytkownik wybrał plik, wysyłamy go na serwer
+
       if (selectedFile) {
-        const uploadedImageUrl = await uploadPicture(selectedFile); // Wysyłamy zdjęcie
-        setCoach({ ...coach, imageUrl: uploadedImageUrl }); // Ustawiamy URL zdjęcia w obiekcie coach
+        const uploadedImageUrl = await uploadPicture(selectedFile);
+        setCoach({ ...coach, imageUrl: uploadedImageUrl });
       }
 
-      // Sprawdzamy, czy zdjęcie zostało załadowane przed utworzeniem trenera
       if (!coach.imageUrl) {
         alert('Please upload an image.');
         return;
       }
 
-      // Tworzymy trenera
+
       await createCoach(coach);
       navigate(`/sport-facilities/coaches`); // Przekierowanie po sukcesie
     } catch (error) {

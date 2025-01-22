@@ -1,23 +1,27 @@
-// pages/UpdateCoach.js
 import React, { useState, useEffect } from 'react';
 import { getCoachById, updateCoach } from '../services/coachService';
+import { uploadPicture } from '../services/fileService';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const UpdateCoach = () => {
-    const { id, sportFacilityID } = useParams(); // Pobiera ID trenera oraz ID obiektu sportowego z URL
+    const { id } = useParams();
+    const sportFacilityID = localStorage.getItem('selectedFacilityId');
     const navigate = useNavigate();
     const [coach, setCoach] = useState({
         name: '',
         surname: '',
-        image_url: '',
+        imageUrl: '',
         sportFacilitiesId: sportFacilityID,
     });
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [fileName, setFileName] = useState('');
 
     useEffect(() => {
         const fetchCoach = async () => {
             try {
-                const coachData = await getCoachById(id); // Pobiera dane trenera z backendu
-                setCoach(coachData); // Ustawia dane w stanie
+                const coachData = await getCoachById(id);
+                setCoach(coachData);
+                setFileName(coachData.imageUrl);
             } catch (error) {
                 console.error('Error fetching coach data', error);
             }
@@ -31,13 +35,29 @@ const UpdateCoach = () => {
         setCoach({ ...coach, [name]: value });
     };
 
-    coach.sportFacilitiesId = sportFacilityID;
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setSelectedFile(file);
+        setFileName(file.name);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await updateCoach(coach); // Aktualizuje dane trenera
-            navigate(`/sport-facilities/coaches`); // Przekierowuje do listy trenerów po sukcesie
+            let updatedImageUrl = coach.imageUrl;
+
+            if (selectedFile) {
+                updatedImageUrl = await uploadPicture(selectedFile);
+            }
+
+            const updatedCoach = {
+                ...coach,
+                imageUrl: updatedImageUrl,
+                sportFacilitiesId: sportFacilityID,
+            };
+
+            await updateCoach(updatedCoach);
+            navigate(`/sport-facilities/coaches`);
         } catch (error) {
             console.error('Error updating coach', error);
         }
@@ -74,16 +94,21 @@ const UpdateCoach = () => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">Image URL</label>
+                    <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">Upload Image</label>
                     <input
                         id="imageUrl"
-                        type="text"
-                        name="imageUrl"
-                        value={coach.imageUrl}
-                        onChange={handleInputChange}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        type="file"
+                        accept="image/jpeg, image/png"
+                        onChange={handleFileChange}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded"
                     />
                 </div>
+
+                {fileName && (
+                    <div className="mb-4 text-gray-700">
+                        <p>Selected file: <strong>{fileName}</strong></p>
+                    </div>
+                )}
 
                 <button
                     type="submit"
