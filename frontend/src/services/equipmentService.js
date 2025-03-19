@@ -1,6 +1,7 @@
 import axios from 'axios';
+import config from '../config';
 
-const API_URL = 'http://localhost:8080/api/equipment';
+const API_URL = `${config.proxy}/api/equipment`;
 
 export const getEqBySportId = async (id) => {
     const response = await axios.get(`${API_URL}/sport/${id}`);

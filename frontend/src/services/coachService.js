@@ -1,6 +1,8 @@
 import axios from 'axios';
+import config from '../config';
 
-const API_URL = 'http://localhost:8080/api/coach';
+const API_URL = `${config.proxy}/api/coach`;
+const PICTURE_URL = `${config.proxy}/uploads`
 
 export const getAllCoaches = async () => {
   const response = await axios.get(`${API_URL}/all`);
@@ -13,11 +15,16 @@ export const getCoachById = async (id) => {
 };
 
 export const getCoachesBySportFacility = async (sportFacilityID) => {
-  const response = await axios.get(`${API_URL}/all`, {
+  const response = await axios.get(`${API_URL}/allBySportFacility`, {
     params: { sportFacilityID }
   });
   return response.data;
 };
+
+export const getCoachImageUrl = (imageUrl) => {
+  return `${PICTURE_URL}/${imageUrl}`;
+};
+
 
 export const createCoach = async (coach) => {
   const response = await axios.post(`${API_URL}/create`, coach);

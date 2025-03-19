@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/authService';
-import '../styles/Login.css'; // Import pliku CSS
+import '/src/index.css'
+import {getPicture} from "../services/fileService.js";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -20,40 +21,48 @@ const Login = () => {
         }
     };
 
+
     const goToRegister = () => {
         navigate('/register');
     };
 
     return (
-        <div className="login-container">
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit} className="login-form">
-                <div className="form-group">
-                    <label>Email:</label>
+        <div className="flex flex-col items-center justify-center h-screen">
+            <h1 className="text-3xl font-bold mb-6">Login</h1>
+            <form onSubmit={handleSubmit} className="flex flex-col items-center">
+                <div className="flex items-center mb-4">
+                    <label className="w-24 text-right mr-2">Email:</label>
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        className="w-72 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-200"
                     />
                 </div>
-                <div className="form-group">
-                    <label>Password:</label>
+                <div className="flex items-center mb-4">
+                    <label className="w-24 text-right mr-2">Password:</label>
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        className="w-72 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-green-200"
                     />
                 </div>
-                {error && <p className="error-message">{error}</p>}
-                <button type="submit" className="login-button">Login</button>
+                {error && <p className="text-red-500">{error}</p>}
+                <button
+                    type="submit"
+                    className="mt-5 py-2 px-4 bg-green-500 text-white font-semibold rounded hover:bg-green-600 transition duration-200"
+                >
+                    Login
+                </button>
             </form>
-            <p>Don't have an account?</p>
+            <p className="mt-4">Don't have an account?</p>
             <a
                 href="#"
                 onClick={goToRegister}
-                className="register-link"
+                className="text-blue-500 underline cursor-pointer"
             >
                 Create New Account
             </a>

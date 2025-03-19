@@ -1,6 +1,7 @@
 import axios from 'axios';
+import config from '../config';
 
-const API_URL = 'http://localhost:8080/api/openhour';
+const API_URL = `${config.proxy}/api/openhour`;
 
 export const getAllOpenHours = async () => {
   const response = await axios.get(`${API_URL}/all`);
